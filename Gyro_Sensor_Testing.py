@@ -1,12 +1,12 @@
 from utils import sound
-from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, EV3GyroSensor, wait_ready_sensors
+from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, EV3GyroSensor, wait_ready_sensors, reset_brick
 import time
 import threading
 
 TS1 = TouchSensor(2)
 Gyro = EV3GyroSensor(1,mode="both")
 
-GYRO_SENSOR_DATA_FILE = "../gyro_sensor_data_file.csv"
+GYRO_SENSOR_DATA_FILE = "gyro_sensor_data_file_for_consistency.csv"
 
 print("Testing file running. Waiting for sensor initialisation...")
 
@@ -21,6 +21,7 @@ def collect_continuous_gyro_data():
             pass
         time.sleep(0.5)
         print("Collecting readings now.")
+        Gyro.reset_measure()
         while not TS1.is_pressed():
             gyro_data = Gyro.get_both_measure()
             if gyro_data is not None:
