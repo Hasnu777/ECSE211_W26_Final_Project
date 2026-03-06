@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2026-03-06" view-index="0" gantt-divider-location="322" resource-divider-location="300" version="3.3.3322" locale="en_AE">
+    <description/>
+    <view zooming-state="default:0" id="gantt-chart">
+        <field id="tpd3" name="Name" width="174" order="0"/>
+        <field id="tpd4" name="Begin date" width="66" order="1"/>
+        <field id="tpd5" name="End date" width="66" order="2"/>
+        <field id="tpd15" name="Notes" width="20" order="3"/>
+        <option id="taskLabelLeft" value="name"/>
+        <option id="taskLabelRight" value=""/>
+        <option id="filter.completedTasks" value="false"/>
+        <option id="filter.dueTodayTasks" value="false"/>
+        <option id="filter.overdueTasks" value="false"/>
+        <option id="filter.inProgressTodayTasks" value="false"/>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="true"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="1" uid="d78492f68bb24c3eaca0738db942501f" name="Project Start" meeting="true" start="2026-02-24" duration="0" complete="0" expand="true">
+            <depend id="2" type="2" difference="0" hardness="Strong"/>
+            <depend id="4" type="2" difference="0" hardness="Strong"/>
+            <depend id="12" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="2" uid="4a257fb423fb4264ad660d6dc080b764" name="Introductory Meeting" meeting="false" start="2026-02-24" duration="1" complete="0" expand="true">
+            <depend id="6" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="12" uid="8c1502c84949446c86f1f2cdad6cb909" name="Team Contract &amp; Shared Goals" meeting="false" start="2026-02-24" duration="1" complete="0" expand="true">
+            <depend id="6" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="4" uid="67d719155e2a47cd81b5c7a19fe460e3" name="Brainstorming Project Timeline" meeting="false" start="2026-02-24" duration="1" complete="0" expand="true">
+            <depend id="6" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="6" uid="3b4d5a3259cf4aa9832ed65a20192e16" name="Preliminary Project Analysis" meeting="false" start="2026-02-25" duration="2" complete="0" expand="true">
+            <depend id="7" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="7" uid="a9a43b09b4444e4aa14b800ef57994d2" name="Gantt Chart Creation" meeting="false" start="2026-02-27" duration="4" complete="0" expand="true">
+            <depend id="8" type="2" difference="0" hardness="Strong"/>
+            <depend id="9" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="8" uid="59b980b2bc3045729c872ebfc0d43d6c" name="Role &amp; Responsibility Distribution" meeting="false" start="2026-03-03" duration="1" complete="0" expand="true">
+            <depend id="10" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="9" uid="34b77a940acd4c1f9f1aa871d9ef16ca" name="Timeline Budget Creation" meeting="false" start="2026-03-03" duration="2" complete="0" expand="true">
+            <depend id="10" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="10" uid="9710a6a28af94629998caaa708af5116" name="Requirements Analysis &amp; Documentation" meeting="false" start="2026-03-05" duration="2" complete="0" expand="true">
+            <depend id="11" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="11" uid="d5adcd02f22b4866a04e029ac53cf412" name="Idea Generation &amp; Selection" meeting="false" start="2026-03-07" duration="2" complete="0" expand="true">
+            <depend id="15" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="15" uid="d55cb43bf2bb4c54a975e2ce76b8a7d5" name="Candidate System Model Selected" meeting="true" start="2026-03-09" duration="0" complete="0" expand="true">
+            <depend id="16" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="16" uid="12640ca659e645c2964ca19f53b511c2" name="Constraints Analysis &amp; Documentation" meeting="false" start="2026-03-09" duration="2" complete="0" expand="true">
+            <depend id="17" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="17" uid="89ef4787915a400a91a70dab6e195ee2" name="System Analysis &amp; Documentation" meeting="false" start="2026-03-11" duration="2" complete="0" expand="true">
+            <depend id="18" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="18" uid="d867f8dbb8614cd08735dd6c97225a7f" name="Subsystem &amp; Component Modelling" meeting="false" start="2026-03-13" duration="2" complete="0" expand="true">
+            <depend id="19" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="19" uid="d79fd9be06de4e6189d64ccf188b34f1" name="Timesheet Updating" meeting="false" start="2026-03-15" duration="1" complete="0" expand="true">
+            <depend id="14" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="14" uid="dbd0ea262e2e4406bc6d81726f1e516b" name="Week 1 Deliverables Complete" meeting="true" start="2026-03-16" duration="0" complete="0" expand="true">
+            <depend id="25" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="25" uid="c22004e0dab34230bc14fd3b03586247" name="TA-Team Meeting 1" meeting="true" start="2026-03-16" duration="0" complete="0" expand="true">
+            <depend id="21" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="21" uid="19616c364e8441609f763cb87466be87" name="Candidate System Refinement" meeting="false" start="2026-03-16" duration="2" complete="0" expand="true">
+            <depend id="22" type="2" difference="0" hardness="Strong"/>
+            <depend id="23" type="2" difference="0" hardness="Strong"/>
+            <depend id="24" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="22" uid="e5af42ee72674066b878f872f7e088c2" name="Meeting 2" meeting="false" start="2026-03-18" duration="1" complete="0" expand="true">
+            <task id="23" uid="8d6870d69bc84ce0b178d4ee9177309d" name="Software Architecture Design" meeting="false" start="2026-03-18" duration="1" complete="0" expand="true">
+                <depend id="26" type="2" difference="0" hardness="Strong"/>
+                <depend id="27" type="2" difference="0" hardness="Strong"/>
+                <depend id="28" type="2" difference="0" hardness="Strong"/>
+                <depend id="29" type="2" difference="0" hardness="Strong"/>
+                <depend id="36" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="24" uid="f870fafa166445708c91007305a3e712" name="Testing Discussion" meeting="false" start="2026-03-18" duration="1" complete="0" expand="true">
+                <depend id="26" type="2" difference="0" hardness="Strong"/>
+                <depend id="27" type="2" difference="0" hardness="Strong"/>
+                <depend id="28" type="2" difference="0" hardness="Strong"/>
+                <depend id="29" type="2" difference="0" hardness="Strong"/>
+                <depend id="36" type="2" difference="0" hardness="Strong"/>
+            </task>
+        </task>
+        <task id="26" uid="5902bc45fc5d4bb2becaf0c6b04a1194" name="Specification &amp; Constraint Refinement" meeting="false" start="2026-03-19" duration="1" complete="0" expand="true"/>
+        <task id="27" uid="705280688ec240b79df4c08a677d3eae" name="Drive System Building" meeting="false" start="2026-03-19" duration="1" complete="0" expand="true">
+            <depend id="30" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="30" uid="3427e6b3214743b2b8b02938cbb4274d" name="Drive System Testing" meeting="false" start="2026-03-20" duration="1" complete="0" expand="true">
+            <depend id="33" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="33" uid="1d6de225ce974d00ba08d692772b7aea" name="Drive System Refinement" meeting="false" start="2026-03-21" duration="1" complete="0" expand="true"/>
+        <task id="36" uid="e8d158cf7f5a4bb5bf0e3705af151814" name="Gyro Sensor Testing" meeting="false" start="2026-03-19" duration="1" complete="0" expand="true">
+            <depend id="37" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="37" uid="50628711649248a8ba61060064a1e35c" name="Orientation &amp; Guidance System Modelling &amp; Building" meeting="false" start="2026-03-20" duration="1" complete="0" expand="true">
+            <depend id="38" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="38" uid="5675f729a8874f43b26247e136bea162" name="Orientation &amp; Guidance System Testing &amp; Refinement" meeting="false" start="2026-03-21" duration="1" complete="0" expand="true"/>
+        <task id="28" uid="989d599e45c64ca594feefe22e197de1" name="Color Detection System Building" meeting="false" start="2026-03-19" duration="1" complete="0" expand="true">
+            <depend id="31" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="31" uid="66b92c8546444d76b93c42b4c938783f" name="Color Detection System Testing" meeting="false" start="2026-03-20" duration="1" complete="0" expand="true">
+            <depend id="34" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="34" uid="d6fbb51c5f84443294afb9c47cc820f0" name="Color Detection System Refinement" meeting="false" start="2026-03-21" duration="1" complete="0" expand="true"/>
+        <task id="29" uid="9b40b6c5a35c40ea8146269397157ec9" name="Pickup/Dropoff System Building" meeting="false" start="2026-03-19" duration="1" complete="0" expand="true">
+            <depend id="32" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="32" uid="028705904b7e4435a00e903c9626f01c" name="Pickup/Dropoff System Testing" meeting="false" start="2026-03-20" duration="1" complete="0" expand="true">
+            <depend id="35" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="35" uid="72d2432466e04f35bc0b011d790f96e0" name="Pickup/Dropoff System Refinement" meeting="false" start="2026-03-21" duration="1" complete="0" expand="true"/>
+        <task id="39" uid="699a274dfe35415cb4bc31460db3349b" name="Drive &amp; O+G Integration Testing" meeting="false" start="2026-03-22" duration="1" complete="0" expand="true"/>
+    </tasks>
+    <resources/>
+    <allocations/>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+</project>
