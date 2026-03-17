@@ -8,8 +8,8 @@ m1 = Motor("A")
 m2 = Motor("B")
 
 
-m1.setlimits()
-m2.setlimits()
+# m1.setlimits()
+# m2.setlimits()
 
 # -------------------- FUNCTIONS --------------------
 
@@ -22,8 +22,11 @@ def main():
     m2.set_dps(0)
 
     # rotate
-    m1.set_position(180)
-    m2.set_position(-180)
+    m1.set_position(90)
+    m2.set_position(-90)
+
+if __name__ == "__main__":
+    main()
 
 
     
