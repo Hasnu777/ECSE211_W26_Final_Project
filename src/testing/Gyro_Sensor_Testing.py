@@ -9,194 +9,194 @@ Gyro = EV3GyroSensor(4,mode="both")
 motor1 = Motor("A")
 motor2 = Motor("B")
 
-GYRO_SENSOR_DATA_FILE = "gyro_sensor_data_file_for_consistency.csv"
+GYRO_SENSOR_DATA_FILE = "gyro_sensor_rotations.csv"
 
 print("Testing file running. Waiting for sensor initialisation...")
 
 wait_ready_sensors(True)
 print("Sensors initialized.")
-
 DataFile = "gyro_sensor.txt"
 
-file = open(DataFile, mode="w")
+# file = open(DataFile, mode="w")
 
-def perform_rotations():
-    
-#     motor1.float_motor()
-#     motor2.float_motor()
-    motor1.set_limits(power=50)
-    motor2.set_limits(power=50)
-    
-    Gyro.set_mode("abs")
-    
-    wait_ready_sensors()
-    
-    Gyro.reset_measure()
-    
-    initialState = Gyro.get_abs_measure()
-    print(initialState)
-    
-    if initialState is None:
-        print("weird")
-    else:    
-        file.write("Initial state: 0")
+# def perform_rotations():
+#
+# #     motor1.float_motor()
+# #     motor2.float_motor()
+#     motor1.set_limits(power=50)
+#     motor2.set_limits(power=50)
+#
+#     Gyro.set_mode("abs")
+#
+#     wait_ready_sensors()
+#
+#     Gyro.reset_measure()
+#
+#     initialState = Gyro.get_abs_measure()
+#     print(initialState)
+#
+#     if initialState is None:
+#         print("weird")
+#     else:
+#         file.write("Initial state: 0")
+#
+#     # 90 degree rotation about face
+#     motor1.set_position_relative(320)
+#     motor2.set_position_relative(-320)
+#
+#     file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
+#
+#     Gyro.reset_measure()
+#
+#     print(Gyro.get_abs_measure())
+#
+#     time.sleep(3)
+#
+#     file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
+#
+#     Gyro.reset_measure()
+#
+#     # reverse 90 degree rotation about face
+#     motor1.set_position_relative(-320)
+#     motor2.set_position_relative(320)
+#
+#     file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
+#
+#     Gyro.reset_measure()
+#
+#     time.sleep(3)
+#
+#     # 90 degree pivot
+#     motor1.set_position_relative(610)
+#     motor2.set_position_relative(0)
+#
+#     file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
+#
+#     Gyro.reset_measure()
+#
+#     time.sleep(3)
+#
+#     file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
+#
+#     Gyro.reset_measure()
+#
+#     # reverse 90 degree pivot
+#     motor1.set_position_relative(-610)
+#     motor2.set_position_relative(0)
+#
+#     time.sleep(3)
+#
+#     file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
+#
+#     Gyro.reset_measure()
+#
+#     # 90 degree pivot other way
+#     motor1.set_position_relative(0)
+#     motor2.set_position_relative(610)
+#
+#     time.sleep(3)
+#
+#     file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
+#
+#     Gyro.reset_measure()
+#
+#     # reverse 90 degree pivot other way
+#     motor1.set_position_relative(0)
+#     motor2.set_position_relative(-610)
+#
+#     file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
+#
+#     Gyro.reset_measure()
+#
+#     time.sleep(3)
+#
+#     # 180 degree rotation about face
+#     motor1.set_position_relative(330*2)
+#     motor2.set_position_relative(-330*2)
+#
+#     file.write("\nExpected 180, got: " + str(Gyro.get_abs_measure()))
+#
+#     Gyro.reset_measure()
+#
+#     time.sleep(3)
+#
+#     # reverse 180 degree rotation about face
+#     motor1.set_position_relative(-330*2)
+#     motor2.set_position_relative(330*2)
+#
+#     file.write("\nExpected 180, got: " + str(Gyro.get_abs_measure()))
+#
+#     Gyro.reset_measure()
+#
+#     time.sleep(3)
+#
+#     # 360 degree rotation about face
+#     motor1.set_position_relative(330*4)
+#     motor2.set_position_relative(-330*4)
+#
+#     file.write("\nExpected 360, got: " + str(Gyro.get_abs_measure()))
+#
+#     Gyro.reset_measure()
+#
+#     time.sleep(3)
+#
+#     # reverse 360 degree rotation about face
+#     motor1.set_position_relative(-330*4)
+#     motor2.set_position_relative(330*4)
+#
+#     file.write("\nExpected 360, got: " + str(Gyro.get_abs_measure()))
+#
+#     Gyro.reset_measure()
+#
+#     time.sleep(3)
+#
+#     motor1.set_dps(360)
+#     motor2.set_dps(360)
+#
+#     time.sleep(3)
+#
+#     file.write("\nExpected 0, got: " + str(Gyro.get_abs_measure()))
+#
+#     Gyro.reset_measure()
+#
+#     motor1.set_dps(-360)
+#     motor2.set_dps(-360)
+#
+#     time.sleep(3)
+#
+#     file.write("\nExpected 0, got: " + str(Gyro.get_abs_measure()))
+#
+#     Gyro.reset_measure()
+#
+#     motor1.set_dps(0)
+#     motor2.set_dps(0)
+#
+#     file.close()
 
-    # 90 degree rotation about face
-    motor1.set_position_relative(320)
-    motor2.set_position_relative(-320)
-    
-    file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
-    
-    Gyro.reset_measure()
-    
-    print(Gyro.get_abs_measure())
-
-    time.sleep(3)
-    
-    file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
-    
-    Gyro.reset_measure()
-
-    # reverse 90 degree rotation about face
-    motor1.set_position_relative(-320)
-    motor2.set_position_relative(320)
-    
-    file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
-    
-    Gyro.reset_measure()
-
-    time.sleep(3)
-
-    # 90 degree pivot
-    motor1.set_position_relative(610)
-    motor2.set_position_relative(0)
-    
-    file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
-    
-    Gyro.reset_measure()
-
-    time.sleep(3)
-    
-    file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
-    
-    Gyro.reset_measure()
-
-    # reverse 90 degree pivot
-    motor1.set_position_relative(-610)
-    motor2.set_position_relative(0)
-
-    time.sleep(3)
-    
-    file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
-    
-    Gyro.reset_measure()
-
-    # 90 degree pivot other way
-    motor1.set_position_relative(0)
-    motor2.set_position_relative(610)
-
-    time.sleep(3)
-    
-    file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
-    
-    Gyro.reset_measure()
-
-    # reverse 90 degree pivot other way
-    motor1.set_position_relative(0)
-    motor2.set_position_relative(-610)
-    
-    file.write("\nExpected 90, got: " + str(Gyro.get_abs_measure()))
-    
-    Gyro.reset_measure()
-
-    time.sleep(3)
-
-    # 180 degree rotation about face
-    motor1.set_position_relative(330*2)
-    motor2.set_position_relative(-330*2)
-
-    file.write("\nExpected 180, got: " + str(Gyro.get_abs_measure()))
-    
-    Gyro.reset_measure()
-
-    time.sleep(3)
-
-    # reverse 180 degree rotation about face
-    motor1.set_position_relative(-330*2)
-    motor2.set_position_relative(330*2)
-
-    file.write("\nExpected 180, got: " + str(Gyro.get_abs_measure()))
-    
-    Gyro.reset_measure()
-
-    time.sleep(3)
-
-    # 360 degree rotation about face
-    motor1.set_position_relative(330*4)
-    motor2.set_position_relative(-330*4)
-    
-    file.write("\nExpected 360, got: " + str(Gyro.get_abs_measure()))
-    
-    Gyro.reset_measure()
-
-    time.sleep(3)
-
-    # reverse 360 degree rotation about face
-    motor1.set_position_relative(-330*4)
-    motor2.set_position_relative(330*4)
-
-    file.write("\nExpected 360, got: " + str(Gyro.get_abs_measure()))
-    
-    Gyro.reset_measure()
-
-    time.sleep(3)
-    
-    motor1.set_dps(360)
-    motor2.set_dps(360)
-
-    time.sleep(3)
-
-    file.write("\nExpected 0, got: " + str(Gyro.get_abs_measure()))
-
-    Gyro.reset_measure()
-    
-    motor1.set_dps(-360)
-    motor2.set_dps(-360)
-    
-    time.sleep(3)
-    
-    file.write("\nExpected 0, got: " + str(Gyro.get_abs_measure()))
-    
-    Gyro.reset_measure()
-    
-    motor1.set_dps(0)
-    motor2.set_dps(0)
-    
-    file.close()
-
-# def collect_continuous_gyro_data():
-#     try:
-#         output_file = open(GYRO_SENSOR_DATA_FILE,"w")
-#         output_file.write(f"Degrees Rotated Since Beginning,Degrees Rotated Per Second\n")
-#         while not TS1.is_pressed():
-#             pass
-#         time.sleep(0.5)
-#         print("Collecting readings now.")
-#         Gyro.reset_measure()
-#         while not TS1.is_pressed():
-#             gyro_data = Gyro.get_both_measure()
-#             if gyro_data is not None:
-#                 print(gyro_data)
-#                 output_file.write(f"{gyro_data[0]},{gyro_data[1]}\n")
-#             time.sleep(0.5)
-#     except BaseException as e:
-#         pass
-#     finally:
-#         print("Gyro samples collected.")
-#         output_file.close()
-#         print("Testing complete.")
-#         reset_brick()
-#         exit()
+def collect_continuous_gyro_data():
+    try:
+        output_file = open(GYRO_SENSOR_DATA_FILE,"w")
+        output_file.write(f"Degrees Rotated Since Beginning,Degrees Rotated Per Second\n")
+        while not TS1.is_pressed():
+            pass
+        time.sleep(0.5)
+        print("Collecting readings now.")
+        Gyro.reset_measure()
+        while not TS1.is_pressed():
+            gyro_data = Gyro.get_both_measure()
+            if gyro_data is not None:
+                print(gyro_data)
+                output_file.write(f"{gyro_data[0]},{gyro_data[1]}\n")
+            time.sleep(0.5)
+    except BaseException as e:
+        pass
+    finally:
+        print("Gyro samples collected.")
+        output_file.close()
+        print("Testing complete.")
+        reset_brick()
+        exit()
 
 if __name__ == "__main__":
-    perform_rotations()
+    # perform_rotations()
+    collect_continuous_gyro_data()
