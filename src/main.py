@@ -3,6 +3,7 @@ from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sens
 import time
 import threading
 
+# Sensor & Motor Setup 
 C_SENSOR = EV3ColorSensor(1)
 TS = TouchSensor(2)
 m1 = Motor("A")
@@ -59,7 +60,22 @@ def colour_class():
     # output
     return current_color
 
+# Function to make both wheels advance
+def advance():
+    print("Quick print")
+    
 
+if __name__ == "__main__":
+    m1.set_dps(60)
+    m2.set_dps(60)
+    m1.set_position_relative(40)
+    m2.set_position_relative(40)
+    m1.set_dps(0)
+    m2.set_dps(0)
+
+
+
+"""
 def wiggle(motor1: Motor, motor2: Motor):
     motor1.set_dps(60)
     time.sleep(1)
@@ -131,20 +147,5 @@ if __name__ == "__main__":
 
         elif robotState == "door":
             break
-        # m1.set_dps(80)
-        # m2.set_dps(80)
-
-        # wiggle(m1, m2)
-        #
-        # inter = colour_class()
-        # if (inter == "intersect"):
-        #     print("intersect found. Rotating now")
-        #     time.sleep(0.5) # test to see if we can get robot to rotate directly onto new line
-        #     m1.set_dps(0)
-        #     m2.set_dps(0)
-        #     time.sleep(1)
-        #     m1.reset_encoder()
-        #     m2.reset_encoder()
-        #     m1.set_position(-345)
-        #     m2.set_position(345)
+"""
 
