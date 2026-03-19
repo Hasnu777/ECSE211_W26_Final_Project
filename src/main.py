@@ -7,10 +7,10 @@ C_SENSOR = EV3ColorSensor(3)
 
 def colour_class():
     # previously calculated cluster centers
-    cluster_center = [[0.973, 0.123, 0.191], [0.179, 0.820, 0.544], [0.206, 0.375, 0.903]]
+    cluster_center = [[0.374809671, 0.558465639, 0.737471218]]
     #previously calculated standard deviations
-    cluster_SD = [[0.000153, 0.00600, 0.00378], [0.00800, 0.00239, 0.00356], [0.00119, 0.00731, 0.00559]]
-    colour_adj = ["red", "green", "blue"] #purple, orange & yellow can be included as well
+    cluster_SD = [[0.027033036, 0.042652416, 0.034928918]]
+    colour_adj = ["intersect"] #purple, orange & yellow can be included as well
 
     #RGB values of current block
     r,g,b = C_SENSOR.read()
