@@ -7,7 +7,7 @@ import csv
 # CONSTANTS
 ColorSensor = EV3ColorSensor(1)
 TouchSensor = TouchSensor(2)
-DataFile = "calibration_data_yellow.csv"
+DataFile = "calibration_data_intersect.csv"
 
 wait_ready_sensors(True)
 
@@ -15,7 +15,7 @@ def collect_color_data():
     try:
         with open(DataFile, "a", newline='') as csvfile:
             writer = csv.writer(csvfile)
-            #writer.writerow(["R", "G", "B"])
+            writer.writerow(["R", "G", "B"])
             print("Press touch sensor to read color data")
             while not TouchSensor.is_pressed():
                 pass
