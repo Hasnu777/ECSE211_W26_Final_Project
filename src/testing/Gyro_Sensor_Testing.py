@@ -19,14 +19,14 @@ print("Sensors initialized.")
 def perform_rotations():
 
     # 90 degree rotation about face
-    motor1.set_position_relative(583)
-    motor2.set_position_relative(-583)
+    motor1.set_position_relative(292)
+    motor2.set_position_relative(-292)
 
     time.sleep(3)
 
     # reverse 90 degree rotation about face
-    motor1.set_position_relative(-583)
-    motor2.set_position_relative(583)
+    motor1.set_position_relative(-292)
+    motor2.set_position_relative(292)
 
     time.sleep(3)
 
@@ -55,29 +55,29 @@ def perform_rotations():
     time.sleep(3)
 
     # 180 degree rotation about face
-    motor1.set_position_relative(583*2)
-    motor2.set_position_relative(-583*2)
+    motor1.set_position_relative(292*2)
+    motor2.set_position_relative(-292*2)
 
     time.sleep(3)
 
     # reverse 180 degree rotation about face
-    motor1.set_position_relative(-583*2)
-    motor2.set_position_relative(583*2)
+    motor1.set_position_relative(-292*2)
+    motor2.set_position_relative(292*2)
 
     time.sleep(3)
 
     # 360 degree rotation about face
-    motor1.set_position_relative(583*4)
-    motor2.set_position_relative(-583*4)
+    motor1.set_position_relative(292*4)
+    motor2.set_position_relative(-292*4)
 
     time.sleep(3)
 
     # reverse 360 degree rotation about face
-    motor1.set_position_relative(-583*4)
-    motor2.set_position_relative(583*4)
+    motor1.set_position_relative(-292*4)
+    motor2.set_position_relative(292*4)
 
-    motor1.set_dps(120)
-    motor2.set_dps(120)
+    motor1.set_dps(360)
+    motor2.set_dps(360)
 
     time.sleep(3)
 
