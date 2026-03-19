@@ -9,7 +9,7 @@ Gyro = EV3GyroSensor(4,mode="both")
 motor1 = Motor("A")
 motor2 = Motor("B")
 
-GYRO_SENSOR_DATA_FILE = "gyro_sensor_rotations.csv"
+GYRO_SENSOR_DATA_FILE = "gyro_sensor_180_deg.csv"
 
 print("Testing file running. Waiting for sensor initialisation...")
 
@@ -183,6 +183,7 @@ def collect_continuous_gyro_data():
         print("Collecting readings now.")
         Gyro.reset_measure()
         while not TS1.is_pressed():
+            time.sleep(3)
             gyro_data = Gyro.get_both_measure()
             if gyro_data is not None:
                 print(gyro_data)
@@ -198,5 +199,6 @@ def collect_continuous_gyro_data():
         exit()
 
 if __name__ == "__main__":
+    Gyro.reset_measure()
     # perform_rotations()
     collect_continuous_gyro_data()
