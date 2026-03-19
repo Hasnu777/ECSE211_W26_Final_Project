@@ -1,0 +1,15 @@
+Initial state: 0
+Expected 90, got: 3
+Expected 90, got: -82
+Expected 90, got: -82
+Expected 90, got: 2
+Expected 90, got: -80
+Expected 90, got: 2
+Expected 90, got: 85
+Expected 90, got: 85
+Expected 180, got: 4
+Expected 180, got: -173
+Expected 360, got: 1
+Expected 360, got: -351
+Expected 0, got: 0
+Expected 0, got: -1
