@@ -83,6 +83,11 @@ def perform_rotations():
 
     motor1.set_dps(-120)
     motor2.set_dps(-120)
+    
+    time.sleep(3)
+    
+    motor1.set_dps(0)
+    motor2.set_dps(0)
 
 # def collect_continuous_gyro_data():
 #     try:
