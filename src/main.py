@@ -1,9 +1,10 @@
-from src.utils import sound
-from src.utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sensors, EV3ColorSensor
+from utils import sound
+from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sensors, EV3ColorSensor
 import time
 import threading
 
 C_SENSOR = EV3ColorSensor(1)
+TS = TouchSensor(2)
 m1 = Motor("A")
 m2 = Motor("B")
 wiggleLeft = True
@@ -60,49 +61,76 @@ def colour_class():
 
 
 def wiggle(motor1: Motor, motor2: Motor):
-    motor1.set_dps(0)
-    time.sleep(0.2)
-    motor1.set_dps(80)
+    motor1.set_dps(60)
+    time.sleep(1)
+    print("slept")
+    motor1.set_dps(160)
 
 
-if __name__ == "_main__":
+if __name__ == "__main__":
 
     robotState = "wiggling"
 
     while True:
+#         time.sleep(1)
+        
+        if TS.is_pressed():
+            m1.set_dps(0)
+            m2.set_dps(0)
+            break
+        
+        m1.set_dps(160)
+        m2.set_dps(160)
 
         inter = colour_class()
+        print("in while loop")
+
+        print(inter)
 
         if inter == "intersect":
-            state = "intersection"
+            robotState = "intersection"
         elif inter == "door":
-            state = "door"
+            robotState = "door"
         elif inter == "room":
-            state = "room"
+            robotState = "room"
         elif inter == "goodBed":
-            state = "goodBed"
+            robotState = "goodBed"
         elif inter == "badBed":
-            state = "badBed"
+            robotState = "badBed"
 
-        match state:
-            case "wiggling":
-                if wiggleLeft:
-                    wiggle(m1, m2)
-                else:
-                    wiggle(m2, m1)
+        
 
-            case "intersection":
-                time.sleep(0.5)
-                m1.set_dps(0)
-                m2.set_dps(0)
-                m1.reset_encoder()
-                m2.reset_encoder()
-                m1.set_position(-345)
-                m2.set_position(345)
-                state = "wiggling"
+        print("checking state...")
+        if robotState == "wiggling":
+            print("wiggling!")
+            if wiggleLeft:
+                print("wiggling left")
+#                 wiggle(m1, m2)
+                wiggleLeft = not wiggleLeft
+            else:
+                print('wiggling right')
+#                 wiggle(m2, m1)
+                wiggleLeft = not wiggleLeft
 
-            case "door":
-                break
+        elif robotState == "intersection":
+            print('intersection found, rotating now')
+            time.sleep(0.5)
+            print('slept 0.5')
+            m1.set_dps(0)
+            m2.set_dps(0)
+            print('stopped')
+            time.sleep(1)
+            print('slept 1')
+            m1.reset_encoder()
+            m2.reset_encoder()
+            print('reset')
+            m1.set_position(-320)
+            m2.set_position(320)
+            print('rotated')
+            robotState = "wiggling"
+
+        elif robotState == "door":
+            break
         # m1.set_dps(80)
         # m2.set_dps(80)
 
