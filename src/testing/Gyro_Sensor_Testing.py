@@ -76,6 +76,8 @@ def perform_rotations():
     motor1.set_position_relative(-292*4)
     motor2.set_position_relative(292*4)
 
+    time.sleep(3)
+    
     motor1.set_dps(360)
     motor2.set_dps(360)
 
