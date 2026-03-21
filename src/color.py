@@ -21,7 +21,7 @@ class Color:
         delta_red = new_r - self.red_mean
         delta_green = new_g - self.green_mean
         delta_blue = new_b - self.blue_mean
-        distance = (delta_red**2, delta_green**2, delta_blue**2)
+        distance = (delta_red**2 + delta_green**2 + delta_blue**2)**0.5
         return distance
 
 
