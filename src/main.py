@@ -46,16 +46,21 @@ def classify_unknown_color():
     best_distance = 100000000          # arbitrarily set a big number
     best_color = "unknown"
 
+    print_counter = 0
+    norm_counter = 0
     # Iterate through colors to find the closest match
     for color in all_colors:
         distance = color.find_distance(norm_r, norm_g, norm_b)
-        print(color.name, distance)
+        print(print_counter, color.name, distance)
+        print_counter += 1
 
         if (distance < best_distance):
             best_distance = distance
             best_color = color.name
 
     # check if closest matching known color is < 2 SD's to the detected color
+    print(norm_counter, norm_r, norm_g, norm_b)
+    norm_counter += 1
     if (color.is_match(norm_r, norm_g, norm_b)):
         print(norm_r, norm_g, norm_b)
         return best_color
@@ -66,7 +71,7 @@ def classify_unknown_color():
 if __name__ == "__main__":
     while True:
         if touch_sensor.is_pressed():
-            classify_unknown_color()
+            print(classify_unknown_color())
 
 
 
