@@ -7,6 +7,9 @@ class Color:
         self.red_sd = red_sd
         self.green_sd = green_sd
         self.blue_sd = blue_sd
+
+    def get_name(self):
+        return self.name
     
     # Return an array with the cluster's RGB centers
     def get_center(self):

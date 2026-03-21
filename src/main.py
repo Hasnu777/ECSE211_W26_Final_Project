@@ -35,6 +35,7 @@ def classify_unknown_color():
     raw_r = raw_rgb[0]
     raw_g = raw_rgb[1]
     raw_b = raw_rgb[2]
+    print("Detected color info:", raw_r, raw_g, raw_b)
 
     # Normalizing the RGB values
     denominator = (raw_r**2 + raw_g**2 + raw_b**2)**0.5
@@ -42,29 +43,34 @@ def classify_unknown_color():
     norm_b = raw_b/denominator
     norm_g = raw_g/denominator
 
+    print("Detected color norm info:", norm_r, norm_g, norm_b)
+
     # Loop through each color and find distance between unknown color and all measured known colors
     best_distance = 100000000          # arbitrarily set a big number
-    best_color = "unknown"
+    best_color = None
 
     print_counter = 0
     norm_counter = 0
     # Iterate through colors to find the closest match
     for color in all_colors:
+        print("Trying to match detected color to:", color.get_name())
         distance = color.find_distance(norm_r, norm_g, norm_b)
         print(print_counter, color.name, distance)
         print_counter += 1
 
         if (distance < best_distance):
+            print("Updated distance:", distance)
             best_distance = distance
-            best_color = color.name
+            best_color = color
 
     # check if closest matching known color is < 2 SD's to the detected color
-    print(norm_counter, norm_r, norm_g, norm_b)
-    norm_counter += 1
-    if (color.is_match(norm_r, norm_g, norm_b)):
-        print(norm_r, norm_g, norm_b + "matched")
-        return best_color
 
+
+    if (color.is_match(norm_r, norm_g, norm_b)):
+        print(norm_r, norm_g, norm_b, "matched")
+        return best_color.get_name()
+
+    print("More than 2 SDs away")
     return "unknown"
     
 
