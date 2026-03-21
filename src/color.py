@@ -1,3 +1,6 @@
+from idlelib.multicall import r
+
+
 class Color:
     def __init__(self, name, red_mean, green_mean, blue_mean,  red_sd, green_sd, blue_sd):
         self.name = name
@@ -32,6 +35,9 @@ class Color:
     # Compared the new normalized rgb values (s.d. method)
     def is_match(self, new_r, new_g, new_b):
         # Comparison values are true if the difference is <= 2 s.d.s
+        print("R diff: ", abs(self.red_mean - new_r))
+        print("G diff: ", abs(self.green_mean - new_g))
+        print("B diff: ", abs(self.blue_mean - new_b))
         red_in_range = abs(self.red_mean - new_r) <= (2 * self.red_sd)
         green_in_range = abs(self.green_mean - new_g) <= (2 * self.green_sd)
         blue_in_range = abs(self.blue_mean - new_b) <= (2 * self.blue_sd)
