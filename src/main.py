@@ -62,7 +62,7 @@ def classify_unknown_color():
     print(norm_counter, norm_r, norm_g, norm_b)
     norm_counter += 1
     if (color.is_match(norm_r, norm_g, norm_b)):
-        print(norm_r, norm_g, norm_b)
+        print(norm_r, norm_g, norm_b + "matched")
         return best_color
 
     return "unknown"
@@ -70,8 +70,10 @@ def classify_unknown_color():
 
 if __name__ == "__main__":
     while True:
+        time.sleep(2)
+        print(classify_unknown_color())
         if touch_sensor.is_pressed():
-            print(classify_unknown_color())
+            break
 
 
 
