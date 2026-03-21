@@ -65,8 +65,8 @@ def classify_unknown_color():
 
     # check if closest matching known color is < 2 SD's to the detected color
 
-
-    if (color.is_match(norm_r, norm_g, norm_b)):
+    print("Trying to match to color:",best_color.get_name())
+    if (best_color.is_match(norm_r, norm_g, norm_b)):
         print(norm_r, norm_g, norm_b, "matched")
         return best_color.get_name()
 
@@ -75,8 +75,11 @@ def classify_unknown_color():
     
 
 if __name__ == "__main__":
+    exe_counter = 0
     while True:
-        time.sleep(2)
+        time.sleep(5)
+        print("Attempt number", exe_counter)
+        exe_counter += 1
         print(classify_unknown_color())
         if touch_sensor.is_pressed():
             break
