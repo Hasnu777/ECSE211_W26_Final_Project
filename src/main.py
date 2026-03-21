@@ -9,13 +9,12 @@ color_sensor = EV3ColorSensor(1)
 wait_ready_sensors(True)
 
 # -------- Motor Setup -------- 
-m1 = Motor("A")
-m2 = Motor("B")
-m1.set_dps(0)
-m2.set_dps(0)
-m1.reset_encoder()
-m2.reset_encoder()
-
+motor_1 = Motor("A")
+motor_2 = Motor("B")
+motor_1.set_dps(0)
+motor_2.set_dps(0)
+motor_1.reset_encoder()
+motor_2.reset_encoder()
 
 # Defining Color Objects (all mean and sd values are obtained via measurement)
 red = Color("red", 0.019313118, 0.00257185, 0.004151466, 0.000734278, 0.000353749, 0.000330727)
@@ -27,15 +26,14 @@ yellow = Color("yellow", 0.012555844, 0.004891167, 0.002517735, 0.000375845, 0.0
 
 # array with all the colors
 all_colors = [red, green, blue, orange, white, yellow]
-
-# Purpose of following method:
-# Color sensor read and identifies to what color a new color reading belongs to
-def classify_new_color():
+ 
+# Purpose of following method: Color sensor reads and identifies to what color a new color reading belongs to
+def classify_unknown_color():
     # Collect raw rgb
     raw_rgb = color_sensor.get_rgb()
-    raw_r = new_rgb[0]
-    raw_g = new_rgb[1]
-    raw_b = new_rgb[2]
+    raw_r = raw_rgb[0]
+    raw_g = raw_rgb[1]
+    raw_b = raw_rgb[2]
 
     # Normalizing the RGB values
     denominator = (raw_r**2 + raw_g**2 + raw_b**2)**0.5
@@ -43,9 +41,32 @@ def classify_new_color():
     norm_b = raw_b/denominator
     norm_g = raw_g/denominator
 
+    # Loop through each color and find distance between unknown color and all measured known colors
+    acceptable_distance_threshold = 100 # Arbitrarily set to 100
+    best_distance = 100000000          # arbitrarily set a big number
+    best_color = "unknown"
+
+    for color in all_colors:
+        distance = color.find_distance(norm_r, norm_g, norm_b)
+
+        if (distance < best_distance):
+            best_distance = distance
+            best_color = color.name
+        
+    if (best_distance < acceptable_distance_threshold):
+        return best_color
+    
+    return "unknown"
+    
+
+if __name__ == "_main__":
+    while True:
+        classify_unknown_color()
 
 
-# def classify_new_color():
+
+# -------------------------- Coding Graveyard --------------------------
+    # def classify_new_color():
 
 #     # Getting raw RGB data: 
 #     RGB = C_SENSOR.get_rgb()
@@ -84,20 +105,16 @@ def classify_new_color():
 #     #output
 #     return current_color
 
-
-# -------- Main -------- 
-if __name__ == "_main__":
-    while True:
-        m1.set_dps(80)
-        m2.set_dps(80)
-        inter = colour_class()
-        if (inter == "intersect"):
-            print("intersect found. Rotating now")
-            m1.set_dps(0)
-            m2.set_dps(0)
-            time.sleep(1)
-            m1.reset_encoder()
-            m2.reset_encoder()
-            m1.set_position(-345)
-            m2.set_position(345)
+        # m1.set_dps(80)
+        # m2.set_dps(80)
+        # inter = colour_class()
+        # if (inter == "intersect"):
+        #     print("intersect found. Rotating now")
+        #     m1.set_dps(0)
+        #     m2.set_dps(0)
+        #     time.sleep(1)
+        #     m1.reset_encoder()
+        #     m2.reset_encoder()
+        #     m1.set_position(-345)
+        #     m2.set_position(345)
         
