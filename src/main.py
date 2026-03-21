@@ -42,7 +42,6 @@ def classify_unknown_color():
     norm_g = raw_g/denominator
 
     # Loop through each color and find distance between unknown color and all measured known colors
-    acceptable_distance_threshold = 100 # Arbitrarily set to 100
     best_distance = 100000000          # arbitrarily set a big number
     best_color = "unknown"
 
@@ -53,7 +52,7 @@ def classify_unknown_color():
             best_distance = distance
             best_color = color.name
         
-    if (best_distance < acceptable_distance_threshold):
+    if (color.is_match(norm_r, norm_g, norm_b)):
         return best_color
     
     return "unknown"
