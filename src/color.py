@@ -12,7 +12,7 @@ class Color:
     def get_center(self):
         return [self.red_mean, self.green_mean, self.blue_mean]
     
-    # Returns an assray with the cluster's RGB sds
+    # Return an array with the cluster's RGB sds
     def get_sd(self):
         return [self.red_sd, self.green_sd, self.blue_sd]
     
@@ -33,7 +33,7 @@ class Color:
         green_in_range = abs(self.green_mean - new_g) <= (2 * self.green_sd)
         blue_in_range = abs(self.blue_mean - new_b) <= (2 * self.blue_sd)
 
-        if (red_in_range and green_in_range, blue_in_range): 
+        if (red_in_range and green_in_range and blue_in_range):
             return True
         
         return False
