@@ -36,6 +36,9 @@ class Color:
     def is_match(self, new_r, new_g, new_b):
         # Comparison values are true if the difference is <= 2 s.d.s
         print("R diff: ", abs(self.red_mean - new_r))
+        print("G mean: ", self.green_mean)
+        print("new_g = ", new_g)
+        print(self.green_mean-new_g)
         print("G diff: ", abs(self.green_mean - new_g))
         print("B diff: ", abs(self.blue_mean - new_b))
         red_in_range = abs(self.red_mean - new_r) <= (2 * self.red_sd)
