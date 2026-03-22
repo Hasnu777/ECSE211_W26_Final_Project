@@ -90,20 +90,20 @@ def classify_unknown_color():
     print_counter = 0
     norm_counter = 0
     # Iterate through colors to find the closest match
-    for color in all_colors:
+    for i in range(len(all_colors)):
+        color = all_colors[i]
         print("Trying to match detected color to:", color.get_name())
         distance = color.find_distance(norm_r, norm_g, norm_b)
         print(print_counter, color.name, distance)
         print_counter += 1
-        best_colors[distance] = color
+        best_colors[distance] = i
 
-    distances = list(best_colors.keys()).sort()
+    distances = sorted(list(best_colors.keys()))
     for i in range(3):
-        color_to_check = best_colors[distances[i]]
+        color_to_check = all_colors[best_colors[distances[i]]]
         if color_to_check.is_match(norm_r, norm_g, norm_b) and i == 0:
-            return color_to_check.get_name()
-
-    return f"unknown, after checking closest 3 colors: {distances[0].get_name()}, {distances[1].get_name()}, {distances[2].get_name()}"
+            return f"{color_to_check.get_name()} matched to detected color. Closest three are: {all_colors[best_colors[distances[0]]].get_name()}, {all_colors[best_colors[distances[1]]].get_name()}, {all_colors[best_colors[distances[0]]].get_name()}"
+    return f"unknown, after checking closest 3 colors: {best_colors[distances[0]].get_name()}, {best_colors[distances[1]].get_name()}, {best_colors[distances[2]].get_name()}"
 
         # if (distance < best_distance):
         #     print("Updated distance:", distance)
