@@ -26,15 +26,27 @@ motor_2.reset_encoder()
 # yellow = Color("yellow", 0.012555844, 0.004891167, 0.002517735, 0.000375845, 0.000209882, 0.000220295)
 
 # RATIO METHOD
-red = Color("red", 0.741824288,0.098789986,0.159385726, 0.019852985,0.013327676,0.011013703)
-green = Color("green", 0.338262801,0.501012684,0.160724514, 0.005607666,0.006761501,0.00595247)
-blue = Color("blue", 0.189484037,0.257711208,0.552804755, 0.003798342,0.004916666,0.006644135)
-orange = Color("orange", 0.628879119,0.244945924,0.126174957, 0.010417871,0.00748031,0.011306495)
-white = Color("white", 0.275411125,0.26260196,0.461986915, 0.002241287,0.002003323,0.002767336)
-yellow = Color("yellow", 0.501769776,0.368411827,0.129818397, 0.004752631,0.003487286,0.004773292)
+# red = Color("red", 0.741824288,0.098789986,0.159385726, 0.019852985,0.013327676,0.011013703)
+# green = Color("green", 0.338262801,0.501012684,0.160724514, 0.005607666,0.006761501,0.00595247)
+# blue = Color("blue", 0.189484037,0.257711208,0.552804755, 0.003798342,0.004916666,0.006644135)
+# orange = Color("orange", 0.628879119,0.244945924,0.126174957, 0.010417871,0.00748031,0.011306495)
+# white = Color("white", 0.275411125,0.26260196,0.461986915, 0.002241287,0.002003323,0.002767336)
+# yellow = Color("yellow", 0.501769776,0.368411827,0.129818397, 0.004752631,0.003487286,0.004773292)
+
+# BELOW IS HASSANS VERSION OF COLORS FOR RAW VALUES
+blue = Color('blue', 80.4622641509434, 112.21278825995807, 224.60796645702305, 1.9135239505320853, 1.5913168416741919, 1.968669552261819)
+green_bed = Color('green bed', 84.56631578947369, 130.36631578947367, 37.66842105263158, 1.3808167320993143, 1.2824820118829443, 1.2141935298698636)
+orange = Color('orange', 142.99899899899899, 55.72172172172172, 25.293293293293292, 1.3699911951811488, 1.228881111998254, 1.2902440834430997)
+red_bed = Color('red bed', 98.86666666666666, 15.12, 20.501538461538463, 1.337685205645076, 1.278203868013678, 1.2235918928775156)
+thick_intersection = Color('thick intersection', 9.175, 13.131, 19.778, 1.39941952251639, 1.2376748361342733, 1.237221079678163)
+thick_line = Color('thick line', 11.844, 17.027, 18.762, 1.3578158932638844, 1.2562925614680682, 1.2146423341873112)
+thin_intersection = Color('thin intersection', 10.212, 11.035, 13.188, 1.3874638734035565, 1.2457026129859405, 1.1334266628238459)
+thin_line = Color('thin line', 30.104104104104103, 21.64864864864865, 35.193193193193196, 1.3516657032515547, 1.2170278684188722, 1.1937917961547064)
+white = Color('white', 203.32290615539858, 201.88900100908174, 313.6902119071645, 1.3237983261613457, 1.4304565581244055, 1.4776829762517514)
+yellow = Color('yellow', 154.011, 118.301, 36.598, 1.3648732541888275, 1.2978439813783471, 1.2059834161380496)
 
 # array with all the colors
-all_colors = [red, green, blue, orange, white, yellow]
+all_colors = [blue, green_bed, orange, red_bed, thick_intersection, thick_line, thin_intersection, thin_line, white, yellow]
  
 # Purpose of following method: Color sensor reads and identifies to what color a new color reading belongs to
 def classify_unknown_color():
@@ -47,10 +59,14 @@ def classify_unknown_color():
 
     # Normalizing the RGB values
     #denominator = (raw_r**2 + raw_g**2 + raw_b**2)**0.5 UNIT VECTOR METHOD
-    denominator = (raw_r + raw_g + raw_b) # RATIO METHOD
-    norm_r = raw_r/denominator
-    norm_b = raw_b/denominator
-    norm_g = raw_g/denominator
+    # denominator = (raw_r + raw_g + raw_b) # RATIO METHOD
+    # norm_r = raw_r/denominator
+    # norm_b = raw_b/denominator
+    # norm_g = raw_g/denominator
+
+    norm_r = raw_r
+    norm_g = raw_g
+    norm_b = raw_b
 
     print("Detected color norm info:", norm_r, norm_g, norm_b)
 
@@ -84,7 +100,7 @@ def classify_unknown_color():
     
 
 if __name__ == "__main__":
-    exe_counter = 0
+    exe_counter = 1
     while True:
         time.sleep(7)
         print("Attempt number", exe_counter)

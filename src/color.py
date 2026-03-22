@@ -1,7 +1,10 @@
 from idlelib.multicall import r
 
+THRESHOLD = 2
 
 class Color:
+
+
     def __init__(self, name, red_mean, green_mean, blue_mean,  red_sd, green_sd, blue_sd):
         self.name = name
         self.red_mean = red_mean
@@ -41,9 +44,9 @@ class Color:
         print(self.green_mean-new_g)
         print("G diff: ", abs(self.green_mean - new_g))
         print("B diff: ", abs(self.blue_mean - new_b))
-        red_in_range = abs(self.red_mean - new_r) <= (4 * self.red_sd)
-        green_in_range = abs(self.green_mean - new_g) <= (4 * self.green_sd)
-        blue_in_range = abs(self.blue_mean - new_b) <= (4 * self.blue_sd)
+        red_in_range = abs(self.red_mean - new_r) <= (THRESHOLD * self.red_sd)
+        green_in_range = abs(self.green_mean - new_g) <= (THRESHOLD * self.green_sd)
+        blue_in_range = abs(self.blue_mean - new_b) <= (THRESHOLD * self.blue_sd)
 
         print("Red in range:", red_in_range)
         print("Green in range:", green_in_range)
