@@ -5,37 +5,45 @@ import threading
 import csv
 
 # CONSTANTS
-ColorSensor = EV3ColorSensor(1)
-TouchSensor = TouchSensor(2)
-DataFile = "calibration_data_line.csv"
+COLOR_SENSOR = EV3ColorSensor(1)
+TOUCH_SENSOR = TouchSensor(2)
+DataFile = "calibration_blue.csv"
 
 wait_ready_sensors(True)
+
+NUM_READINGS = 1000
 
 def collect_color_data():
     try:
         with open(DataFile, "a", newline='') as csvfile:
             writer = csv.writer(csvfile)
-            #writer.writerow(["R", "G", "B"])
-            print("Press touch sensor to read color data")
-            while not TouchSensor.is_pressed():
+            writer.writerow(["R", "G", "B"])
+
+            print("Press touch sensor to begin collecting data...")
+            while not TOUCH_SENSOR.is_pressed():
                 pass
-            print("Pressed. Reading data now in 1 second intervals.")
+
+            print(f"Pressed. Collecting {NUM_READINGS} readings...")
             count = 0
-            while count < 30:
-                if not TouchSensor.is_pressed():
-                    data = ColorSensor.get_rgb()
-                    if data is not None:
-                        writer.writerow(data)
-                        count += 1
-                    else:
-                        print("Color failed to read, try again.")
-                    sleep(1)
+            while count < NUM_READINGS:
+                data = COLOR_SENSOR.get_rgb()
+                if data is not None:
+                    writer.writerow(data)
+                    count += 1
+                    print(f"  [{count}/{NUM_READINGS}]  R={data[0]}  G={data[1]}  B={data[2]}", end="\r")
+                else:
+                    print("\nColor sensor failed to read, retrying...")
+                sleep(0.05)
+
+            print(f"\nDone! {NUM_READINGS} readings saved to {DataFile}")
+
     except BaseException as e:
         print("Exception occurred:", e)
     finally:
         csvfile.close()
         reset_brick()
         exit()
+
 
 if __name__ == "__main__":
     collect_color_data()
