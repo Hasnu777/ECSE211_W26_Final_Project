@@ -75,9 +75,9 @@ for line in dataFile:
     green_vector_norm_mean = np.mean(vector_norm_greens)
     blue_vector_norm_mean = np.mean(vector_norm_blues)
 
-    red_ratio_norm_mean = np.mean(vector_norm_reds)
-    green_ratio_norm_mean = np.mean(vector_norm_greens)
-    blue_ratio_norm_mean = np.mean(vector_norm_blues)
+    red_ratio_norm_mean = np.mean(ratio_norm_reds)
+    green_ratio_norm_mean = np.mean(ratio_norm_greens)
+    blue_ratio_norm_mean = np.mean(ratio_norm_blues)
 
     red_sd = np.std(reds)
     green_sd = np.std(greens)
@@ -87,9 +87,9 @@ for line in dataFile:
     green_vector_norm_sd = np.std(vector_norm_greens)
     blue_vector_norm_sd = np.std(vector_norm_blues)
 
-    red_ratio_norm_sd = np.std(vector_norm_reds)
-    green_ratio_norm_sd = np.std(vector_norm_greens)
-    blue_ratio_norm_sd = np.std(vector_norm_blues)
+    red_ratio_norm_sd = np.std(ratio_norm_reds)
+    green_ratio_norm_sd = np.std(ratio_norm_greens)
+    blue_ratio_norm_sd = np.std(ratio_norm_blues)
 
 
 file.write("Data for yellow:"
