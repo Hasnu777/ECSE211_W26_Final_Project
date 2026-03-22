@@ -28,9 +28,9 @@ def raise_arm():
 def lower_arm():
     arm.set_position(LOWERED_ARM)
 
-
-# ---------- FUNCTION DEFINITIONS ----------
-if __name__ == "__main__":
+def bring_cube_up():
+    lower_arm()
+    time.sleep(1)
     open_gripper()
     time.sleep(1)
     close_gripper()
@@ -38,7 +38,28 @@ if __name__ == "__main__":
     raise_arm()
     time.sleep(1)
     open_gripper()
-    lower_arm(1)
+    time.sleep(1)
+    lower_arm()
+    time.sleep(1)
+    
+def bring_cube_down():
+    raise_arm()
+    time.sleep(1)
+    open_gripper()
+    time.sleep(1)
+    close_gripper()
+    time.sleep(1)
+    lower_arm()
+    time.sleep(1)
+    open_gripper()
+    time.sleep(1)
+    lower_arm()
+    time.sleep(1)
+
+# ---------- FUNCTION DEFINITIONS ----------
+if __name__ == "__main__":
+    bring_cube_up()
+    bring_cube_down()
 
     # gripper.set_position(10)
     # time.sleep(1)
