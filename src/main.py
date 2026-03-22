@@ -70,15 +70,15 @@ def classify_unknown_color():
     print("Detected color info:", raw_r, raw_g, raw_b)
 
     # Normalizing the RGB values
-    #denominator = (raw_r**2 + raw_g**2 + raw_b**2)**0.5 UNIT VECTOR METHOD
+    denominator = (raw_r**2 + raw_g**2 + raw_b**2)**0.5 # UNIT VECTOR METHOD
     # denominator = (raw_r + raw_g + raw_b) # RATIO METHOD
-    # norm_r = raw_r/denominator
-    # norm_b = raw_b/denominator
-    # norm_g = raw_g/denominator
+    norm_r = raw_r/denominator
+    norm_b = raw_b/denominator
+    norm_g = raw_g/denominator
 
-    norm_r = raw_r
-    norm_g = raw_g
-    norm_b = raw_b
+#     norm_r = raw_r
+#     norm_g = raw_g
+#     norm_b = raw_b
 
     print("Detected color norm info:", norm_r, norm_g, norm_b)
 
@@ -114,7 +114,7 @@ def classify_unknown_color():
 if __name__ == "__main__":
     exe_counter = 1
     while True:
-        time.sleep(7)
+        time.sleep(4)
         print("Attempt number", exe_counter)
         exe_counter += 1
         print(classify_unknown_color())

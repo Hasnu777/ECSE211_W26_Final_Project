@@ -1,6 +1,6 @@
 from idlelib.multicall import r
 
-THRESHOLD = 2
+THRESHOLD = 5
 
 class Color:
 
