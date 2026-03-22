@@ -83,8 +83,9 @@ def classify_unknown_color():
     print("Detected color norm info:", norm_r, norm_g, norm_b)
 
     # Loop through each color and find distance between unknown color and all measured known colors
-    best_distance = 100000000          # arbitrarily set a big number
-    best_color = None
+    best_distance = 100000000 # arbitrarily set a big number
+    best_color = []
+    best_colors = {}
 
     print_counter = 0
     norm_counter = 0
@@ -94,21 +95,30 @@ def classify_unknown_color():
         distance = color.find_distance(norm_r, norm_g, norm_b)
         print(print_counter, color.name, distance)
         print_counter += 1
+        best_colors[distance] = color
 
-        if (distance < best_distance):
-            print("Updated distance:", distance)
-            best_distance = distance
-            best_color = color
+    distances = list(best_colors.keys()).sort()
+    for i in range(3):
+        color_to_check = best_colors[distances[i]]
+        if color_to_check.is_match(norm_r, norm_g, norm_b) and i == 0:
+            return color_to_check.get_name()
 
-    # check if closest matching known color is < 2 SD's to the detected color
+    return f"unknown, after checking closest 3 colors: {distances[0].get_name()}, {distances[1].get_name()}, {distances[2].get_name()}"
 
-    print("Trying to match to color:",best_color.get_name())
-    if (best_color.is_match(norm_r, norm_g, norm_b)):
-        print(norm_r, norm_g, norm_b, "matched")
-        return best_color.get_name()
+        # if (distance < best_distance):
+        #     print("Updated distance:", distance)
+        #     best_distance = distance
+        #     best_color = color
 
-    print("More than 2 SDs away")
-    return "unknown"
+    # check if closest matching known color is < 5 SD's to the detected color
+
+    # print("Trying to match to color:",best_color.get_name())
+    # if (best_color.is_match(norm_r, norm_g, norm_b)):
+    #     print(norm_r, norm_g, norm_b, "matched")
+    #     return best_color.get_name()
+    #
+    # print("More than 2 SDs away")
+    # return "unknown"
     
 
 if __name__ == "__main__":
