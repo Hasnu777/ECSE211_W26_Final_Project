@@ -5,7 +5,7 @@ import threading
 from color import *
 
 # -------- Sensor Setup -------- 
-color_sensor = EV3ColorSensor(1)
+color_sensor = EV3ColorSensor(4)
 touch_sensor = TouchSensor(2)
 wait_ready_sensors(True)
 
@@ -46,7 +46,8 @@ def classify_unknown_color():
     print("Detected color info:", raw_r, raw_g, raw_b)
 
     # Normalizing the RGB values
-    denominator = (raw_r**2 + raw_g**2 + raw_b**2)**0.5
+    #denominator = (raw_r**2 + raw_g**2 + raw_b**2)**0.5 UNIT VECTOR METHOD
+    denominator = (raw_r + raw_g + raw_b) # RATIO METHOD
     norm_r = raw_r/denominator
     norm_b = raw_b/denominator
     norm_g = raw_g/denominator
@@ -85,7 +86,7 @@ def classify_unknown_color():
 if __name__ == "__main__":
     exe_counter = 0
     while True:
-        time.sleep(5)
+        time.sleep(7)
         print("Attempt number", exe_counter)
         exe_counter += 1
         print(classify_unknown_color())
