@@ -9,36 +9,45 @@ Gyro = EV3GyroSensor(4,mode="both")
 motor1 = Motor("A")
 motor2 = Motor("B")
 
-GYRO_SENSOR_DATA_FILE = "gyro_sensor_180_deg.csv"
+GYRO_SENSOR_DATA_FILE = "gyro_sensor_straight.csv"
 
 print("Testing file running. Waiting for sensor initialisation...")
 
 wait_ready_sensors(True)
 print("Sensors initialized.")
-DataFile = "gyro_sensor.txt"
 
-# file = open(DataFile, mode="w")
+file = open(GYRO_SENSOR_DATA_FILE, mode="w")
 
-# def perform_rotations():
-#
-# #     motor1.float_motor()
-# #     motor2.float_motor()
-#     motor1.set_limits(power=50)
-#     motor2.set_limits(power=50)
-#
-#     Gyro.set_mode("abs")
-#
-#     wait_ready_sensors()
-#
-#     Gyro.reset_measure()
-#
-#     initialState = Gyro.get_abs_measure()
-#     print(initialState)
-#
-#     if initialState is None:
-#         print("weird")
-#     else:
-#         file.write("Initial state: 0")
+def perform_rotations():
+
+#     motor1.float_motor()
+#     motor2.float_motor()
+    motor1.set_limits(power=50)
+    motor2.set_limits(power=50)
+
+    Gyro.set_mode("abs")
+
+    wait_ready_sensors()
+
+    Gyro.reset_measure()
+
+    initialState = Gyro.get_abs_measure()
+    print(initialState)
+
+    if initialState is None:
+        print("weird")
+    else:
+        file.write("Initial state: 0")
+
+for i in range(5):
+    motor1.set_dps(90)
+    motor2.set_dps(90)
+    Gyro.get_abs_measure()
+    time.sleep(1)
+
+motor1.set_dps(0)
+motor2.set_dps(0)
+
 #
 #     # 90 degree rotation about face
 #     motor1.set_position_relative(320)
