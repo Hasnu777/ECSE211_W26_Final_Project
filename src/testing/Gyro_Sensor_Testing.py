@@ -5,18 +5,21 @@ import time
 import threading
 
 TS1 = TouchSensor(2)
-Gyro = EV3GyroSensor(4,mode="both")
+Gyro = EV3GyroSensor(3,mode="both")
 motor1 = Motor("A")
 motor2 = Motor("B")
 
-GYRO_SENSOR_DATA_FILE = "gyro_sensor_straight.csv"
+motor1.set_dps(0)
+motor2.set_dps(0)
+
+GYRO_SENSOR_DATA_FILE = "gyro_sensor_straight.txt"
 
 print("Testing file running. Waiting for sensor initialisation...")
 
 wait_ready_sensors(True)
 print("Sensors initialized.")
 
-file = open(GYRO_SENSOR_DATA_FILE, mode="w")
+file = open(GYRO_SENSOR_DATA_FILE, mode="a")
 
 def perform_rotations():
 
@@ -34,19 +37,31 @@ def perform_rotations():
     initialState = Gyro.get_abs_measure()
     print(initialState)
 
-    if initialState is None:
-        print("weird")
-    else:
-        file.write("Initial state: 0")
+#     if initialState is None:
+#         print("weird")
+    while initialState is None or not 0:
+        if initialState == 0:
+            break
+        Gyro.reset_measure()
+        initialState = Gyro.get_abs_measure()
+        print(initialState)
+        if initialState == 0:
+            break 
+    
+    file.write("Initial state: 0\n")
 
-for i in range(5):
-    motor1.set_dps(90)
-    motor2.set_dps(90)
-    Gyro.get_abs_measure()
-    time.sleep(1)
+if __name__ == "__main__":
+    perform_rotations()
+    for i in range(10):
+        motor1.set_dps(360)
+        motor2.set_dps(360)
+        file.write(str(Gyro.get_abs_measure()) + "\n")
+        time.sleep(1)
 
-motor1.set_dps(0)
-motor2.set_dps(0)
+    motor1.set_dps(0)
+    motor2.set_dps(0)
+
+    file.close()
 
 #
 #     # 90 degree rotation about face
@@ -207,7 +222,7 @@ def collect_continuous_gyro_data():
         reset_brick()
         exit()
 
-if __name__ == "__main__":
-    Gyro.reset_measure()
-    # perform_rotations()
-    collect_continuous_gyro_data()
+# if __name__ == "__main__":
+#     Gyro.reset_measure()
+#     # perform_rotations()
+#     collect_continuous_gyro_data()
