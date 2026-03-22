@@ -4,6 +4,8 @@ import time
 import threading
 
 # ---------- MOTOR SETUP ----------
+leftWheel = Motor("B")
+rightWheel = Motor("A")
 arm = Motor("C")
 gripper = Motor("D")
 arm.set_limits(power=30)
@@ -55,11 +57,113 @@ def bring_cube_down():
     time.sleep(1)
     lower_arm()
     time.sleep(1)
+    
+def moveForward(seconds):
+    print('starting to move forward')
+    leftWheel.set_dps(180)
+    rightWheel.set_dps(180)
+    print('going for', seconds,'seconds')
+    time.sleep(seconds)
+    print('stopping...')
+    leftWheel.set_dps(0)
+    rightWheel.set_dps(0)
+    print('stopped')
+    
+def turnRight():
+    print('starting to turn right')
+    leftWheel.set_dps(0)
+    rightWheel.set_dps(0)
+    print('turning...')
+    leftWheel.set_position_relative(610)
+    print('turned')
+
+def turnLeft():
+    print('starting to turn left')
+    leftWheel.set_dps(0)
+    rightWheel.set_dps(0)
+    print('turning...')
+    rightWheel.set_position_relative(610)
+    print('turned')
+    
+def moveBackwards(seconds):
+    print('starting to move backwards')
+    leftWheel.set_dps(-180)
+    rightWheel.set_dps(-180)
+    print('moving now')
+    time.sleep(seconds)
+    print('stopping...')
+    leftWheel.set_dps(0)
+    rightWheel.set_dps(0)
+    print('stopped')
+    
+def spin(seconds):
+    print('starting to spin')
+    leftWheel.set_dps(180)
+    rightWheel.set_dps(-180)
+    print('spinning')
+    time.sleep(seconds)
+    print('stopping...')
+    leftWheel.set_dps(0)
+    rightWheel.set_dps(0)
+    print('stopped')
+    
+def testMovement():
+    moveForward(3)
+    time.sleep(1)
+    turnRight()
+    time.sleep(1)
+    turnLeft()
+    time.sleep(1)
+    turnLeft()
+    time.sleep(1)
+    turnRight()
+    time.sleep(1)
+    moveBackwards(8)
+    moveForward(5)
+    spin(5)
 
 # ---------- FUNCTION DEFINITIONS ----------
 if __name__ == "__main__":
-    bring_cube_up()
-    bring_cube_down()
+    try:
+        print('resetting')
+        leftWheel.reset_encoder()
+        time.sleep(1)
+        print('reset left')
+        rightWheel.reset_encoder()
+        time.sleep(1)
+        print('reset right')
+        arm.reset_encoder()
+        time.sleep(1)
+        print('reset arm')
+        print('done')
+    finally:
+        print('entered finally block')
+        leftWheel.reset_encoder()
+        print('left wheel has been reset')
+        time.sleep(1)
+        rightWheel.reset_encoder()
+        print('right wheel has been reset')
+        time.sleep(1)
+        arm.reset_encoder()
+        print('arm has been reset')
+        print('done')
+        
+#     try:
+#         print('testing movement with downwards arm')
+#         testMovement()
+#         print('moving arm up')
+#         time.sleep(1)
+#         raise_arm()
+# #         bring_cube_up()
+#         print('testing movement with upwards arm')
+#         testMovement()
+# #         bring_cube_down()
+#         lower_arm()
+#         close_
+#         testMovement()
+#     finally:
+#         leftWheel.reset_encoder()
+#         rightWheel.reset_encoder()
 
     # gripper.set_position(10)
     # time.sleep(1)
