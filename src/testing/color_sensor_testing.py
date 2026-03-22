@@ -5,9 +5,9 @@ import threading
 import csv
 
 # CONSTANTS
-COLOR_SENSOR = EV3ColorSensor(1)
+COLOR_SENSOR = EV3ColorSensor(4)
 TOUCH_SENSOR = TouchSensor(2)
-DataFile = "calibration_blue.csv"
+DataFile = "calibration_thick_intersection.csv"
 
 wait_ready_sensors(True)
 
