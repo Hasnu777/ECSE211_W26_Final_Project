@@ -8,22 +8,30 @@ import threading
 m1 = Motor("A")
 m2 = Motor("B")
 
-m1.set_limits(power=50)
-m2.set_limits(power=50)
+m1.set_limits(power=50,dps=425)
+m2.set_limits(power=50,dps=425)
+m1.reset_encoder()
+m2.reset_encoder()
 
 # -------------------- FUNCTIONS --------------------
-
+file = open('data_collection_3.txt', 'a')
 
 def main():
     oneSquare = 710
     m1.reset_encoder()
     m2.reset_encoder()
 # Moving from 1 to 2
-    m2.set_position(oneSquare)
-    m1.set_position(oneSquare)
+    m1.set_position_relative(oneSquare)
+    m2.set_position_relative(oneSquare)
+    while True:
+        rw_status_int = m1.get_status()
+        rw_status = ", ".join([str(entry) for entry in rw_status_int])
+        lw_status_int= m2.get_status()
+        lw_status = ", ".join([str(entry) for entry in lw_status_int])
+        file.write("RW: " + rw_status + "\nLW: " + lw_status + "\n")
     time.sleep(5)
-    m2.reset_encoder()
     m1.reset_encoder()
+    m2.reset_encoder()
 
 # Turning from 2 to 3 and moving
     m1.set_position(340)
