@@ -17,9 +17,26 @@ m2 = Motor("B")
 def main():
     m1.reset_encoder()
     m2.reset_encoder()
-    m1.set_position(-360)
+# Moving from 1 to 2
+    m1.set_position(360)
     m2.set_position(360)
-    #m1.set_dps(720)
+    time.sleep(2)
+# Turning from 2 to 3 and moving
+    m1.set_position(90)
+    time.sleep(1)
+    m1.set_position(360)
+    m2.set_position(360)
+#Turning 3 to 4 and moving
+    m2.set_position(720)
+    m1.set_position(720)
+    time.sleep(1)
+    m2.set_position(90)
+    time.sleep(1)
+    m1.set_position(720)
+    m2.set_position(720)
+
+#Moving 4    
+#m1.set_dps(720)
     #m2.set_dps(720)
     #time.sleep(3)
     #m1.set_dps(0)
