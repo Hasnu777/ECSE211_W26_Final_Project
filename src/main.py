@@ -3,80 +3,106 @@ from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sens
 import time
 import threading
 
+# ------------------------- CONSTANTS ------------------------
+
+ONE_SQUARE = 710
+NINETY_DEGREES = 343
 
 # -------------------- SENSORS AND MOTORS --------------------
-m1 = Motor("A")
-m2 = Motor("B")
+rightWheel = Motor("A")
+leftWheel = Motor("B")
 
-m1.set_limits(power=50,dps=425)
-m2.set_limits(power=50,dps=425)
-m1.reset_encoder()
-m2.reset_encoder()
+rightWheel.set_limits(power=50,dps=425)
+leftWheel.set_limits(power=50,dps=425)
+rightWheel.reset_encoder()
+leftWheel.reset_encoder()
 
 # -------------------- FUNCTIONS --------------------
 # file = open('data_collection_3.txt', 'a')
 
+def moveForward(amount):
+    rightWheel.set_position_relative(amount)
+    leftWheel.set_position_relative(amount)
+    print(f"Moved forward {amount / ONE_SQUARE} blocks.")
+    
+def moveBackward(amount):
+    rightWheel.set_position_relative(-amount)
+    leftWheel.set_position_relative(-amount)
+    print(f"Moved backward {amount / ONE_SQUARE} blocks.")
+
+def turnRight(amount):
+    leftWheel.set_position_relative(amount)
+    rightWheel.set_position_relative(-amount)
+    print(f"Turned right by { 90 * (amount / NINETY_DEGREES)} degrees.")
+
+def turnLeft(amount):
+    rightWheel.set_position_relative(amount)
+    leftWheel.set_position_relative(-amount)
+    print(f"Turned left by {90 * (amount / NINETY_DEGREES)} degrees.")
+
 def main():
-    oneSquare = 710
-    m1.reset_encoder()
-    m2.reset_encoder()
-# Moving from 1 to 2
-    m1.set_position_relative(oneSquare * 0.55)
-    m2.set_position_relative(oneSquare * 0.55)
-#     while True:
-#         rw_status_int = m1.get_status()
-#         rw_status = ", ".join([str(entry) for entry in rw_status_int])
-#         lw_status_int= m2.get_status()
-#         lw_status = ", ".join([str(entry) for entry in lw_status_int])
-#         file.write("RW: " + rw_status + "\nLW: " + lw_status + "\n")
-    time.sleep(5)
-    m1.reset_encoder()
-    m2.reset_encoder()
-
-# Turning from 2 to 3 and moving
-    m1.set_position(343)
-    m2.set_position(-343)
+    rightWheel.reset_encoder()
+    leftWheel.reset_encoder()
+    # Moving from start to blocks (1 -> 2)
+    moveForward(ONE_SQUARE * 0.55)
     time.sleep(1)
-    m2.reset_encoder()
-    m1.reset_encoder()
-    m1.set_position(oneSquare*1.7)
-    m2.set_position(oneSquare*1.7)
-    time.sleep(3.5)
-    m2.reset_encoder()
-    m1.reset_encoder()
-#Turning 3 to 4 and moving
-    m2.set_position(343)
-    m1.set_position(-343)
-    time.sleep(2)
-    m2.reset_encoder()
-    m1.reset_encoder()
-    m2.set_position(oneSquare*1.9)
-    m1.set_position(oneSquare*1.9)
-    time.sleep(5)
-    m2.reset_encoder()
-    m1.reset_encoder()
-    m1.set_position(-343)
-    m2.set_position(343)
-    time.sleep(5)
-    m2.reset_encoder()
-    m1.reset_encoder()
-    m1.set_position(oneSquare)
-    m2.set_position(oneSquare)
-    time.sleep(3)
+    # NEED TO PICK UP BLOCKS AND RESET
+    # Turning to face outside of pharmacy and move out of it (2 -> 3)
+    turnLeft(NINETY_DEGREES)
+    time.sleep(1)
+    moveForward(ONE_SQUARE * 1.7)
+    time.sleep(1)
+    # Turning right and moving forward (3 -> 4)
+    turnRight(NINETY_DEGREES)
+    time.sleep(1)
+    moveForward(ONE_SQUARE * 1.9)
+    time.sleep(1)
+    # Turning right and moving into double room (4 -> 5)
+    turnRight(NINETY_DEGREES)
+    time.sleep(1)
+    moveForward(ONE_SQUARE)
+    time.sleep(1)
+    # NEED TO WIGGLE AFTER DETECTING DOOR. POTENTIALLY ALTER ROOM MOVEMENT.
+    # NOT DOING IT RIGHT NOW, JUST MOVING IN AND OUT
+    moveForward(ONE_SQUARE * 2)
+    time.sleep(1)
+    print("Scanned for beds. No beds found. Scanning new section...")
+    moveBackward(ONE_SQUARE * 2)
+    turnLeft(NINETY_DEGREES)
+    moveForward(ONE_SQUARE * 0.5)
+    turnRight(NINETY_DEGREES)
+    moveForward(ONE_SQUARE * 2)
+    print("Scanned for beds. No beds found. Scanning new section...")
+    moveBackward(ONE_SQUARE * 2)
+    turnLeft(NINETY_DEGREES)
+    moveForward(ONE_SQUARE * 0.5)
+    turnRight(NINETY_DEGREES)
+    moveForward(ONE_SQUARE * 2)
+    print("Scanned for beds. No beds found. Exiting room...")
+    moveBackward(ONE_SQUARE * 2)
+    moveBackward(ONE_SQUARE * 0.5)
+    turnRight(NINETY_DEGREES)
+    moveForward(ONE_SQUARE * 2)
+    turnRight(NINETY_DEGREES)
+    moveForward(ONE_SQUARE * 0.5)
+    moveForward(ONE_SQUARE * 2)
+    print("Scanned for beds. No beds found. Exiting room...")
+    moveBackward(ONE_SQUARE * 2)
+    moveBackward(ONE_SQUARE * 0.5)
+    turnLeft(NINETY_DEGREES)
+    moveForward(ONE_SQUARE * 2)
+    turnRight(NINETY_DEGREES)
+    moveForward(ONE_SQUARE * 0.5)
+    moveForward(ONE_SQUARE * 2)
+    print("Scanned for beds. No beds found. Exiting room...")
+    moveBackward(ONE_SQUARE * 2)
+    moveBackward(ONE_SQUARE * 0.5)
+    moveBackward(ONE_SQUARE * 2)
 
-#
-#Moving 4    
-#m1.set_dps(720)
-    #m2.set_dps(720)
-    #time.sleep(3)
-    #m1.set_dps(0)
-    #m2.set_dps(0)
-
-    # rotate
 
 
 if __name__ == "__main__":
-    print("test")
+    print("Beginning hardcoded pathing")
     main()
 
 #from utils import sound
@@ -85,25 +111,25 @@ if __name__ == "__main__":
 #import threading
 
 # -------------------- SENSORS AND MOTORS --------------------
-#m1 = Motor("A")
-#m2 = Motor("B")
+#rightWheel = Motor("A")
+#leftWheel = Motor("B")
 
-#m1.set_limits(power=50)
-#m2.set_limits(power=50)
+#rightWheel.set_limits(power=50)
+#leftWheel.set_limits(power=50)
 
 # -------------------- FUNCTIONS --------------------
 
 
 #def main():
-#    m1.reset_encoder()
-#    m2.reset_encoder()
-#    m1.set_position(-335)
-#    m2.set_position(335)
-    #m1.set_dps(720)
-    #m2.set_dps(720)
+#    rightWheel.reset_encoder()
+#    leftWheel.reset_encoder()
+#    rightWheel.set_position(-335)
+#    leftWheel.set_position(335)
+    #rightWheel.set_dps(720)
+    #leftWheel.set_dps(720)
     #time.sleep(3)
-    #m1.set_dps(0)
-    #m2.set_dps(0)
+    #rightWheel.set_dps(0)
+    #leftWheel.set_dps(0)
 
     # rotate
 
