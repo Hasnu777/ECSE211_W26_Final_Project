@@ -1,4 +1,4 @@
-from src.utils import sound
+#from src.utils import sound
 from src.utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sensors
 import time
 import threading

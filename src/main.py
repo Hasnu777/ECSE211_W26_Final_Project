@@ -8,33 +8,38 @@ import threading
 m1 = Motor("A")
 m2 = Motor("B")
 
-# m1.setlimits()
-# m2.setlimits()
+m1.set_limits(50)
+m2.set_limits(50)
 
 # -------------------- FUNCTIONS --------------------
 
 
 def main():
+    oneSquare = 710
     m1.reset_encoder()
     m2.reset_encoder()
 # Moving from 1 to 2
-    m1.set_position(360)
-    m2.set_position(360)
-    time.sleep(2)
-# Turning from 2 to 3 and moving
-    m1.set_position(90)
-    time.sleep(1)
-    m1.set_position(360)
-    m2.set_position(360)
-#Turning 3 to 4 and moving
-    m2.set_position(720)
-    m1.set_position(720)
-    time.sleep(1)
-    m2.set_position(90)
-    time.sleep(1)
-    m1.set_position(720)
-    m2.set_position(720)
+    m1.set_position(oneSquare*2)
+    m2.set_position(oneSquare*2)
+    time.sleep(5)
+    m1.reset_encoder()
+    m2.reset_encoder()
 
+# Turning from 2 to 3 and moving
+    m1.set_position(340)
+    m2.set_position(-340)
+    time.sleep(1)
+#    m1.set_position(360)
+#    m2.set_position(360)
+##Turning 3 to 4 and moving
+#    m2.set_position(720)
+#    m1.set_position(720)
+#    time.sleep(1)
+#    m2.set_position(90)
+#    time.sleep(1)
+#    m1.set_position(720)
+#    m2.set_position(720)
+#
 #Moving 4    
 #m1.set_dps(720)
     #m2.set_dps(720)
