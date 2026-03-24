@@ -6,7 +6,7 @@ import threading
 # ------------------------- CONSTANTS ------------------------
 
 ONE_SQUARE = 710
-NINETY_DEGREES = 335
+NINETY_DEGREES = 338
 
 # -------------------- SENSORS AND MOTORS --------------------
 rightWheel = Motor("A")
@@ -46,11 +46,11 @@ def main():
     # Moving from start to blocks (1 -> 2)
     moveForward(ONE_SQUARE * 0.55)
     time.sleep(3)
-    # NEED TO PICK UP BLOCKS AND RESET
+    # TODO: PICK UP BLOCKS AND RESET
     # Turning to face outside of pharmacy and move out of it (2 -> 3)
     turnLeft(NINETY_DEGREES)
     time.sleep(3)
-    moveForward(ONE_SQUARE * 1.75)
+    moveForward(ONE_SQUARE * 1.75) # exit pharmacy and move forward
     time.sleep(4)
     # Turning right and moving forward (3 -> 4)
     turnRight(NINETY_DEGREES)
@@ -60,24 +60,28 @@ def main():
     # Turning right and moving into double room (4 -> 5)
     turnRight(NINETY_DEGREES)
     time.sleep(3)
-    moveForward(ONE_SQUARE)
+    moveForward(ONE_SQUARE * 0.5)
     time.sleep(3)
-    # NEED TO WIGGLE AFTER DETECTING DOOR. POTENTIALLY ALTER ROOM MOVEMENT.
+    # TODO: WIGGLE AFTER DETECTING DOOR. POTENTIALLY ALTER ROOM MOVEMENT.
     # NOT DOING IT RIGHT NOW, JUST MOVING IN AND OUT
-    moveForward(ONE_SQUARE * 0.9)
-    time.sleep(4)
-    print("Scanned for beds. No beds found. Scanning new section...")
-    moveBackward(ONE_SQUARE * 1.7)
-    time.sleep(4)
-    turnLeft(NINETY_DEGREES)
-    time.sleep(3)
-    moveForward(ONE_SQUARE * 0.5)
-    time.sleep(3)
-    turnRight(NINETY_DEGREES)
-    time.sleep(3)
+    # scanning room in sections
+    # section 1
     moveForward(ONE_SQUARE * 1.7)
     time.sleep(4)
     print("Scanned for beds. No beds found. Scanning new section...")
+    # Move to section 2
+    moveBackward(ONE_SQUARE * 1.7)
+    time.sleep(4)
+    turnLeft(NINETY_DEGREES)
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 0.5)
+    time.sleep(3)
+    turnRight(NINETY_DEGREES)
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 1.7)
+    time.sleep(4)
+    print("Scanned for beds. No beds found. Scanning new section...")
+    # Move to section 3
     moveBackward(ONE_SQUARE * 1.7)
     time.sleep(4)
     turnLeft(NINETY_DEGREES)
@@ -91,9 +95,10 @@ def main():
     print("Scanned for beds. No beds found. Exiting room...")
     moveBackward(ONE_SQUARE * 1.7)
     time.sleep(4)
-    moveBackward(ONE_SQUARE * 0.5)
+    # moveBackward(ONE_SQUARE * 0.5)
     time.sleep(3)
     turnRight(NINETY_DEGREES)
+    # Moving to single room
     time.sleep(3)
     moveForward(ONE_SQUARE * 1.7)
     time.sleep(4)
@@ -107,10 +112,11 @@ def main():
     moveBackward(ONE_SQUARE * 1.7)
     time.sleep(4)
     moveBackward(ONE_SQUARE * 0.5)
+    # Moving to other single room
     time.sleep(3)
     turnLeft(NINETY_DEGREES)
     time.sleep(3)
-    moveForward(ONE_SQUARE * 1.7)
+    moveForward(ONE_SQUARE * 2)
     time.sleep(4)
     turnRight(NINETY_DEGREES)
     time.sleep(3)
@@ -121,9 +127,10 @@ def main():
     print("Scanned for beds. No beds found. Exiting room...")
     moveBackward(ONE_SQUARE * 1.7)
     time.sleep(4)
+    # Returning to pharmacy
     moveBackward(ONE_SQUARE * 0.5)
     time.sleep(3)
-    moveBackward(ONE_SQUARE * 2)
+    moveBackward(ONE_SQUARE * 1.8)
     time.sleep(4)
 
 
