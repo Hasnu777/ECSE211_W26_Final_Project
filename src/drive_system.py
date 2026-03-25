@@ -6,8 +6,8 @@ import threading
 # ------------------------- CONSTANTS ------------------------
 
 ONE_SQUARE = 710
-NINETY_DEGREES_LEFT = 338
-NINETY_DEGREES_RIGHT = 330
+NINETY_DEGREES_LEFT = 343
+NINETY_DEGREES_RIGHT = 343
 
 # -------------------- SENSORS AND MOTORS --------------------
 rightWheel = Motor("A")
@@ -53,6 +53,17 @@ def turnLeft(amount):
     leftWheel.set_limits(power=50, dps=425)
     print(f"Turned left by {90 * (amount / NINETY_DEGREES_LEFT)} degrees.")
 
+def arcRight(amount):
+    leftWheel.set_limits(power=30,dps=300)
+    rightWheel.set_dps(0)
+    leftWheel.set_position_relative(amount)
+    leftWheel.set_limits(power=50,dps=425)
+    
+def arcLeft(amount):
+    rightWheel.set_limits(power=30,dps=300)
+    leftWheel.set_dps(0)
+    rightWheel.set_position_relative(amount)
+    rightWheel.set_limits(power=50,dps=425)
 
 def main():
     rightWheel.reset_encoder()

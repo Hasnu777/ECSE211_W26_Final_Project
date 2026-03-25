@@ -1,10 +1,14 @@
 from utils import sound
 from utils.brick import TouchSensor, Motor, EV3ColorSensor, wait_ready_sensors
-import time
+from time import sleep
 import threading
 
 from drive_system import *
 from color_detection import all_colors, classify_unknown_color
+
+# ------------------------ CONSTANTS -------------------------
+WIGGLE = NINETY_DEGREES_LEFT * 0.4
+WIGGLE_COMPLETION = NINETY_DEGREES_LEFT * 0.6
 
 # -------------------- SENSORS AND MOTORS --------------------
 rightWheel = Motor("A")
@@ -25,7 +29,7 @@ def checkForBed():
     while color != "green bed" or color != "red bed":
         unknownColor = color_sensor.get_color()
         color = classify_unknown_color(unknownColor)
-
+    print("WHOA BED DETECTED OH EM GEE!")
     return color
 
 def traverseDoubleRoom():
@@ -34,25 +38,44 @@ def traverseDoubleRoom():
     currentLeftWheelPosition = leftWheel.get_position()
     currentRightWheelPosition = rightWheel.get_position()
 
-    turnRight(NINETY_DEGREES_RIGHT * 0.4)
-    turnLeft(NINETY_DEGREES_LEFT * 0.6)
+    arcRight(NINETY_DEGREES_RIGHT * 0.8)
+    sleep(1)
+    arcLeft(NINETY_DEGREES_LEFT * 0.8)
+    sleep(1)
+    arcLeft(NINETY_DEGREES_LEFT * 0.8)
+    sleep(1)
+    moveForward(ONE_SQUARE * 0.1)
+    sleep(1)
+    arcRight(NINETY_DEGREES_RIGHT * 0.8)
+    sleep(1)
+    arcRight(NINETY_DEGREES_RIGHT * 0.8)
+    sleep(1)
+    moveForward(ONE_SQUARE * 0.1)
+    sleep(1)
+    arcLeft(NINETY_DEGREES_LEFT * 0.8)
+    sleep(1)
+    arcLeft(NINETY_DEGREES_LEFT * 0.8)
+    sleep(1)
+    moveForward(ONE_SQUARE * 0.1)
+    sleep(1)
+    arcRight(NINETY_DEGREES_RIGHT * 0.8)
+    sleep(1)
 
-    turnLeft(NINETY_DEGREES_LEFT * 0.4)
-    turnRight(NINETY_DEGREES_RIGHT * 0.6)
-
-    turnRight(NINETY_DEGREES_RIGHT * 0.4)
-    turnLeft(NINETY_DEGREES_LEFT * 0.6)
-
-    turnLeft(NINETY_DEGREES_LEFT * 0.4)
-    turnRight(NINETY_DEGREES_RIGHT * 0.6)turnRight(NINETY_DEGREES_RIGHT * 0.4)
-    turnLeft(NINETY_DEGREES_LEFT * 0.6)
-
-    turnLeft(NINETY_DEGREES_LEFT * 0.4)
-    turnRight(NINETY_DEGREES_RIGHT * 0.6)
+#     turnRight(NINETY_DEGREES_RIGHT * 0.4)
+#     turnLeft(NINETY_DEGREES_LEFT * 0.6)
+# 
+#     turnLeft(NINETY_DEGREES_LEFT * 0.4)
+#     turnRight(NINETY_DEGREES_RIGHT * 0.6)
+# 
+#     turnLeft(NINETY_DEGREES_LEFT * 0.4)
+#     turnRight(NINETY_DEGREES_RIGHT * 0.6)
 
 def findBedsInDoubleRoom():
-    leftWheel.reset_encoder()
-    rightWheel.reset_encoder()
+    pass
 
 if __name__ == "__main__":
     traverseDoubleRoom()
+
+#     color_finder = threading.Thread(target=checkForBed())
+#     room_traversing = threading.Thread(target=traverseDoubleRoom())
+    
