@@ -80,8 +80,10 @@ def classify_unknown_color():
     for i in range(3):
         distance, color_to_check = best_colors[i]
         if color_to_check.is_match(norm_r, norm_g, norm_b) and i == 0:
-            return f"{color_to_check.get_name()} matched to detected color. Closest three are: {best_colors[0][1].get_name()}, {best_colors[1][1].get_name()}, {best_colors[2][1].get_name()}"
-    return f"unknown, after checking closest 3 colors: {best_colors[0][1].get_name()}, {best_colors[1][1].get_name()}, {best_colors[2][1].get_name()}"
+            print(f"{color_to_check.get_name()} matched to detected color. Closest three are: {best_colors[0][1].get_name()}, {best_colors[1][1].get_name()}, {best_colors[2][1].get_name()}")
+            return color_to_check.get_name()
+    print(f"unknown, after checking closest 3 colors: {best_colors[0][1].get_name()}, {best_colors[1][1].get_name()}, {best_colors[2][1].get_name()}")
+    return "unknown"
 
 
 if __name__ == "__main__":
