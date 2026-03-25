@@ -1,6 +1,6 @@
 from utils import sound
 from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sensors
-import time
+from time import sleep
 import threading
 
 # ------------------------- CONSTANTS ------------------------
@@ -48,6 +48,50 @@ def turnLeft(amount):
     rightWheel.set_limits(power=50,dps=425)
     leftWheel.set_limits(power=50,dps=425)
     print(f"Turned left by {90 * (amount / NINETY_DEGREES_LEFT)} degrees.")
+
+
+def arcRight(amount):
+    leftWheel.set_limits(power=30, dps=300)
+    rightWheel.set_dps(0)
+    leftWheel.set_position_relative(amount)
+    leftWheel.set_limits(power=50, dps=425)
+
+
+def arcLeft(amount):
+    rightWheel.set_limits(power=30, dps=300)
+    leftWheel.set_dps(0)
+    rightWheel.set_position_relative(amount)
+    rightWheel.set_limits(power=50, dps=425)
+
+
+def traverseDoubleRoom():
+    leftWheel.reset_encoder()
+    rightWheel.reset_encoder()
+    currentLeftWheelPosition = leftWheel.get_position()
+    currentRightWheelPosition = rightWheel.get_position()
+
+    arcRight(NINETY_DEGREES_RIGHT * 0.8)
+    sleep(1)
+    arcLeft(NINETY_DEGREES_LEFT * 0.8)
+    sleep(1)
+    arcLeft(NINETY_DEGREES_LEFT * 0.8)
+    sleep(1)
+    moveForward(ONE_SQUARE * 0.1)
+    sleep(1)
+    arcRight(NINETY_DEGREES_RIGHT * 0.8)
+    sleep(1)
+    arcRight(NINETY_DEGREES_RIGHT * 0.8)
+    sleep(1)
+    moveForward(ONE_SQUARE * 0.1)
+    sleep(1)
+    arcLeft(NINETY_DEGREES_LEFT * 0.8)
+    sleep(1)
+    arcLeft(NINETY_DEGREES_LEFT * 0.8)
+    sleep(1)
+    moveForward(ONE_SQUARE * 0.1)
+    sleep(1)
+    arcRight(NINETY_DEGREES_RIGHT * 0.8)
+    sleep(1)
 
 def main():
     rightWheel.reset_encoder()
