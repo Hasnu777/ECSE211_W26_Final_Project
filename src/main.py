@@ -27,7 +27,7 @@ wait_ready_sensors(True)
 def checkForBed():
     color = ""
     while color != "green bed" or color != "red bed":
-        unknownColor = color_sensor.get_color()
+        unknownColor = color_sensor.get_rgb()
         color = classify_unknown_color(unknownColor)
     print("WHOA BED DETECTED OH EM GEE!")
     return color

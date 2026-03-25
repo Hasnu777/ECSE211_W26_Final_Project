@@ -45,12 +45,19 @@ all_colors = [blue, green_bed, orange, red_bed, thick_intersection, thick_line, 
 
 
 # Purpose of following method: Color sensor reads and identifies to what color a new color reading belongs to
-def classify_unknown_color():
+def classify_unknown_color(unknownColor=None):
     # Collect raw rgb
-    raw_rgb = color_sensor.get_rgb()
-    raw_r = raw_rgb[0]
-    raw_g = raw_rgb[1]
-    raw_b = raw_rgb[2]
+    if unknownColor is None:
+        raw_rgb = color_sensor.get_rgb()
+        raw_r = raw_rgb[0]
+        raw_g = raw_rgb[1]
+        raw_b = raw_rgb[2]
+    else:
+        raw_rgb = unknownColor
+        raw_r = raw_rgb[0]
+        raw_g = raw_rgb[1]
+        raw_b = raw_rgb[2]
+
     print("Detected color info:", raw_r, raw_g, raw_b)
 
     # Normalizing the RGB values with unit vector normalisation method
