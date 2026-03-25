@@ -1,0 +1,135 @@
+Line Follower Code Discussion:
+
+robot.IsPlaced = true;
+
+robot.goToBlocks()
+
+robot.pickUpMeds()
+
+robot.rotate() <- until it faces the door (orange area)
+
+robot.findDoor()
+
+robot.findPath() 
+
+robot.Align()
+
+robot.moveForward(0.5)
+
+robot.turnRight()
+
+robot.reAlign()
+
+robot.moveForward(1)
+
+robot.turnLeft()
+
+robot.reAlign()
+
+robot.moveForward(1)
+
+robot.turnRight()
+
+robot.reAlign(0)
+
+robot.moveForward(1)
+
+robot.turnRight()
+
+robot.moveForward(0.5, checkForDoor=true)
+
+if not doorEntered then robot.moveForward(0.15)
+
+doubleSection = 1
+
+robot.setStartPos()
+
+robot.findBed()
+
+robot.setEndPos()
+
+if found then robot.deliverMeds() then robot.notifyDelivery()
+
+else
+
+	doubleSection += 1
+
+	robot.returnToStartPos()
+
+	robot.translateLeft()
+
+	robot.setStartPos()
+
+	robot.findBed()
+
+	robot.setEndPos()
+
+	if found then robot.deliverMeds() then robot.notifyDelivery()
+	
+	else
+
+		doubleSection += 1
+		
+		robot.returnToStartPos()
+
+		robot.translateLeft()
+
+		robot.setStartPos()
+
+		robot.findBed()
+
+		robot.setEndPos()
+
+		if found then robot.deliverMeds() then robot.notifyDelivery()
+
+robot.returnToStartPos()
+
+robot.moveBackwards(0.5)
+
+if !(robot.isOnPath) then robot.turnRight() then robot.findPath()
+
+if doubleSection == 2 then robot.moveForward(0.5) else if doubleSection == 3 then robot.moveForward(1)
+
+robot.moveForward(1)
+
+robot.turnRight()
+
+robot.moveForward(0.5, checkForDoor=true)
+
+if not doorEntered then robot.moveForward(0.15)
+
+robot.setStartPos()
+
+robot.findBed()
+
+if found then robot.deliverMeds() then robot.notifyDeliver()
+
+robot.setEndPos()
+
+robot.returnToStartPos()
+
+robot.moveBackwards(0.5)
+
+robot.turnLeft()
+
+robot.findPath()
+
+robot.moveForward(2)
+
+robot.turnRight()
+
+robot.moveForward(0.5, checkForDoor=true)
+
+if not doorEntered then robot.moveForward(0.15)
+
+robot.setStartPos()
+
+robot.findBed()
+
+if found then robot.deliverMeds() then robot.notifyDeliver()
+
+robot.setEndPos()
+
+robot.returnToStartPos()
+
+robot.moveBackwards(2.75)
