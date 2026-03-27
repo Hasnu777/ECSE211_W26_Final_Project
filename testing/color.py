@@ -39,3 +39,25 @@ class Color:
         delta_blue = new_b - self.blue_mean
         distance = (delta_red ** 2 + delta_green ** 2 + delta_blue ** 2) ** 0.5
         return distance
+
+# Compared the new normalized rgb values (s.d. method)
+    def is_match(self, new_r, new_g, new_b):
+        # Comparison values are true if the difference is <= 2 s.d.s
+        print("R diff: ", abs(self.red_mean - new_r))
+        print("G mean: ", self.green_mean)
+        print("new_g = ", new_g)
+        print(self.green_mean-new_g)
+        print("G diff: ", abs(self.green_mean - new_g))
+        print("B diff: ", abs(self.blue_mean - new_b))
+        red_in_range = abs(self.red_mean - new_r) <= (THRESHOLD * self.red_sd)
+        green_in_range = abs(self.green_mean - new_g) <= (THRESHOLD * self.green_sd)
+        blue_in_range = abs(self.blue_mean - new_b) <= (THRESHOLD * self.blue_sd)
+
+        print("Red in range:", red_in_range)
+        print("Green in range:", green_in_range)
+        print("Blue in range:", blue_in_range)
+
+        if (red_in_range and green_in_range and blue_in_range):
+            return True
+
+        return False
