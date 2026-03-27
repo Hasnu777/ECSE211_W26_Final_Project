@@ -1,5 +1,5 @@
 """
-Purpose of this files: Used in the color_identification_test.py
+Purpose of this files: Color class used in the color_identification files (for both unit vector and ratio)
 How to test with this code?:
 
 """
