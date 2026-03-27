@@ -1,7 +1,11 @@
-from utils import sound
+"""
+Purpose of this files: Testing if the ports work
+How to test with this code?:
+
+"""
+
 from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sensors
-from time import sleep
-import threading
+import time
 
 # ------------------------- CONSTANTS ------------------------
 
@@ -191,40 +195,6 @@ def main():
     moveBackward(ONE_SQUARE * 1.8)
     time.sleep(4)
 
-
-if __name__ == "__main__":
-    print("Beginning hardcoded pathing")
-    main()
-
-# from utils import sound
-# from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sensors
-# import time
-# import threading
-
-# -------------------- SENSORS AND MOTORS --------------------
-# rightWheel = Motor("A")
-# leftWheel = Motor("B")
-
-# rightWheel.set_limits(power=50)
-# leftWheel.set_limits(power=50)
-
-# -------------------- FUNCTIONS --------------------
-
-
-# def main():
-#    rightWheel.reset_encoder()
-#    leftWheel.reset_encoder()
-#    rightWheel.set_position(-335)
-#    leftWheel.set_position(335)
-# rightWheel.set_dps(720)
-# leftWheel.set_dps(720)
-# time.sleep(3)
-# rightWheel.set_dps(0)
-# leftWheel.set_dps(0)
-
-# rotate
-
-
-# if __name__ == "__main__":
-#    print("test")
-#    main()
+if "__init__" == "__main__":
+   print("test")
+   main()

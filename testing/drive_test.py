@@ -1,4 +1,8 @@
+"""
+Purpose of this files: Testing if the ports work
+How to test with this code?:
 
+"""
 
 import utils.sound as sound
 from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sensors
@@ -22,7 +26,6 @@ leftWheel.reset_encoder()
 
 """
 # -------------------- FUNCTIONS --------------------
-# file = open('data_collection_3.txt', 'a')
 
 def moveForward(amount):
     rightWheel.set_position_relative(amount)

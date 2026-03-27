@@ -1,5 +1,6 @@
 """
 Purpose of this files: Testing if the ports work
+How to test with this code?:
 
 """
 
