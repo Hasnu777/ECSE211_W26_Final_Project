@@ -1,6 +1,4 @@
-
-
-import utils.sound as sound
+from utils import sound
 from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sensors
 from time import sleep
 import threading
@@ -20,19 +18,18 @@ leftWheel.set_limits(power=50,dps=425)
 rightWheel.reset_encoder()
 leftWheel.reset_encoder()
 
-"""
 # -------------------- FUNCTIONS --------------------
 # file = open('data_collection_3.txt', 'a')
 
 def moveForward(amount):
     rightWheel.set_position_relative(amount)
     leftWheel.set_position_relative(amount)
-    print(f"Moved forward {amount / ONE_SQUARE} blocks.")
+    # print(f"Moved forward {amount / ONE_SQUARE} blocks.")
 
 def moveBackward(amount):
     rightWheel.set_position_relative(-amount)
     leftWheel.set_position_relative(-amount)
-    print(f"Moved backward {amount / ONE_SQUARE} blocks.")
+    # print(f"Moved backward {amount / ONE_SQUARE} blocks.")
 
 def turnRight(amount):
     leftWheel.set_limits(power=30,dps=300)
@@ -41,7 +38,7 @@ def turnRight(amount):
     rightWheel.set_position_relative(-amount)
     leftWheel.set_limits(power=50,dps=425)
     rightWheel.set_limits(power=50,dps=425)
-    print(f"Turned right by { 90 * (amount / NINETY_DEGREES_LEFT)} degrees.")
+    # print(f"Turned right by { 90 * (amount / NINETY_DEGREES_LEFT)} degrees.")
 
 def turnLeft(amount):
     leftWheel.set_limits(power=30,dps=300)
@@ -50,7 +47,7 @@ def turnLeft(amount):
     leftWheel.set_position_relative(-amount)
     rightWheel.set_limits(power=50,dps=425)
     leftWheel.set_limits(power=50,dps=425)
-    print(f"Turned left by {90 * (amount / NINETY_DEGREES_LEFT)} degrees.")
+    # print(f"Turned left by {90 * (amount / NINETY_DEGREES_LEFT)} degrees.")
 
 def arcRight(amount):
     leftWheel.set_limits(power=30, dps=300)
@@ -96,7 +93,10 @@ def traverseDoubleRoom():
     sleep(1)
 
 def main():
-    rightWheel.reset_encoder()
-    leftWheel.reset_encoder()
-    moveForward(ONE_SQUARE * 2)
-"""
+    moveForward(2)
+#     rightWheel.reset_encoder()
+#     leftWheel.reset_encoder()
+#     moveForward(ONE_SQUARE * 2)
+#     time.sleep(4)
+#     turnRight(NINETY_DEGREES_RIGHT)
+#     time.sleep(3)
