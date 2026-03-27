@@ -1,3 +1,9 @@
+"""
+Purpose of this files: Testing if the ports work
+
+"""
+
+
 import utils.sound as sound
 from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sensors
 from time import sleep
