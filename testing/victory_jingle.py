@@ -1,12 +1,54 @@
+"""
+Purpose of this file: testing of victory & task completion jingles, to be integrated later
+"""
+
+
 from utils.sound import sound
 from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sensors
 import threading
 
+# -------------------- CONSTANTS --------------------
+VOLUME = 50
+
+E6 = sound.Sound(duration=0.3, pitch="E6", volume=VOLUME)
+E6_HALF = sound.Sound(duration=0.3, pitch="E6", volume=VOLUME)
+E6_3HALVES = sound.Sound(duration=0.45, pitch="E6", volume=VOLUME)
+E6_3X = sound.Sound(duration=0.9, pitch="E6", volume=VOLUME)
+A7 = sound.Sound(duration=0.3, pitch="A7", volume=VOLUME)
+A7_HALF = sound.Sound(duration=0.15, pitch="A7", volume=VOLUME)
+A7_3X = sound.Sound(duration=0.9, pitch="A7", volume=VOLUME)
+A7_2X = sound.Sound(duration=0.6, pitch="A7", volume=VOLUME)
+C7 = sound.Sound(duration=0.3, pitch="C#7", volume=VOLUME)
+B7 = sound.Sound(duration=0.3, pitch="B7", volume=VOLUME)
+B7_HALF = sound.Sound(duration=0.15, pitch="B7", volume=VOLUME)
+G6 = sound.Sound(duration=0.3, pitch="G#6", volume=VOLUME)
+G6_HALF = sound.Sound(duration=0.15, pitch="G#6", volume=VOLUME)
+F6_HALF = sound.Sound(duration=0.15, pitch="F#6", volume=VOLUME)
+F6 = sound.Sound(duration=0.3, pitch="F#6", volume=VOLUME)
+D6 = sound.Sound(duration=0.3, pitch="D#6", volume=VOLUME)
+D7_HALF = sound.Sound(duration=0.15, pitch="D#7", volume=VOLUME)
+
 def victory_jingle():
-    sounds = [sound.Sound()]
-    song = sound.Song(sounds)
-    song.compile 
-    song.play()
+    measure1 = [E6, A7, A7, C7, C7, A7_2X, E6, E6, E6_3HALVES, E6_HALF, B7_HALF, A7_HALF, G6_HALF, F6_HALF, E6_3X]
+    measure2 = [E6, A7, A7, C7, C7, A7_2X, E6, A7, G6, F6_HALF, G6_HALF, A7, D6, E6_3X]
+    measure3 = [E6, G6, G6, A7_HALF, G6_HALF, F6_HALF, G6_HALF, A7_2X, E6, A7, G6, G6, G6_HALF, D7_HALF, B7_HALF, G6_HALF, A7_3X]
+    measure4 = [A7, F6, F6, F6, A7, A7_2X, E6, E6, E6_3HALVES, E6_HALF, B7, G6, A7_3X]
+    measure5 = [A7, G6_HALF, F6_HALF, F6, F6_HALF, A7_HALF, G6_HALF, B7_HALF, A7_2X, E6, E6, E6_3HALVES, E6_HALF, B7, G6, A7_3X]
+    song1 = sound.Song(measure1)
+    song2 = sound.Song(measure2)
+    song3 = sound.Song(measure3)
+    song4 = sound.Song(measure4)
+    song5 = sound.Song(measure5)
+    song1.compile 
+    song2.compile
+    song3.compile
+    song4.compile
+    song5.compile
+    song1.play()
+    song2.play()
+    song3.play()
+    song4.play()
+    song5.play()
 
 def task_jingle():
     sounds = [sound.Sound()]
