@@ -1,11 +1,15 @@
 """
-Purpose of this files: Testing if the ports work
+Purpose of this file:
+- Identifying the color detected by the color sensor
 How to test with this code?:
 
+What to expect when you run the code:
+- The terminal should print the name of the color
 """
-from utils.brick import TouchSensor, Motor, wait_ready_sensors, EV3ColorSensor
 import time
+
 from color import *
+from utils.brick import TouchSensor, Motor, wait_ready_sensors, EV3ColorSensor
 
 EPSILON = 0.0000000001
 
@@ -35,9 +39,17 @@ white = Color('white', 0.47856765654917144, 0.4751915744144273, 0.73834550206427
               0.0022002083544665546, 0.001706285451531559)
 yellow = Color('yellow', 0.7793133994249224, 0.5986100822841631, 0.18516968094855718, 0.002988667062624679,
                0.0035148365461744385, 0.005243845456394571)
+thick_intersection = Color('thick intersection', 0.35875595176919356, 0.5148258450215546, 0.7764796797011159,
+                           0.040709680400056375, 0.030394450281119235, 0.027326227202242318)
+thick_line = Color('thick line', 0.4222264010998929, 0.6081623186340988, 0.6704320827701554, 0.032236153045677625,
+                   0.02623960306083702, 0.025624138391881688)
+thin_intersection = Color('thin intersection', 0.5084433516212437, 0.5503023933503505, 0.6590710630695044,
+                          0.04161211492811081, 0.03563952336368879, 0.03572427963003056)
+thin_line = Color('thin line', 0.5885948428200825, 0.4231970291051555, 0.6883294479534854, 0.014673265027663585,
+                  0.01581006368544569, 0.014060363505711054)
 
 # Array with all the colors
-all_colors = [blue, green, orange, red, white, yellow]
+all_colors = [blue, green, orange, red, white, yellow, thick_intersection, thick_line, thin_intersection, thin_line]
 
 
 # Purpose of following method: Color sensor reads and identifies to what color a new color reading belongs to
@@ -50,7 +62,7 @@ def classify_unknown_color():
 
     # Normalizing the RGB values
     denominator = (raw_r ** 2 + raw_g ** 2 + raw_b ** 2) ** 0.5  # UNIT VECTOR METHOD
-    
+
     # To avoid getting a float division by 0 error
     if (denominator < EPSILON):
         return "unknown"
@@ -60,7 +72,6 @@ def classify_unknown_color():
     norm_g = raw_g / denominator
 
     # Loop through each color and find distance between unknown color and all measured known colors
-    best_distance = 100000000  # arbitrarily set a big number
     best_colors = {}
 
     # Iterate through colors to find the closest match

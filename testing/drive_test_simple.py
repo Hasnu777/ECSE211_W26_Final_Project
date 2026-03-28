@@ -24,7 +24,6 @@ leftWheel.set_limits(power=50,dps=425)
 rightWheel.reset_encoder()
 leftWheel.reset_encoder()
 
-"""
 # -------------------- FUNCTIONS --------------------
 
 def moveForward(amount):
@@ -102,4 +101,3 @@ def main():
     rightWheel.reset_encoder()
     leftWheel.reset_encoder()
     moveForward(ONE_SQUARE * 2)
-"""
