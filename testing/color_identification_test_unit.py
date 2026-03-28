@@ -7,6 +7,8 @@ from utils.brick import TouchSensor, Motor, wait_ready_sensors, EV3ColorSensor
 import time
 from color import *
 
+EPSILON = 0.0000000001
+
 # -------- Sensor Setup --------
 color_sensor = EV3ColorSensor(3)
 touch_sensor = TouchSensor(2)
@@ -48,6 +50,10 @@ def classify_unknown_color():
 
     # Normalizing the RGB values
     denominator = (raw_r ** 2 + raw_g ** 2 + raw_b ** 2) ** 0.5  # UNIT VECTOR METHOD
+    
+    # To avoid getting a float division by 0 error
+    if (denominator < EPSILON):
+        return "unknown"
 
     norm_r = raw_r / denominator
     norm_b = raw_b / denominator

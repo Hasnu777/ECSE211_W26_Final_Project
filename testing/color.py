@@ -49,9 +49,9 @@ class Color:
         green_in_range = abs(self.green_mean - new_g) <= (THRESHOLD * self.green_sd)
         blue_in_range = abs(self.blue_mean - new_b) <= (THRESHOLD * self.blue_sd)
 
-        print("Red in range:", red_in_range)
-        print("Green in range:", green_in_range)
-        print("Blue in range:", blue_in_range)
+        # print("Red in range:", red_in_range)
+        # print("Green in range:", green_in_range)
+        # print("Blue in range:", blue_in_range)
 
         if (red_in_range and green_in_range and blue_in_range):
             return True
