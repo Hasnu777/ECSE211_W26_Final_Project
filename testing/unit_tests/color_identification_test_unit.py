@@ -9,7 +9,7 @@ What to expect when you run the code:
 import time
 
 from color import *
-from utils.brick import TouchSensor, Motor, wait_ready_sensors, EV3ColorSensor
+from testing.unit_tests.utils.brick import TouchSensor, Motor, wait_ready_sensors, EV3ColorSensor
 
 EPSILON = 0.0000000001
 

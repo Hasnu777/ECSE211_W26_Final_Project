@@ -4,7 +4,7 @@ How to test with this code?:
 
 """
 
-from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sensors
+from testing.unit_tests.utils.brick import Motor
 import time
 
 # ------------------------- CONSTANTS ------------------------

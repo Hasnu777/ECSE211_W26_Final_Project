@@ -1,8 +1,8 @@
-from utils.brick import TouchSensor, Motor, EV3GyroSensor, wait_ready_sensors
+from testing.unit_tests.utils.brick import TouchSensor, Motor, EV3GyroSensor, wait_ready_sensors
 import time
 
 TS1 = TouchSensor(2)
-Gyro = EV3GyroSensor(3, mode="both")
+Gyro = EV3GyroSensor(3)
 motor1 = Motor("A")
 motor2 = Motor("D")
 

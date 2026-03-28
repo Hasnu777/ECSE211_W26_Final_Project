@@ -1,4 +1,4 @@
-from utils.brick import Motor
+from testing.unit_tests.utils.brick import Motor
 import time
 
 

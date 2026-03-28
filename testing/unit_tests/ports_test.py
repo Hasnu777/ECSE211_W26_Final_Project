@@ -4,10 +4,7 @@ How to test with this code?:
 
 """
 
-
-import utils.sound as sound
-from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sensors
-from time import sleep
+from testing.unit_tests.utils.brick import Motor
 
 # -------------------- MOTOR TEST --------------------
 m = Motor("A")
