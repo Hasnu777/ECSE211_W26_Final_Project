@@ -1,6 +1,6 @@
 import time
 from color import *
-from testing.unit_tests.utils.brick import TouchSensor, Motor, wait_ready_sensors, EV3ColorSensor
+from utils.brick import TouchSensor, Motor, wait_ready_sensors, EV3ColorSensor
 
 # ------------------------- CONSTANTS ------------------------
 ONE_SQUARE = 710
@@ -235,6 +235,7 @@ def main():
 if __name__ == "__main__":
     while True:
         print("Color: ", classify_unknown_color())
-        moveForward(ONE_SQUARE * 0.5)
+        moveForward(10)
+        time.sleep(1)
         if touch_sensor.is_pressed():
             break
