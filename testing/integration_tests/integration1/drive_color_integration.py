@@ -124,112 +124,124 @@ def turnLeft(amount):
     leftWheel.set_limits(power=50, dps=425)
     print(f"Turned left by {90 * (amount / NINETY_DEGREES_LEFT)} degrees.")
 
-
-def arcRight(amount):
-    leftWheel.set_limits(power=30, dps=300)
-    rightWheel.set_dps(0)
-    leftWheel.set_position_relative(amount)
-    leftWheel.set_limits(power=50, dps=425)
-
-
-def arcLeft(amount):
-    rightWheel.set_limits(power=30, dps=300)
-    leftWheel.set_dps(0)
-    rightWheel.set_position_relative(amount)
-    rightWheel.set_limits(power=50, dps=425)
+def wiggle_in_room():
+    amount = 330
+    waitTime = 2
+    rightWheel.set_limits(power=30, dps=120)
+    leftWheel.set_limits(power=30, dps=120)
+    for i in range(2):
+        if (i % 2 == 0):
+            rightWheel.set_position_relative(amount/2)
+            time.sleep(waitTime)
+            leftWheel.set_position_relative(amount)
+            time.sleep(waitTime)
+        else:
+            rightWheel.set_position_relative(amount)
+            time.sleep(waitTime)
+            leftWheel.set_position_relative(amount/2)
+            time.sleep(waitTime)
 
 def drive():
+    # Setup
     rightWheel.reset_encoder()
     leftWheel.reset_encoder()
+    rightWheel.set_limits(power=50, dps=300)
+    leftWheel.set_limits(power=50, dps=300)
+    
     # Moving from start to blocks (1 -> 2)
     moveForward(ONE_SQUARE * 0.55)
     time.sleep(3)
+        
     # TODO: PICK UP BLOCKS AND RESET
+    
     # Turning to face outside of pharmacy and move out of it (2 -> 3)
-    turnLeft(NINETY_DEGREES_LEFT)
+    turnLeft(NINETY_DEGREES_LEFT) 
     time.sleep(3)
-    moveForward(ONE_SQUARE * 1.75)  # exit pharmacy and move forward
+    leftWheel.set_position_relative(53) # Correction for alignment 
+    time.sleep(2)
+    
+    # Exit pharmacy and move forward
+    moveForward(ONE_SQUARE * 1.75)  
     time.sleep(4)
+    
     # Turning right and moving forward (3 -> 4)
     turnRight(NINETY_DEGREES_RIGHT)
     time.sleep(3)
-    moveForward(ONE_SQUARE * 1.9)
-    time.sleep(4)
-    # Turning right and moving into double room (4 -> 5)
-    turnRight(NINETY_DEGREES_RIGHT - 3)
-    time.sleep(3)
-    moveForward(ONE_SQUARE * 0.5)
-    time.sleep(3)
-    # TODO: WIGGLE AFTER DETECTING DOOR. POTENTIALLY ALTER ROOM MOVEMENT.
-    # NOT DOING IT RIGHT NOW, JUST MOVING IN AND OUT
-    # scanning room in sections
-    # section 1
-    moveForward(ONE_SQUARE * 1.2)
-    time.sleep(4)
-    print("Scanned for beds. No beds found. Scanning new section...")
-    # Move to section 2
-    moveBackward(ONE_SQUARE * 1.2)
-    time.sleep(4)
-    turnLeft(NINETY_DEGREES_LEFT)
-    time.sleep(3)
-    moveForward(ONE_SQUARE * 0.4)
-    time.sleep(3)
-    turnRight(NINETY_DEGREES_RIGHT)
-    time.sleep(3)
-    moveForward(ONE_SQUARE * 1.2)
-    time.sleep(4)
-    print("Scanned for beds. No beds found. Scanning new section...")
-    # Move to section 3
-    moveBackward(ONE_SQUARE * 1.2)
-    time.sleep(4)
-    turnLeft(NINETY_DEGREES_LEFT)
-    time.sleep(3)
-    moveForward(ONE_SQUARE * 0.4)
-    time.sleep(3)
-    turnRight(NINETY_DEGREES_RIGHT)
-    time.sleep(3)
-    moveForward(ONE_SQUARE * 1.2)
-    time.sleep(4)
-    print("Scanned for beds. No beds found. Exiting room...")
-    moveBackward(ONE_SQUARE * 1.2)
-    time.sleep(4)
-    moveBackward(ONE_SQUARE * 0.5)
-    time.sleep(3)
-    turnRight(NINETY_DEGREES_RIGHT)
-    # Moving to single room
-    time.sleep(3)
-    moveForward(ONE_SQUARE * 1.7)
-    time.sleep(4)
-    turnRight(NINETY_DEGREES_RIGHT)
-    time.sleep(3)
-    moveForward(ONE_SQUARE * 0.5)
-    time.sleep(3)
-    moveForward(ONE_SQUARE * 1.2)
-    time.sleep(4)
-    print("Scanned for beds. No beds found. Exiting room...")
-    moveBackward(ONE_SQUARE * 1.2)
-    time.sleep(4)
-    moveBackward(ONE_SQUARE * 0.5)
-    # Moving to other single room
-    time.sleep(3)
-    turnLeft(NINETY_DEGREES_LEFT)
-    time.sleep(3)
     moveForward(ONE_SQUARE * 2)
     time.sleep(4)
+    
+    # Scanning room in section 1
+    moveForward(400)
+    turnRight(NINETY_DEGREES_RIGHT)
+    time.sleep(2)
+    leftWheel.set_position_relative(20) # Correction for alignment
+    time.sleep(1)
+    moveForward(500) # Move closer to entrance
+    time.sleep(3)
+    wiggle_in_room()
+    
+    # Back out of room
+    leftWheel.set_limits(power=30, dps=300)
+    rightWheel.set_limits(power=30, dps=300)
+    moveBackward(ONE_SQUARE * 1.5)
+    time.sleep(4)
+    
+    # Revisit section 1
+    turnLeft(NINETY_DEGREES_LEFT)
+    time.sleep(2)
+    moveForward(ONE_SQUARE * 0.7)
+    time.sleep(2)
+    turnRight(NINETY_DEGREES_RIGHT)
+    time.sleep(2)
+    # Adjustment
+    moveForward(ONE_SQUARE * 0.9)
+    time.sleep(2)
+    wiggle_in_room()
+    
+    leftWheel.set_limits(power=30, dps=300)
+    rightWheel.set_limits(power=30, dps=300)
+    moveBackward(ONE_SQUARE * 1.4)
+    time.sleep(4)
+    
+    
+    # Going towards section 2
+    turnRight(NINETY_DEGREES_RIGHT)
+    time.sleep(3)
+    #turnLeft(20) # Corrective adjustment
+    time.sleep(1)
+    moveForward(ONE_SQUARE * 2)
+    time.sleep(3)
+    
+    # Entering room 2
+    turnRight(NINETY_DEGREES_RIGHT)
+    time.sleep(1)
+    turnRight(20) # Corrective adjustment
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 0.3)
+    time.sleep(1.5)
+    wiggle_in_room()
+    
+    # Exiting room 2
+    moveBackward(ONE_SQUARE * 2)
+    time.sleep(3)
+    
+    # Going towards room 1
+    turnLeft(NINETY_DEGREES_LEFT)
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 1.9)
+    time.sleep(3)
+    
+    # Entering room 1
     turnRight(NINETY_DEGREES_RIGHT)
     time.sleep(3)
     moveForward(ONE_SQUARE * 0.5)
-    time.sleep(3)
-    moveForward(ONE_SQUARE * 1.2)
     time.sleep(4)
-    print("Scanned for beds. No beds found. Exiting room...")
-    moveBackward(ONE_SQUARE * 1.2)
-    time.sleep(4)
-    # Returning to pharmacy
-    moveBackward(ONE_SQUARE * 0.5)
-    time.sleep(3)
-    moveBackward(ONE_SQUARE * 1.8)
-    time.sleep(4)
+    wiggle_in_room()
+    
+    # Going back to pharmacy
+    leftWheel.set_limits(power=30, dps=300)
+    rightWheel.set_limits(power=30, dps=300)
+    moveBackward(ONE_SQUARE*3)
     
 def color_identification():
     while (True):
