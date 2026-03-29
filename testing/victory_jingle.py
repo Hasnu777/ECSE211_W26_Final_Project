@@ -29,7 +29,8 @@ F6 = Sound(duration=0.3, pitch="F#6", volume=VOLUME, amp_f = 5, amp_ka = 0.1, am
 D6 = Sound(duration=0.3, pitch="D#6", volume=VOLUME, amp_f = 5, amp_ka = 0.1, amp_ac = 0.9)
 D7_HALF = Sound(duration=0.15, pitch="D#7", volume=VOLUME, amp_f = 5, amp_ka = 0.1, amp_ac = 0.9)
 
-B5 = Sound(duration=0.1, pitch="B5", volume=VOLUME, amp_f = 5, amp_ka = 0.1, amp_ac = 0.9)
+B5_COIN = Sound(duration=0.1, pitch="B5", volume=VOLUME, amp_f = 5, amp_ka = 0.1, amp_ac = 0.9)
+E6_COIN = Sound(duration=0.3, pitch="E6", volume=VOLUME, amp_f = 5, amp_ka = 0.1, amp_ac = 0.9)
 
 
 # -------------------- FUNCTIONS --------------------
@@ -58,14 +59,15 @@ def victory_jingle():
     time.sleep(4.5)
     song5.compile()
     song5.play()
-    time.sleep(4.8)
+    song5.wait_done()
     
 
 def task_jingle():
-    sounds = [B5, E6]
+    sounds = [B5_COIN, E6_COIN]
     song = Song(sounds)
     song.compile()
     song.play()
+    song.wait_done()
     
 if __name__ == "__main__":
     victory_jingle()
