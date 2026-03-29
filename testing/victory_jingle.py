@@ -6,9 +6,10 @@ Purpose of this file: testing of victory & task completion jingles, to be integr
 from utils.sound import Sound, Song
 from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sensors
 import threading
+import time
 
 # -------------------- CONSTANTS --------------------
-VOLUME = 100
+VOLUME = 90
 
 E6 = Sound(duration=0.3, pitch="E6", volume=VOLUME)
 E6_HALF = Sound(duration=0.3, pitch="E6", volume=VOLUME)
@@ -39,16 +40,22 @@ def victory_jingle():
     song3 = Song(measure3)
     song4 = Song(measure4)
     song5 = Song(measure5)
-    song1.compile 
-    song2.compile
-    song3.compile
-    song4.compile
-    song5.compile
+    song1.compile()
     song1.play()
+    time.sleep(5.1)
+    song2.compile()
     song2.play()
+    time.sleep(4.4)
+    song3.compile()
     song3.play()
+    time.sleep(4.8)
+    song4.compile()
     song4.play()
+    time.sleep(4.5)
+    song5.compile()
     song5.play()
+    time.sleep(4.8)
+    
 
 # def task_jingle():
 #     sounds = [sound.Sound()]
@@ -56,6 +63,7 @@ def victory_jingle():
 #     song.compile
 #     song.play() 
 if __name__ == "__main__":
-#     tone1 = Sound(duration = 1.0, volume = 100, pitch="A3")
+#     tone1 = Sound(duration=0.3, pitch="E6", volume=VOLUME)
 #     tone1.play()
     victory_jingle()
+#     E6.play()
