@@ -11,7 +11,8 @@ NINETY_DEGREES_LEFT = 343
 NINETY_DEGREES_RIGHT = 343
 EPSILON = 0.0000000001
 
-NOTE = Sound(duration=0.3, pitch="D#6", volume=70, amp_f = 5, amp_ka = 0.1, amp_ac = 0.9)
+NOTE = Sound(duration=0.3, pitch="D#6", volume=100)
+
 
 # The following 2 variables are shared between the 2 threads
 red_found = False
@@ -131,29 +132,34 @@ def turnLeft(amount):
     leftWheel.set_limits(power=50, dps=425)
     print(f"Turned left by {90 * (amount / NINETY_DEGREES_LEFT)} degrees.")
 
+def play_victory_sound():
+    NOTE.play()
+    NOTE.wait_done()
+
 def wiggle_in_room():
     is_backed_out = False
     angle = 330
-    distance = 5
+    distance = 120
     waitTime = 1
     rightWheel.set_limits(power=30, dps=120)
     leftWheel.set_limits(power=30, dps=120)
+    
     for i in range(2):
         if (i % 2 == 0):
-            turnLeft(angle)
+            leftWheel.set_position_relative(angle)
             time.sleep(waitTime)
             moveForward(distance)
             time.sleep(waitTime)
-            turnRight(angle * 2)
+            rightWheel.set_position_relative(angle * 2)
             time.sleep(waitTime)
             moveForward(distance)
             time.sleep(waitTime)
         else:
-            turnRight(angle * 2)
+            leftWheel.set_position_relative(angle * 2)
             time.sleep(waitTime)
             moveForward(distance)
             time.sleep(waitTime)
-            turnLeft(angle)
+            rightWheel.set_position_relative(angle)
             time.sleep(waitTime)
             moveForward(distance)
             time.sleep(waitTime)
@@ -169,7 +175,7 @@ def wiggle_in_room():
 def is_red_spotted():
     global last_red_spotting
     result = False
-    delta_red = abs(last_red_spotting - datetime.datetime.now())
+    delta_red = abs(last_red_spotting - datetime.datetime.now()).total_seconds()
     if (classify_unknown_color() == "red" and delta_red > 5):
         last_red_spotting = datetime.datetime.now()
         result = True
@@ -178,7 +184,7 @@ def is_red_spotted():
 def is_green_spotted():
     global last_green_spotting
     result = False
-    delta_green = abs(last_green_spotting - datetime.datetime.now())
+    delta_green = abs(last_green_spotting - datetime.datetime.now()).total_seconds()
     if (classify_unknown_color() == "green" and delta_green > 5):
         play_victory_sound()
         last_green_spotting = datetime.datetime.now()
@@ -188,16 +194,10 @@ def is_green_spotted():
 def back_out_of_room():
     leftWheel.set_limits(power=30, dps=300)
     rightWheel.set_limits(power=30, dps=300)
-    moveBackward(ONE_SQUARE * 1.5)
+    moveBackward(ONE_SQUARE * 2.3)
     time.sleep(3)
 
-def play_victory_sound():
-    NOTE.play()
-    NOTE.wait_done()
-
 def explore_room():
-
-
     # search for bed
     wiggle_in_room()
 
@@ -229,10 +229,11 @@ def drive():
     moveForward(ONE_SQUARE * 2)
     time.sleep(4)
     
+    
     # Orient yourself towards room 1 and approach
     turnRight(NINETY_DEGREES_RIGHT)
     time.sleep(1)
-    leftWheel.set_position_relative(20)  # Correction for alignment
+    # leftWheel.set_position_relative(20)  # Correction for alignment
     time.sleep(1)
     moveForward(ONE_SQUARE * 0.6)  # Move closer to entrance
     time.sleep(3)
@@ -243,14 +244,15 @@ def drive():
     # Revisit section 1
     turnLeft(NINETY_DEGREES_LEFT)
     time.sleep(2)
-    moveForward(ONE_SQUARE * 0.7)
+    moveForward(ONE_SQUARE * 1)
     time.sleep(2)
     turnRight(NINETY_DEGREES_RIGHT)
     time.sleep(2)
 
-    moveForward(ONE_SQUARE * 0.9)
+    moveForward(ONE_SQUARE * 0.6) #move closer to entrance
     time.sleep(2)
     wiggle_in_room()
+    moveBackward(ONE_SQUARE)
     
     # Going towards section 2
     turnRight(NINETY_DEGREES_RIGHT)
@@ -269,7 +271,8 @@ def drive():
     time.sleep(1.5)
     wiggle_in_room()
 
-    
+    moveBackward(3)
+    time.sleep(3)
     # Going towards room 3
     turnLeft(NINETY_DEGREES_LEFT)
     time.sleep(3)
@@ -297,7 +300,7 @@ def color_identification():
 
 
 # ----------- Threading code -----------
-t1 = threading.Thread(target=wiggle_in_room(), args=())
+t1 = threading.Thread(target=drive(), args=())
 t2 = threading.Thread(target=color_identification, args=())
 
 t1.start()
