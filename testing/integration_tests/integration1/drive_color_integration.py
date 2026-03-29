@@ -1,4 +1,5 @@
 import time
+import threading 
 from color import *
 from utils.brick import TouchSensor, Motor, wait_ready_sensors, EV3ColorSensor
 
@@ -137,7 +138,115 @@ def arcLeft(amount):
     rightWheel.set_position_relative(amount)
     rightWheel.set_limits(power=50, dps=425)
 
+def drive():
+    rightWheel.reset_encoder()
+    leftWheel.reset_encoder()
+    # Moving from start to blocks (1 -> 2)
+    moveForward(ONE_SQUARE * 0.55)
+    time.sleep(3)
+    # TODO: PICK UP BLOCKS AND RESET
+    # Turning to face outside of pharmacy and move out of it (2 -> 3)
+    turnLeft(NINETY_DEGREES_LEFT)
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 1.75)  # exit pharmacy and move forward
+    time.sleep(4)
+    # Turning right and moving forward (3 -> 4)
+    turnRight(NINETY_DEGREES_RIGHT)
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 1.9)
+    time.sleep(4)
+    # Turning right and moving into double room (4 -> 5)
+    turnRight(NINETY_DEGREES_RIGHT - 3)
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 0.5)
+    time.sleep(3)
+    # TODO: WIGGLE AFTER DETECTING DOOR. POTENTIALLY ALTER ROOM MOVEMENT.
+    # NOT DOING IT RIGHT NOW, JUST MOVING IN AND OUT
+    # scanning room in sections
+    # section 1
+    moveForward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    print("Scanned for beds. No beds found. Scanning new section...")
+    # Move to section 2
+    moveBackward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    turnLeft(NINETY_DEGREES_LEFT)
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 0.4)
+    time.sleep(3)
+    turnRight(NINETY_DEGREES_RIGHT)
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    print("Scanned for beds. No beds found. Scanning new section...")
+    # Move to section 3
+    moveBackward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    turnLeft(NINETY_DEGREES_LEFT)
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 0.4)
+    time.sleep(3)
+    turnRight(NINETY_DEGREES_RIGHT)
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    print("Scanned for beds. No beds found. Exiting room...")
+    moveBackward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    moveBackward(ONE_SQUARE * 0.5)
+    time.sleep(3)
+    turnRight(NINETY_DEGREES_RIGHT)
+    # Moving to single room
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 1.7)
+    time.sleep(4)
+    turnRight(NINETY_DEGREES_RIGHT)
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 0.5)
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    print("Scanned for beds. No beds found. Exiting room...")
+    moveBackward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    moveBackward(ONE_SQUARE * 0.5)
+    # Moving to other single room
+    time.sleep(3)
+    turnLeft(NINETY_DEGREES_LEFT)
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 2)
+    time.sleep(4)
+    turnRight(NINETY_DEGREES_RIGHT)
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 0.5)
+    time.sleep(3)
+    moveForward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    print("Scanned for beds. No beds found. Exiting room...")
+    moveBackward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    # Returning to pharmacy
+    moveBackward(ONE_SQUARE * 0.5)
+    time.sleep(3)
+    moveBackward(ONE_SQUARE * 1.8)
+    time.sleep(4)
+    
+def color_identification():
+    while (True):
+        print("Color: ", classify_unknown_color())
+        time.sleep(0.2)
 
+
+# ----------- Threading code -----------
+t1 = threading.Thread(target=drive, args=())
+t2 = threading.Thread(target=color_identification, args=())
+
+t1.start()
+t2.start()
+t1.join()
+t2.join()
+
+"""
 def main():
     rightWheel.reset_encoder()
     leftWheel.reset_encoder()
@@ -233,9 +342,134 @@ def main():
 
 
 if __name__ == "__main__":
+    rightWheel.reset_encoder()
+    leftWheel.reset_encoder()
+    # Moving from start to blocks (1 -> 2)
+    moveForward(ONE_SQUARE * 0.55)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    # TODO: PICK UP BLOCKS AND RESET
+    # Turning to face outside of pharmacy and move out of it (2 -> 3)
+    turnLeft(NINETY_DEGREES_LEFT)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    moveForward(ONE_SQUARE * 1.75)  # exit pharmacy and move forward
+    time.sleep(4)
+    print("Color: ", classify_unknown_color())
+    # Turning right and moving forward (3 -> 4)
+    turnRight(NINETY_DEGREES_RIGHT)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    moveForward(ONE_SQUARE * 1.9)
+    time.sleep(4)
+    print("Color: ", classify_unknown_color())
+    # Turning right and moving into double room (4 -> 5)
+    turnRight(NINETY_DEGREES_RIGHT - 3)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    moveForward(ONE_SQUARE * 0.5)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    # TODO: WIGGLE AFTER DETECTING DOOR. POTENTIALLY ALTER ROOM MOVEMENT.
+    # NOT DOING IT RIGHT NOW, JUST MOVING IN AND OUT
+    # scanning room in sections
+    # section 1
+    moveForward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    print("Scanned for beds. No beds found. Scanning new section...")
+    # Move to section 2
+    moveBackward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    print("Color: ", classify_unknown_color())
+    turnLeft(NINETY_DEGREES_LEFT)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    moveForward(ONE_SQUARE * 0.4)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    turnRight(NINETY_DEGREES_RIGHT)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    moveForward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    print("Scanned for beds. No beds found. Scanning new section...")
+    # Move to section 3
+    moveBackward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    print("Color: ", classify_unknown_color())
+    turnLeft(NINETY_DEGREES_LEFT)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    moveForward(ONE_SQUARE * 0.4)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    turnRight(NINETY_DEGREES_RIGHT)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    moveForward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    print("Scanned for beds. No beds found. Exiting room...")
+    moveBackward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    moveBackward(ONE_SQUARE * 0.5)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    turnRight(NINETY_DEGREES_RIGHT)
+    # Moving to single room
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    moveForward(ONE_SQUARE * 1.7)
+    time.sleep(4)
+    print("Color: ", classify_unknown_color())
+    turnRight(NINETY_DEGREES_RIGHT)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    moveForward(ONE_SQUARE * 0.5)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    moveForward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    print("Color: ", classify_unknown_color())
+    print("Scanned for beds. No beds found. Exiting room...")
+    moveBackward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    print("Color: ", classify_unknown_color())
+    moveBackward(ONE_SQUARE * 0.5)
+    # Moving to other single room
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    turnLeft(NINETY_DEGREES_LEFT)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    moveForward(ONE_SQUARE * 2)
+    time.sleep(4)
+    print("Color: ", classify_unknown_color())
+    turnRight(NINETY_DEGREES_RIGHT)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    moveForward(ONE_SQUARE * 0.5)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    moveForward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    print("Color: ", classify_unknown_color())
+    print("Scanned for beds. No beds found. Exiting room...")
+    moveBackward(ONE_SQUARE * 1.2)
+    time.sleep(4)
+    print("Color: ", classify_unknown_color())
+    # Returning to pharmacy
+    moveBackward(ONE_SQUARE * 0.5)
+    time.sleep(3)
+    print("Color: ", classify_unknown_color())
+    moveBackward(ONE_SQUARE * 1.8)
+    time.sleep(4)
+    print("Color: ", classify_unknown_color())
+    
+    
     while True:
         print("Color: ", classify_unknown_color())
         moveForward(10)
         time.sleep(1)
         if touch_sensor.is_pressed():
             break
+"""
