@@ -1,7 +1,9 @@
 import time
-import threading 
+import threading
+import datetime
 from color import *
 from utils.brick import TouchSensor, Motor, wait_ready_sensors, EV3ColorSensor
+from utils.sound import Sound, Song
 
 # ------------------------- CONSTANTS ------------------------
 ONE_SQUARE = 710
@@ -9,6 +11,14 @@ NINETY_DEGREES_LEFT = 343
 NINETY_DEGREES_RIGHT = 343
 EPSILON = 0.0000000001
 
+NOTE = Sound(duration=0.3, pitch="D#6", volume=70, amp_f = 5, amp_ka = 0.1, amp_ac = 0.9)
+
+# The following 2 variables are shared between the 2 threads
+red_found = False
+green_found = False
+
+last_red_spotting = datetime.datetime.now()
+last_green_spotting = datetime.datetime.now()
 # -------------------- SENSORS AND MOTORS --------------------
 rightWheel = Motor("A")
 leftWheel = Motor("D")
@@ -91,8 +101,6 @@ def classify_unknown_color():
     return "unknown"
 
 
-
-
 def moveForward(amount):
     rightWheel.set_position_relative(amount)
     leftWheel.set_position_relative(amount)
@@ -114,7 +122,6 @@ def turnRight(amount):
     rightWheel.set_limits(power=50, dps=425)
     print(f"Turned right by {90 * (amount / NINETY_DEGREES_LEFT)} degrees.")
 
-
 def turnLeft(amount):
     leftWheel.set_limits(power=30, dps=300)
     rightWheel.set_limits(power=30, dps=300)
@@ -125,21 +132,75 @@ def turnLeft(amount):
     print(f"Turned left by {90 * (amount / NINETY_DEGREES_LEFT)} degrees.")
 
 def wiggle_in_room():
-    amount = 330
-    waitTime = 2
+    is_backed_out = False
+    angle = 330
+    distance = 5
+    waitTime = 1
     rightWheel.set_limits(power=30, dps=120)
     leftWheel.set_limits(power=30, dps=120)
     for i in range(2):
         if (i % 2 == 0):
-            rightWheel.set_position_relative(amount/2)
+            turnLeft(angle)
             time.sleep(waitTime)
-            leftWheel.set_position_relative(amount)
+            moveForward(distance)
+            time.sleep(waitTime)
+            turnRight(angle * 2)
+            time.sleep(waitTime)
+            moveForward(distance)
             time.sleep(waitTime)
         else:
-            rightWheel.set_position_relative(amount)
+            turnRight(angle * 2)
             time.sleep(waitTime)
-            leftWheel.set_position_relative(amount/2)
+            moveForward(distance)
             time.sleep(waitTime)
+            turnLeft(angle)
+            time.sleep(waitTime)
+            moveForward(distance)
+            time.sleep(waitTime)
+
+        # delta time for the time that has passed since the last red spotting
+        if (is_red_spotted() or is_green_spotted()):
+            back_out_of_room()
+            is_backed_out = True
+
+    if (is_backed_out == False):
+        back_out_of_room()
+
+def is_red_spotted():
+    global last_red_spotting
+    result = False
+    delta_red = abs(last_red_spotting - datetime.datetime.now())
+    if (classify_unknown_color() == "red" and delta_red > 5):
+        last_red_spotting = datetime.datetime.now()
+        result = True
+    return result
+
+def is_green_spotted():
+    global last_green_spotting
+    result = False
+    delta_green = abs(last_green_spotting - datetime.datetime.now())
+    if (classify_unknown_color() == "green" and delta_green > 5):
+        play_victory_sound()
+        last_green_spotting = datetime.datetime.now()
+        result = True
+    return result
+
+def back_out_of_room():
+    leftWheel.set_limits(power=30, dps=300)
+    rightWheel.set_limits(power=30, dps=300)
+    moveBackward(ONE_SQUARE * 1.5)
+    time.sleep(3)
+
+def play_victory_sound():
+    NOTE.play()
+    NOTE.wait_done()
+
+def explore_room():
+
+
+    # search for bed
+    wiggle_in_room()
+
 
 def drive():
     # Setup
@@ -159,32 +220,25 @@ def drive():
     time.sleep(3)
     leftWheel.set_position_relative(53) # Correction for alignment 
     time.sleep(2)
-    
-    # Exit pharmacy and move forward
     moveForward(ONE_SQUARE * 1.75)  
     time.sleep(4)
     
-    # Turning right and moving forward (3 -> 4)
+    # Turning right and moving forward (3 -> 4) in front of room 1
     turnRight(NINETY_DEGREES_RIGHT)
     time.sleep(3)
     moveForward(ONE_SQUARE * 2)
     time.sleep(4)
     
-    # Scanning room in section 1
-    moveForward(400)
+    # Orient yourself towards room 1 and approach
     turnRight(NINETY_DEGREES_RIGHT)
-    time.sleep(2)
-    leftWheel.set_position_relative(20) # Correction for alignment
     time.sleep(1)
-    moveForward(500) # Move closer to entrance
+    leftWheel.set_position_relative(20)  # Correction for alignment
+    time.sleep(1)
+    moveForward(ONE_SQUARE * 0.6)  # Move closer to entrance
     time.sleep(3)
+
+    # Explore the room
     wiggle_in_room()
-    
-    # Back out of room
-    leftWheel.set_limits(power=30, dps=300)
-    rightWheel.set_limits(power=30, dps=300)
-    moveBackward(ONE_SQUARE * 1.5)
-    time.sleep(4)
     
     # Revisit section 1
     turnLeft(NINETY_DEGREES_LEFT)
@@ -193,16 +247,10 @@ def drive():
     time.sleep(2)
     turnRight(NINETY_DEGREES_RIGHT)
     time.sleep(2)
-    # Adjustment
+
     moveForward(ONE_SQUARE * 0.9)
     time.sleep(2)
     wiggle_in_room()
-    
-    leftWheel.set_limits(power=30, dps=300)
-    rightWheel.set_limits(power=30, dps=300)
-    moveBackward(ONE_SQUARE * 1.4)
-    time.sleep(4)
-    
     
     # Going towards section 2
     turnRight(NINETY_DEGREES_RIGHT)
@@ -220,18 +268,15 @@ def drive():
     moveForward(ONE_SQUARE * 0.3)
     time.sleep(1.5)
     wiggle_in_room()
+
     
-    # Exiting room 2
-    moveBackward(ONE_SQUARE * 2)
-    time.sleep(3)
-    
-    # Going towards room 1
+    # Going towards room 3
     turnLeft(NINETY_DEGREES_LEFT)
     time.sleep(3)
     moveForward(ONE_SQUARE * 1.9)
     time.sleep(3)
     
-    # Entering room 1
+    # Entering room 3
     turnRight(NINETY_DEGREES_RIGHT)
     time.sleep(3)
     moveForward(ONE_SQUARE * 0.5)
@@ -242,7 +287,9 @@ def drive():
     leftWheel.set_limits(power=30, dps=300)
     rightWheel.set_limits(power=30, dps=300)
     moveBackward(ONE_SQUARE*3)
-    
+
+
+
 def color_identification():
     while (True):
         print("Color: ", classify_unknown_color())
@@ -250,7 +297,7 @@ def color_identification():
 
 
 # ----------- Threading code -----------
-t1 = threading.Thread(target=drive, args=())
+t1 = threading.Thread(target=wiggle_in_room(), args=())
 t2 = threading.Thread(target=color_identification, args=())
 
 t1.start()
