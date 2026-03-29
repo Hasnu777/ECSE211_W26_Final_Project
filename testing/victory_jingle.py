@@ -29,6 +29,10 @@ F6 = Sound(duration=0.3, pitch="F#6", volume=VOLUME, amp_f = 5, amp_ka = 0.1, am
 D6 = Sound(duration=0.3, pitch="D#6", volume=VOLUME, amp_f = 5, amp_ka = 0.1, amp_ac = 0.9)
 D7_HALF = Sound(duration=0.15, pitch="D#7", volume=VOLUME, amp_f = 5, amp_ka = 0.1, amp_ac = 0.9)
 
+B5 = Sound(duration=0.1, pitch="B5", volume=VOLUME, amp_f = 5, amp_ka = 0.1, amp_ac = 0.9)
+
+
+# -------------------- FUNCTIONS --------------------
 def victory_jingle():
     measure1 = [E6, A7, A7, C7, C7, A7_2X, E6, E6, E6_3HALVES, E6_HALF, B7_HALF, A7_HALF, G6_HALF, F6_HALF, E6_3X]
     measure2 = [E6, A7, A7, C7, C7, A7_2X, E6, A7, G6, F6_HALF, G6_HALF, A7, D6, E6_3X]
@@ -58,13 +62,11 @@ def victory_jingle():
     
 
 def task_jingle():
-    sounds = [sound.Sound()]
-    song = sound.Song(sounds)
-    song.compile
+    sounds = [B5, E6]
+    song = Song(sounds)
+    song.compile()
     song.play()
     
 if __name__ == "__main__":
-#     tone1 = Sound(duration=0.3, pitch="E6", volume=VOLUME)
-#     tone1.play()
     victory_jingle()
-#     E6.play()
+    task_jingle()
