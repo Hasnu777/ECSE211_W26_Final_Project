@@ -9,7 +9,7 @@ import threading
 import time
 
 # -------------------- CONSTANTS --------------------
-VOLUME = 60
+VOLUME = 70
 
 E6 = Sound(duration=0.3, pitch="E6", volume=VOLUME, amp_f = 5, amp_ka = 0.1, amp_ac = 0.9)
 E6_HALF = Sound(duration=0.3, pitch="E6", volume=VOLUME, amp_f = 5, amp_ka = 0.1, amp_ac = 0.9)
