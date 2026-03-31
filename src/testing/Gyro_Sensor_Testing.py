@@ -5,9 +5,12 @@ import time
 import threading
 
 TS1 = TouchSensor(2)
-Gyro = EV3GyroSensor(3,mode="both")
+Gyro = EV3GyroSensor(4,mode="both")
 motor_R = Motor("A")
-motor_L = Motor("C")
+motor_L = Motor("D")
+
+motor_C = Motor("C")
+motor_C.set_dps(0)
 
 motor_R.set_dps(0)
 motor_L.set_dps(0)
@@ -20,8 +23,8 @@ print("Sensors initialized.")
 
 def perform_rotations():
 
-    motor_R.set_limits(power=50)
-    motor_L.set_limits(power=50)
+    motor_R.set_limits(power=200)
+    motor_L.set_limits(power=200)
 
     Gyro.set_mode("abs")
 
@@ -41,8 +44,8 @@ def print_continuous_gyro_data():
         print("Collecting readings now.")
         Gyro.reset_measure()
         while not TS1.is_pressed():
-            time.sleep(3)
-            gyro_data = Gyro.get_abs_measure()
+            time.sleep(0.3)
+            gyro_data = Gyro.get_both_measure()
             if gyro_data is not None:
                 print(gyro_data)
             time.sleep(0.5)
@@ -50,7 +53,6 @@ def print_continuous_gyro_data():
         pass
     finally:
         print("Gyro samples collected.")
-        print("Testing complete.")
         reset_brick()
         exit()
 
@@ -61,10 +63,11 @@ def maintain_angle():
         current = Gyro.get_abs_measure()
         error = target - current
         correction = error * 0.5
-        time.sleep(0.1)
-        motor_R.set_dps(correction)
-        motor_L.set_dps(-correction)
-        time.sleep(0.1)
+        motor_R.set_position_relative(-correction)
+        motor_L.set_position_relative(correction)
+#         time.sleep(0.1)
 
 if __name__ == "__main__":
-    #maintain_angle()
+#     print_continuous_gyro_data()
+#     maintain_angle()
+    print("reset")
