@@ -22,7 +22,6 @@ print("Sensors initialized.")
 
 
 def perform_rotations():
-
     motor_R.set_limits(power=200)
     motor_L.set_limits(power=200)
 
@@ -56,18 +55,17 @@ def print_continuous_gyro_data():
         reset_brick()
         exit()
 
-def maintain_angle():
+def maintain_angle(target):
     Gyro.reset_measure()
-    target = Gyro.get_abs_measure()
     while True:
         current = Gyro.get_abs_measure()
-        error = target - current
+        error = (target - current)%360
         correction = error * 0.5
         motor_R.set_position_relative(-correction)
         motor_L.set_position_relative(correction)
-#         time.sleep(0.1)
 
 if __name__ == "__main__":
 #     print_continuous_gyro_data()
-#     maintain_angle()
+    target = Gyro.get_abs_measure()
+    maintain_angle(target)
     print("reset")
