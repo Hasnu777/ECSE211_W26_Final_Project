@@ -22,8 +22,8 @@ print("Sensors initialized.")
 
 
 def perform_rotations():
-    motor_R.set_limits(power=200)
-    motor_L.set_limits(power=200)
+    motor_R.set_limits(power=50)
+    motor_L.set_limits(power=50)
 
     Gyro.set_mode("abs")
 
@@ -44,18 +44,23 @@ def maintain_angle(target):
     Gyro.reset_measure()
     while True:
         current = Gyro.get_abs_measure()
-        error = (target - current)%360
-        correction = error * 0.5
-        motor_R.set_position_relative(-correction)
-        motor_L.set_position_relative(correction)
+        if current != None:
+            error = target - current
+            correction = error * 0.5
+            motor_R.set_position_relative(-correction)
+            motor_L.set_position_relative(correction)
 
 if __name__ == "__main__":
 #     print_continuous_gyro_data()
-    # target = Gyro.get_abs_measure()
-    # maintain_angle(target)
-    t1 = Thread(continuous_measure_gyro)
+#     target = Gyro.get_abs_measure()
+#     Gyro.reset_measure()
+#     maintain_angle(target)
+    global target = 0
+    t1 = Thread(continuous_measure_gyro())
     t1.start()
-    print(target)
-    if TS1.is_pressed():
-        t1.join()
+    while True:
+        print(target)
+        if TS1.is_pressed():
+            t1.join()
+            break
     # print("reset")
