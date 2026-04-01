@@ -71,7 +71,7 @@ if __name__ == "__main__":
     if turn != 90:
         motor_R.set_position_relative(-error)
         motor_L.set_position_relative(error)
-    
+#     This shit don't work yet
 
     while True:
         print(target)
