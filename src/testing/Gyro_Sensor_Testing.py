@@ -2,7 +2,7 @@
 from utils import sound
 from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, EV3GyroSensor, wait_ready_sensors, reset_brick
 import time
-import threading
+from threading import Thread
 
 TS1 = TouchSensor(2)
 Gyro = EV3GyroSensor(4,mode="both")
@@ -35,25 +35,10 @@ def perform_rotations():
     print(initialState)
 
 
-def print_continuous_gyro_data():
-    try:
-        while not TS1.is_pressed():
-            pass
-        time.sleep(0.5)
-        print("Collecting readings now.")
-        Gyro.reset_measure()
-        while not TS1.is_pressed():
-            time.sleep(0.3)
-            gyro_data = Gyro.get_both_measure()
-            if gyro_data is not None:
-                print(gyro_data)
-            time.sleep(0.5)
-    except BaseException as e:
-        pass
-    finally:
-        print("Gyro samples collected.")
-        reset_brick()
-        exit()
+def continuous_measure_gyro():
+    global target
+    while True:
+        target = Gyro.get_abs_measure()
 
 def maintain_angle(target):
     Gyro.reset_measure()
@@ -66,6 +51,11 @@ def maintain_angle(target):
 
 if __name__ == "__main__":
 #     print_continuous_gyro_data()
-    target = Gyro.get_abs_measure()
-    maintain_angle(target)
-    print("reset")
+    # target = Gyro.get_abs_measure()
+    # maintain_angle(target)
+    t1 = Thread(continuous_measure_gyro)
+    t1.start()
+    print(target)
+    if TS1.is_pressed():
+        t1.join()
+    # print("reset")
