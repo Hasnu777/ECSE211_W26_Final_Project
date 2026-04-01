@@ -36,9 +36,10 @@ def perform_rotations():
 
 
 def continuous_measure_gyro():
-    global target
+    global target, running
     while True:
-        target = Gyro.get_abs_measure()
+        target = Gyro.get_abs_measure()%360
+        time.sleep(0.01)
 
 def maintain_angle(target):
     Gyro.reset_measure()
@@ -56,11 +57,25 @@ if __name__ == "__main__":
 #     Gyro.reset_measure()
 #     maintain_angle(target)
     target = 0
-    t1 = Thread(target = continuous_measure_gyro())
+    running = True
+    t1 = Thread(target = continuous_measure_gyro)
     t1.start()
+    
+    #right turn overshoot
+    start = target
+    motor_L.set_position_relative(343)
+    motor_R.set_position_relative(-343)
+    time.sleep(0.1)
+    turn = target - start
+    error = 90-turn
+    if turn != 90:
+        motor_R.set_position_relative(-error)
+        motor_L.set_position_relative(error)
+    
+
     while True:
         print(target)
         if TS1.is_pressed():
-            t1.join()
             break
+    t1.join()
     # print("reset")
