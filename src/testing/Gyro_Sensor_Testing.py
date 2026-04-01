@@ -55,8 +55,8 @@ if __name__ == "__main__":
 #     target = Gyro.get_abs_measure()
 #     Gyro.reset_measure()
 #     maintain_angle(target)
-    global target = 0
-    t1 = Thread(continuous_measure_gyro())
+    target = 0
+    t1 = Thread(target = continuous_measure_gyro())
     t1.start()
     while True:
         print(target)
