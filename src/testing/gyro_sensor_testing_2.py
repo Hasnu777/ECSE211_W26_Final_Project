@@ -66,31 +66,28 @@ def find_gyro_diff(old, now):
     return abs(old - now)  # TODO: you might want to remove abs
 
 def turn_90_deg():
-    actual_turn_angle = 400
     expected_turn_angle = 90
 
     GYRO.reset_measure()
     angle_before_turn = GYRO.get_abs_measure()
-    turnRight(actual_turn_angle)
-    time.sleep(1)
+    turnRight(40)
+    time.sleep(3)
     angle_after_turn = GYRO.get_abs_measure()
     
-    expected = expected_turn_angle
-
     delta_turn = find_gyro_diff(angle_after_turn, angle_before_turn)
     print("delta_turns: ", delta_turn)
     
-    delta_expected_from_unexpected = (expected - delta_turn)
-    print("delta_expected_from_unexpected: ", delta_expected_from_unexpected)
+    delta_deviation_from_90 = (expected_turn_angle - delta_turn)
+    print("delta_expected_from_unexpected: ", delta_deviation_from_90)
 
-    if (delta_expected_from_unexpected > 0):
+    if (delta_deviation_from_90 > 0):
         print("one")
-        turnRight(delta_expected_from_unexpected)
+        turnRight(delta_deviation_from_90)
         #turnRight(delta2) # Adjustment to reach 90 deg again
         time.sleep(1)
-    elif (delta_expected_from_unexpected < 0):
+    elif (delta_deviation_from_90 < 0):
         print("two")
-        turnRight(delta_expected_from_unexpected * 3)
+        turnLeft(delta_deviation_from_90)
         #turnLeft(delta2) # Adjustment to reach 90 deg again
         time.sleep(1)
 

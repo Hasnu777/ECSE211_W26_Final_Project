@@ -23,8 +23,8 @@ GYRO = EV3GyroSensor(4, mode="both")
 
 # TODO change this value
 SQUARE_LENGTH = 0.5   # (meters) Side length of square
-WHEEL_RADIUS = 0.028  # (meters) Radius of one wheel
-AXLE_LENGTH = 0.11    # (meters) Distance between wheel contacts
+WHEEL_RADIUS = 0.0145  # (meters) Radius of one wheel
+AXLE_LENGTH = 0.143   # (meters) Distance between wheel contacts
 
 DIST_TO_DEG = 180 / (math.pi * WHEEL_RADIUS)
 ORIENT_TO_DEG = AXLE_LENGTH / WHEEL_RADIUS
@@ -123,12 +123,12 @@ def find_gyro_diff(old, now):
     return abs(old - now)  # TODO: you might want to remove abs
 
 def turn_90_deg():
-    actual_turn_angle = 400
+    actual_turn_angle = 180
     expected_turn_angle = 90
 
     GYRO.reset_measure()
     angle_before_turn = GYRO.get_abs_measure()
-    turnRight(actual_turn_angle)
+    turnRight(actual_turn_angle, 100)
     time.sleep(1)
     angle_after_turn = GYRO.get_abs_measure()
 
@@ -142,13 +142,15 @@ def turn_90_deg():
 
     if (delta_expected_from_unexpected > 0):
         print("one")
-        turnRight(delta_expected_from_unexpected)
+        turnRight(delta_expected_from_unexpected, 100)
         # turnRight(delta2) # Adjustment to reach 90 deg again
         time.sleep(1)
     elif (delta_expected_from_unexpected < 0):
         print("two")
-        turnRight(delta_expected_from_unexpected * 3)
+        turnRight(delta_expected_from_unexpected, 100)
         # turnLeft(delta2) # Adjustment to reach 90 deg again
         time.sleep(1)
 
 if __name__ == "__main__":
+    turn_90_deg()
+    
