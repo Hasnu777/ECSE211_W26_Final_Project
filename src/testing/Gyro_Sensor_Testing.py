@@ -15,6 +15,8 @@ motor_C.set_dps(0)
 motor_R.set_dps(0)
 motor_L.set_dps(0)
 
+
+
 print("Testing file running. Waiting for sensor initialisation...")
 
 wait_ready_sensors(True)
@@ -22,8 +24,8 @@ print("Sensors initialized.")
 
 
 def perform_rotations():
-    motor_R.set_limits(power=80)
-    motor_L.set_limits(power=80)
+    motor_R.set_limits(power=50, dps = 150)
+    motor_L.set_limits(power=50, dps = 150)
 
     Gyro.set_mode("abs")
 
@@ -66,7 +68,7 @@ if __name__ == "__main__":
     print("start is " + str(start))
     motor_L.set_position_relative(500) #rotate 90 degrees, overshot
     motor_R.set_position_relative(-500)
-    time.sleep(2)
+    time.sleep(4)
     print ("current angle is " + str(Gyro.get_abs_measure()))
     delta = Gyro.get_abs_measure() - start
     print("delta is " + str(delta))
@@ -81,8 +83,8 @@ if __name__ == "__main__":
         correction = error * 0.5
         if error > 1:
             print("overshoot detected, time to correct it!")
-            motor_L.set_position_relative(-correction)
-            motor_R.set_position_relative(correction)
+            motor_L.set_position_relative(-correction*343/90)
+            motor_R.set_position_relative(correction*343/90)
             print("Corrected the overshoot, I think, let's re-loop and check again!")
             time.sleep(0.2)
             current = Gyro.get_abs_measure()
@@ -90,8 +92,8 @@ if __name__ == "__main__":
             print("New delta post-overshoot-correction calculated to be", str(delta))
         elif error < -1:
             print("undershoot detected, time to correct it!")
-            motor_L.set_position_relative(correction)
-            motor_R.set_position_relative(-correction)
+            motor_L.set_position_relative(correction*343/90)
+            motor_R.set_position_relative(-correction*343/90)
             print("Corrected the undershoot, I think, let's re-loop and check again!")
             time.sleep(0.2)
             current = Gyro.get_abs_measure()
@@ -126,11 +128,11 @@ if __name__ == "__main__":
         #         correction = error*0.5
         #         current = Gyro.get_abs_measure()
         #         delta =  current - start
-    while True:
-#         print("currentAngle is " + str(currentAngle))
-        print("dps is " + str(dps))
-        if TS1.is_pressed():
-            break
-        time.sleep(0.1)
+#     while True:
+# #         print("currentAngle is " + str(currentAngle))
+#         print("dps is " + str(dps))
+#         if TS1.is_pressed():
+#             break
+#         time.sleep(0.1)
     # t1.join()
     # print("reset")
