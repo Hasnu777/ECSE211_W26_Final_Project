@@ -19,8 +19,8 @@ from utils.brick import BP, Motor
 MOTOR_POLL_DELAY = 0.05
 
 SQUARE_LENGTH = 0.5   # (meters) Side length of square
-WHEEL_RADIUS = 0.028  # (meters) Radius of one wheel
-AXLE_LENGTH = 0.11    # (meters) Distance between wheel contacts
+WHEEL_RADIUS = 0.02  # (meters) Radius of one wheel
+AXLE_LENGTH = 0.075   # (meters) Distance between wheel contacts
 
 DIST_TO_DEG = 180 / (math.pi * WHEEL_RADIUS)
 ORIENT_TO_DEG = AXLE_LENGTH / WHEEL_RADIUS
