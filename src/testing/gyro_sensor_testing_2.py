@@ -48,11 +48,44 @@ def constantly_measure_2():
         time.sleep(1)
         print("------------------------------------------------------")
 
+def turnRight(amount):
+    wheel_L.set_limits(power=30,dps=300)
+    wheel_R.set_limits(power=30,dps=300)
+    wheel_L.set_position_relative(amount)
+    wheel_R.set_position_relative(-amount)
+    wheel_L.set_limits(power=50,dps=425)
+    wheel_R.set_limits(power=50,dps=425)
+
+
+def turnLeft(amount):
+    wheel_L.set_limits(power=30,dps=300)
+    wheel_R.set_limits(power=30,dps=300)
+    wheel_R.set_position_relative(amount)
+    wheel_L.set_position_relative(-amount)
+    wheel_R.set_limits(power=50,dps=425)
+    wheel_L.set_limits(power=50,dps=425)
+
+def find_gyro_diff(old, now):
+    return abs(old - now)
+
+def turn_90_deg():
+    GYRO.reset_measure()
+    old = GYRO.get_abs_measure()
+    turnRight(338)
+    new = GYRO.get_abs_measure()
+
+    delta = find_gyro_diff(old, new)
+
+    if (find_gyro_diff() < 0):
+        turnRight(delta) # Adjustment to reach 90 deg again
+    elif (find_gyro_diff() > 0):
+        turnLeft(delta) # Adjustment to reach 90 deg again
 
 
 if __name__ == "__main__":
-    #constantly_measure()
-    constantly_measure_2()
+    # constantly_measure()
+    # constantly_measure_2()
+    turn_90_deg()
 
 
 
