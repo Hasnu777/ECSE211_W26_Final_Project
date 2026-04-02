@@ -21,20 +21,38 @@ wait_ready_sensors(True)
 
 
 def constantly_measure():
+    GYRO.reset_measure()
     while (True):
-        print("Value: ", GYRO.value())
+        print("Status: ", GYRO.get_status())
         print("Raw value: ", GYRO.get_raw_value())
         print("Absolute angle measurement: ", GYRO.get_abs_measure())
         print("DPS measurement: ", GYRO.get_dps_measure())
         print("Both measurement: ", GYRO.get_both_measure())
+        time.sleep(1)
         print("------------------------------------------------------")
 
 
 
+def constantly_measure_2():
+    GYRO.reset_measure()
+    angle_before = GYRO.get_abs_measure()
+    
+    while (True):
+
+        print("Both measurement: ", GYRO.get_both_measure())
+        
+        print("Old angle measurement: ", angle_before)
+        print("New angle measurement: ", GYRO.get_both_measure()[0])
+        delta = angle_before - GYRO.get_both_measure()[0]
+        print("Difference: ", delta)
+        time.sleep(1)
+        print("------------------------------------------------------")
+
 
 
 if __name__ == "__main__":
-    constantly_measure()
+    #constantly_measure()
+    constantly_measure_2()
 
 
 
