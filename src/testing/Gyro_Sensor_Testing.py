@@ -36,52 +36,47 @@ def perform_rotations():
 
 
 def continuous_measure_gyro():
-    global target, running, dps
-    while True:
-        target = Gyro.get_abs_measure()%360
-        dps = Gyro.get_dps_measure()
+    global currentAngle, running, dps
+    while running:
+        both  = Gyro.get_both_measure()
+        currentAngle = both[0]%360
+        dps = both[1]
         time.sleep(0.01)
 
-def maintain_angle(target):
+def maintain_angle(currentAngle):
     Gyro.reset_measure()
     while True:
         current = Gyro.get_abs_measure()
         if current != None:
-            error = target - current
+            error = currentAngle - current
             correction = error * 0.5
             motor_R.set_position_relative(-correction)
             motor_L.set_position_relative(correction)
 
 if __name__ == "__main__":
-#     print_continuous_gyro_data()
-#     target = Gyro.get_abs_measure()
-#     Gyro.reset_measure()
-#     maintain_angle(target)
-    target = 0
+    currentAngle = 0
     dps = 0
     running = True
-    t1 = Thread(target = continuous_measure_gyro)
+    t1 = Thread(currentAngle = continuous_measure_gyro)
     t1.start()
     
     #right turn overshoot
-    start = target
-    print(start)
+    start = currentAngle
+    print("angle before rotation is: " + str(start))
     motor_L.set_position_relative(343)
     motor_R.set_position_relative(-343)
-#     dps = 200 #set arbitrary val
-#     while dps != 0:
-#         turn = target - start
-#     print(turn)
-#     time.sleep(0.1)
+    time.sleep(2)
+    turn = currentAngle - start
+    while turn != 90:
+        error = 90 - turn
+        print("error is " + str(error))
+        correction = error * 0.5
+        motor_L.set_position_relative(correction)
+        motor_R.set_position_relative(-correction)
+    
 
-#     error = 90-turn
-#     if turn != 90:
-#         motor_R.set_position_relative(-error)
-#         motor_L.set_position_relative(error)
-# #     This shit don't work yet
-# 
     while True:
-#         print("target is " + str(target))
+#         print("currentAngle is " + str(currentAngle))
         print("dps is " + str(dps))
         if TS1.is_pressed():
             break
