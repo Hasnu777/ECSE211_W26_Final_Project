@@ -90,27 +90,27 @@ def rotate_bot(angle, speed):
 def turnLeft(angle, speed):
     """Rotate in place (degrees, dps)"""
     try:
-        LEFT_MOTOR.set_dps(speed)
-        RIGHT_MOTOR.set_dps(speed)
+        #LEFT_MOTOR.set_dps(speed)
+        #RIGHT_MOTOR.set_dps(speed)
 
-        LEFT_MOTOR.set_limits(POWER_LIMIT, speed)
-        RIGHT_MOTOR.set_limits(POWER_LIMIT, speed)
+        LEFT_MOTOR.set_limits(POWER_LIMIT)
+        RIGHT_MOTOR.set_limits(POWER_LIMIT)
 
         LEFT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
         RIGHT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
 
-        wait_for_motor(RIGHT_MOTOR)
+        wait_for_motor(LEFT_MOTOR)
     except IOError as error:
         print(error)
 
 def turnRight(angle, speed):
     """Rotate in place (degrees, dps)"""
     try:
-        LEFT_MOTOR.set_dps(speed)
-        RIGHT_MOTOR.set_dps(speed)
+        #LEFT_MOTOR.set_dps(speed)
+        #RIGHT_MOTOR.set_dps(speed)
 
-        LEFT_MOTOR.set_limits(POWER_LIMIT, speed)
-        RIGHT_MOTOR.set_limits(POWER_LIMIT, speed)
+        LEFT_MOTOR.set_limits(POWER_LIMIT)
+        RIGHT_MOTOR.set_limits(POWER_LIMIT)
 
         LEFT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
         RIGHT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
