@@ -84,13 +84,13 @@ def rotate_bot(angle, speed, direction):
         RIGHT_MOTOR.set_limits(POWER_LIMIT, speed)
 
         if direction == RIGHT:
-            LEFT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
-            RIGHT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
-        elif direction == LEFT:
             LEFT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
             RIGHT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
-
-        wait_for_motor(RIGHT_MOTOR)
+            wait_for_motor(LEFT_MOTOR)
+        elif direction == LEFT:
+            LEFT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
+            RIGHT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
+            wait_for_motor(RIGHT_MOTOR)
     except IOError as error:
         print(error)
 
@@ -109,7 +109,6 @@ def turn_90_deg():
     time.sleep(1)
     angle_after_turn = GYRO.get_abs_measure()
 
-
     actual_turn_angle = find_gyro_diff(angle_after_turn, angle_before_turn)
     print("actual_turn_angle: ", actual_turn_angle)
 
@@ -122,19 +121,18 @@ def turn_90_deg():
         time.sleep(1)
     elif delta_expected_from_unexpected < 0:
         print("Case two: Left turn overshoot")
-        rotate_bot(delta_expected_from_unexpected, 100)
+        rotate_bot(delta_expected_from_unexpected, 100, LEFT)
         time.sleep(1)
 
     print("-------------------------------------------------")
 
-if __name__ == "__main__":
+def rotation_direction():
     while (True):
-        # Turn counterclockwise
-        rotate_bot(10, 100, "right")
+        rotate_bot(10, 100, "right") # Turn counterclockwise
+        rotate_bot(10, 100, LEFT) # Turn clockwise
         print("Value:", GYRO.get_abs_measure())
         print("-------------------------------------------")
-        # Turn counterclockwise
-        #rotate_bot(10, 100, "right")
-        #print("Value:", GYRO.get_abs_measure())
-
         time.sleep(1)
+
+if __name__ == "__main__":
+    
