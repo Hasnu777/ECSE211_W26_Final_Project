@@ -105,36 +105,41 @@ def turn_90_deg():
 
     # Make the robot turn and
     angle_before_turn = GYRO.get_abs_measure()
-    rotate_bot(180, 200, "right")
+    rotate_bot(180, 200, RIGHT)
     time.sleep(1)
     angle_after_turn = GYRO.get_abs_measure()
-
 
     actual_turn_angle = find_gyro_diff(angle_after_turn, angle_before_turn)
     print("actual_turn_angle: ", actual_turn_angle)
 
-    delta_expected_from_unexpected = (expected_turn_angle - actual_turn_angle)
-    print("delta_expected_from_unexpected: ", delta_expected_from_unexpected)
+    delta = (expected_turn_angle - actual_turn_angle)  # delta between real and expected turn angles
+    print("delta_expected_from_unexpected: ", delta)
 
-    if delta_expected_from_unexpected > 0:
+    if delta > 0: # if delta positive, robot overshooting right
         print("Case one: Right turn overshoot")
-        rotate_bot(delta_expected_from_unexpected, 100, RIGHT)
+        rotate_bot(delta, 100, LEFT)
         time.sleep(1)
-    elif delta_expected_from_unexpected < 0:
+    elif delta < 0: # if delta negative, robot overshooting left
         print("Case two: Left turn overshoot")
-        rotate_bot(delta_expected_from_unexpected, 100)
+        rotate_bot(delta, 100, RIGHT)
         time.sleep(1)
 
     print("-------------------------------------------------")
 
-if __name__ == "__main__":
-    while (True):
-        # Turn counterclockwise
-        rotate_bot(10, 100, "right")
-        print("Value:", GYRO.get_abs_measure())
-        print("-------------------------------------------")
-        # Turn counterclockwise
-        #rotate_bot(10, 100, "right")
-        #print("Value:", GYRO.get_abs_measure())
 
-        time.sleep(1)
+# Purely for test
+def check_rotation_sign():
+    while (True):
+    # Turn counterclockwise
+    rotate_bot(10, 100, "right")
+    print("Value:", GYRO.get_abs_measure())
+    print("-------------------------------------------")
+    # Turn counterclockwise
+    # rotate_bot(10, 100, "right")
+    # print("Value:", GYRO.get_abs_measure())
+
+    time.sleep(1)
+
+
+if __name__ == "__main__":
+    turn_90_deg()
