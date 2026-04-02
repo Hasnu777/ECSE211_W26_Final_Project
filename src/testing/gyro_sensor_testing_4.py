@@ -14,17 +14,13 @@ from cmath import isclose
 import time
 import math
 from utils import brick
-from utils.brick import BP, Motor,  EV3GyroSensor
+from utils.brick import BP, Motor
 
 MOTOR_POLL_DELAY = 0.05
 
-GYRO = EV3GyroSensor(4, mode="both")
-
-
-# TODO change this value
 SQUARE_LENGTH = 0.5   # (meters) Side length of square
-WHEEL_RADIUS = 0.0145  # (meters) Radius of one wheel
-AXLE_LENGTH = 0.143   # (meters) Distance between wheel contacts
+WHEEL_RADIUS = 0.028  # (meters) Radius of one wheel
+AXLE_LENGTH = 0.11    # (meters) Distance between wheel contacts
 
 DIST_TO_DEG = 180 / (math.pi * WHEEL_RADIUS)
 ORIENT_TO_DEG = AXLE_LENGTH / WHEEL_RADIUS
@@ -46,6 +42,7 @@ def wait_for_motor(motor: Motor):
     while not math.isclose(motor.get_speed(), 0):
         time.sleep(MOTOR_POLL_DELAY)
 
+
 def init_motor(motor: Motor):
     """Initialize motor"""
     try:
@@ -54,6 +51,7 @@ def init_motor(motor: Motor):
         motor.set_power(0)
     except IOError as error:
         print(error)
+
 
 def move_dist_fwd(distance, speed):
     """Move forward (meters, dps)"""
@@ -71,6 +69,7 @@ def move_dist_fwd(distance, speed):
     except IOError as error:
         print(error)
 
+
 def rotate_bot(angle, speed):
     """Rotate in place (degrees, dps)"""
     try:
@@ -87,70 +86,40 @@ def rotate_bot(angle, speed):
     except IOError as error:
         print(error)
 
-def turnLeft(angle, speed):
-    """Rotate in place (degrees, dps)"""
-    try:
-        LEFT_MOTOR.set_dps(speed)
-        RIGHT_MOTOR.set_dps(speed)
 
-        LEFT_MOTOR.set_limits(POWER_LIMIT, speed)
-        RIGHT_MOTOR.set_limits(POWER_LIMIT, speed)
+def do_square(side_length):
+    for _ in range(4):
+        move_dist_fwd(side_length, FWD_SPEED)
+        rotate_bot(90, TRN_SPEED)
 
-        LEFT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
-        RIGHT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
+    LEFT_MOTOR.set_power(0)
+    RIGHT_MOTOR.set_power(0)
 
-        wait_for_motor(RIGHT_MOTOR)
-    except IOError as error:
-        print(error)
 
-def turnRight(angle, speed):
-    """Rotate in place (degrees, dps)"""
-    try:
-        LEFT_MOTOR.set_dps(speed)
-        RIGHT_MOTOR.set_dps(speed)
+try:
+    print("Square Driving Demo")
 
-        LEFT_MOTOR.set_limits(POWER_LIMIT, speed)
-        RIGHT_MOTOR.set_limits(POWER_LIMIT, speed)
+    init_motor(LEFT_MOTOR)
+    init_motor(RIGHT_MOTOR)
 
-        LEFT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
-        RIGHT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
+    while True:
+        side_length = SQUARE_LENGTH
 
-        wait_for_motor(RIGHT_MOTOR)
-    except IOError as error:
-        print(error)
+        resp = input(
+            f"Override default side length ({side_length:.2f}m)? y/n (q for quit): "
+        )
 
-def find_gyro_diff(old, now):
-    return abs(old - now)  # TODO: you might want to remove abs
+        if resp.lower() == "y":
+            side_length = float(input("Enter square side length (m): "))
 
-def turn_90_deg():
-    actual_turn_angle = 180
-    expected_turn_angle = 90
+        if resp.lower() == "q":
+            BP.reset_all()
+            exit()
 
-    GYRO.reset_measure()
-    angle_before_turn = GYRO.get_abs_measure()
-    turnRight(actual_turn_angle, 100)
-    time.sleep(1)
-    angle_after_turn = GYRO.get_abs_measure()
+        print(f"Starting square driver with side length = {side_length:.2f}m")
 
-    expected = expected_turn_angle
+        do_square(side_length)
 
-    delta_turn = find_gyro_diff(angle_after_turn, angle_before_turn)
-    print("delta_turns: ", delta_turn)
-
-    delta_expected_from_unexpected = (expected - delta_turn)
-    print("delta_expected_from_unexpected: ", delta_expected_from_unexpected)
-
-    if (delta_expected_from_unexpected > 0):
-        print("one")
-        turnRight(delta_expected_from_unexpected, 100)
-        # turnRight(delta2) # Adjustment to reach 90 deg again
-        time.sleep(1)
-    elif (delta_expected_from_unexpected < 0):
-        print("two")
-        turnRight(delta_expected_from_unexpected, 100)
-        # turnLeft(delta2) # Adjustment to reach 90 deg again
-        time.sleep(1)
-
-if __name__ == "__main__":
-    turn_90_deg()
-    
+except KeyboardInterrupt:
+    BP.reset_all()
+    print("\nProgram stopped")
