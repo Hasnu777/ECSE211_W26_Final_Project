@@ -63,17 +63,30 @@ if __name__ == "__main__":
     #right turn overshoot
     start = currentAngle
     print("angle before rotation is: " + str(start))
-    motor_L.set_position_relative(343)
-    motor_R.set_position_relative(-343)
+    motor_L.set_position_relative(500) #rotate 90 degrees
+    motor_R.set_position_relative(-500)
     time.sleep(2)
-    turn = currentAngle - start
-    while turn != 90:
-        error = 90 - turn
-        print("error is " + str(error))
+    delta = currentAngle - start
+    while not (delta < 92 and delta > 88):
+        delta = currentAngle - start
+        error = (start + 90) - delta
+        # print("error is " + str(error))
+        """        
         correction = error * 0.5
         motor_L.set_position_relative(correction)
-        motor_R.set_position_relative(-correction)
-    
+        motor_R.set_position_relative(-correction) 
+        """
+
+        while error > 0:
+            motor_L.set_position_relative(1)
+            motor_R.set_position_relative(-1) 
+            error = (start + 90) - delta
+
+        while error < 0:
+            motor_L.set_position_relative(-1)
+            motor_R.set_position_relative(1) 
+
+            error = (start + 90) - delta
 
     while True:
 #         print("currentAngle is " + str(currentAngle))
