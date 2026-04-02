@@ -71,16 +71,28 @@ def find_gyro_diff(old, now):
 def turn_90_deg():
     GYRO.reset_measure()
     old = GYRO.get_abs_measure()
-    turnRight(338)
+    turnRight(400)
+    time.sleep(1)
     new = GYRO.get_abs_measure()
+    
+    expected = 90
 
     delta = find_gyro_diff(old, new)
+    print(delta)
+    
+    delta2 = (expected - delta)
+    print("delta2: ", delta2)
 
-    if (find_gyro_diff() < 0):
-        turnRight(delta) # Adjustment to reach 90 deg again
-    elif (find_gyro_diff() > 0):
-        turnLeft(delta) # Adjustment to reach 90 deg again
-
+    if (delta2 > 0):
+        print("one")
+        turnRight(delta2)
+        #turnRight(delta2) # Adjustment to reach 90 deg again
+        time.sleep(1)
+    elif (delta2 < 0):
+        print("two")
+        turnRight(delta2*3)
+        #turnLeft(delta2) # Adjustment to reach 90 deg again
+        time.sleep(1)
 
 if __name__ == "__main__":
     # constantly_measure()
