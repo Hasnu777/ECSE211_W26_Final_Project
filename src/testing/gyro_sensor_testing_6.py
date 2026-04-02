@@ -28,8 +28,8 @@ ORIENT_TO_DEG = AXLE_LENGTH / WHEEL_RADIUS
 FWD_SPEED = 100   # (deg/sec)
 TRN_SPEED = 180   # (deg/sec)
 
-LEFT_MOTOR = Motor("A")
-RIGHT_MOTOR = Motor("D")
+LEFT_MOTOR = Motor("D")
+RIGHT_MOTOR = Motor("A")
 GYRO = EV3GyroSensor(4, mode="both")
 
 POWER_LIMIT = 80
@@ -105,7 +105,7 @@ def turn_90_deg():
 
     # Make the robot turn and
     angle_before_turn = GYRO.get_abs_measure()
-    rotate_bot(180, 200, RIGHT)
+    rotate_bot(150, 200, LEFT)
     time.sleep(1)
     angle_after_turn = GYRO.get_abs_measure()
 
@@ -116,12 +116,12 @@ def turn_90_deg():
     print("delta_expected_from_unexpected: ", delta)
 
     if delta > 0: # if delta positive, robot overshooting right
-        print("Case one: Right turn overshoot")
-        rotate_bot(delta, 100, LEFT)
+        print("Case one: LEFT turn overshoot")
+        rotate_bot(abs(delta) + 2, 100, RIGHT)
         time.sleep(1)
     elif delta < 0: # if delta negative, robot overshooting left
-        print("Case two: Left turn overshoot")
-        rotate_bot(delta, 100, RIGHT)
+        print("Case two: RIGHT turn overshoot")
+        rotate_bot(abs(delta) + 2, 100, LEFT)
         time.sleep(1)
 
     print("-------------------------------------------------")
@@ -130,16 +130,17 @@ def turn_90_deg():
 # Purely for test
 def check_rotation_sign():
     while (True):
-    # Turn counterclockwise
-    rotate_bot(10, 100, "right")
-    print("Value:", GYRO.get_abs_measure())
-    print("-------------------------------------------")
-    # Turn counterclockwise
-    # rotate_bot(10, 100, "right")
-    # print("Value:", GYRO.get_abs_measure())
+        # Turn counterclockwise
+        rotate_bot(10, 100, "right")
+        print("Value:", GYRO.get_abs_measure())
+        print("-------------------------------------------")
+        # Turn counterclockwise
+        # rotate_bot(10, 100, "right")
+        # print("Value:", GYRO.get_abs_measure())
 
-    time.sleep(1)
+        time.sleep(1)
 
 
 if __name__ == "__main__":
+    #check_rotation_sign()
     turn_90_deg()
