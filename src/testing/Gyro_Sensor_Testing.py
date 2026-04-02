@@ -69,10 +69,10 @@ if __name__ == "__main__":
     motor_L.set_position_relative(343)
     motor_R.set_position_relative(-343)
 #     dps = 200 #set arbitrary val
-    while dps != 0:
-        turn = target - start
-    print(turn)
-    time.sleep(0.1)
+#     while dps != 0:
+#         turn = target - start
+#     print(turn)
+#     time.sleep(0.1)
 
 #     error = 90-turn
 #     if turn != 90:
