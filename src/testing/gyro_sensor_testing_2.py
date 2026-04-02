@@ -31,8 +31,6 @@ def constantly_measure():
         time.sleep(1)
         print("------------------------------------------------------")
 
-
-
 def constantly_measure_2():
     GYRO.reset_measure()
     angle_before = GYRO.get_abs_measure()
@@ -56,7 +54,6 @@ def turnRight(amount):
     wheel_L.set_limits(power=50,dps=425)
     wheel_R.set_limits(power=50,dps=425)
 
-
 def turnLeft(amount):
     wheel_L.set_limits(power=30,dps=300)
     wheel_R.set_limits(power=30,dps=300)
@@ -66,31 +63,34 @@ def turnLeft(amount):
     wheel_L.set_limits(power=50,dps=425)
 
 def find_gyro_diff(old, now):
-    return abs(old - now)
+    return abs(old - now)  # TODO: you might want to remove abs
 
 def turn_90_deg():
+    actual_turn_angle = 400
+    expected_turn_angle = 90
+
     GYRO.reset_measure()
-    old = GYRO.get_abs_measure()
-    turnRight(400)
+    angle_before_turn = GYRO.get_abs_measure()
+    turnRight(actual_turn_angle)
     time.sleep(1)
-    new = GYRO.get_abs_measure()
+    angle_after_turn = GYRO.get_abs_measure()
     
-    expected = 90
+    expected = expected_turn_angle
 
-    delta = find_gyro_diff(old, new)
-    print(delta)
+    delta_turn = find_gyro_diff(angle_after_turn, angle_before_turn)
+    print("delta_turns: ", delta_turn)
     
-    delta2 = (expected - delta)
-    print("delta2: ", delta2)
+    delta_expected_from_unexpected = (expected - delta_turn)
+    print("delta_expected_from_unexpected: ", delta_expected_from_unexpected)
 
-    if (delta2 > 0):
+    if (delta_expected_from_unexpected > 0):
         print("one")
-        turnRight(delta2)
+        turnRight(delta_expected_from_unexpected)
         #turnRight(delta2) # Adjustment to reach 90 deg again
         time.sleep(1)
-    elif (delta2 < 0):
+    elif (delta_expected_from_unexpected < 0):
         print("two")
-        turnRight(delta2*3)
+        turnRight(delta_expected_from_unexpected * 3)
         #turnLeft(delta2) # Adjustment to reach 90 deg again
         time.sleep(1)
 
