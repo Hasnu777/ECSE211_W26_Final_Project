@@ -61,19 +61,21 @@ if __name__ == "__main__":
     # t1.start()
     
     #right turn overshoot
+    Gyro.reset_measure()
     start = Gyro.get_abs_measure()
     print("start is " + str(start))
-    print("angle before rotation is: " + str(start))
-    motor_L.set_position_relative(500) #rotate 90 degrees
+    motor_L.set_position_relative(500) #rotate 90 degrees, overshot
     motor_R.set_position_relative(-500)
     time.sleep(2)
+    print ("current angle is " + str(Gyro.get_abs_measure()))
     delta = Gyro.get_abs_measure() - start
     print("delta is " + str(delta))
     while not (delta < 92 and delta > 88):
         print("while loop entered")
-        delta = Gyro.get_abs_measure() - start
+        current = Gyro.get_abs_measure()
+        delta =  current - start
         error = (start + 90) - delta
-        # print("error is " + str(error))
+        print("error is " + str(error))
           
         correction = error * 0.5
 #         motor_L.set_position_relative(correction)
@@ -85,17 +87,22 @@ if __name__ == "__main__":
                 print("overshot")
                 motor_L.set_position_relative(-correction)
                 motor_R.set_position_relative(correction)
-                correction *= 0.5
+                
                 time.sleep(0.2)
                 error = (start + 90) - delta
+                correction = error*0.5
+                current = Gyro.get_abs_measure()
+                delta =  current - start
             elif error < -1:
                 print("undershot")
                 motor_L.set_position_relative(correction)
                 motor_R.set_position_relative(-correction)
-                correction *= 0.5
+              
                 time.sleep(0.2)
                 error = (start + 90) - delta
-
+                correction = error*0.5
+                current = Gyro.get_abs_measure()
+                delta =  current - start
     while True:
 #         print("currentAngle is " + str(currentAngle))
         print("dps is " + str(dps))
