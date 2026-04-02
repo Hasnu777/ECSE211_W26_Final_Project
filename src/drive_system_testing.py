@@ -1,13 +1,13 @@
 #from src.utils import sound
-from src.utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sensors
+from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, wait_ready_sensors
 import time
 import threading
 
 
 # -------------------- SENSORS AND MOTORS --------------------
-m1 = Motor("A")
-m2 = Motor("B")
-
+m_R = Motor("A")
+m_L = Motor("D")
+TS = TouchSensor(2)
 # m1.setlimits()
 # m2.setlimits()
 
@@ -47,4 +47,14 @@ def main():
 
 if __name__ == "__main__":
     print("test")
-    main()
+    m_R.reset_encoder()
+    m_L.reset_encoder()
+    
+    m_R.set_dps(200)
+    m_L.set_dps(200)
+    while True:
+        if TS.is_pressed():
+            m_R.set_dps(0)
+            m_L.set_dps(0)
+    
+    
