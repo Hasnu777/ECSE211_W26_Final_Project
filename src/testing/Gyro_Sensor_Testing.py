@@ -57,35 +57,41 @@ if __name__ == "__main__":
     currentAngle = 0
     dps = 0
     running = True
-    t1 = Thread(currentAngle = continuous_measure_gyro)
+    t1 = Thread(target = continuous_measure_gyro)
     t1.start()
     
     #right turn overshoot
     start = currentAngle
+    print("start is " + str(start))
     print("angle before rotation is: " + str(start))
     motor_L.set_position_relative(500) #rotate 90 degrees
     motor_R.set_position_relative(-500)
     time.sleep(2)
     delta = currentAngle - start
+    print("delta is " + str(delta))
     while not (delta < 92 and delta > 88):
+        print("while loop entered")
         delta = currentAngle - start
         error = (start + 90) - delta
         # print("error is " + str(error))
-        """        
+          
         correction = error * 0.5
-        motor_L.set_position_relative(correction)
-        motor_R.set_position_relative(-correction) 
-        """
+#         motor_L.set_position_relative(correction)
+#         motor_R.set_position_relative(-correction) 
+        
 
         while error > 0:
-            motor_L.set_position_relative(1)
-            motor_R.set_position_relative(-1) 
+            print("overshot")
+            motor_L.set_position_relative(-correction)
+            motor_R.set_position_relative(correction)
+            time.sleep(0.2)
             error = (start + 90) - delta
 
         while error < 0:
-            motor_L.set_position_relative(-1)
-            motor_R.set_position_relative(1) 
-
+            print("undershot")
+            motor_L.set_position_relative(correction)
+            motor_R.set_position_relative(-correction)
+            time.sleep(0.2)
             error = (start + 90) - delta
 
     while True:
