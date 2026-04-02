@@ -1,0 +1,38 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = git@github.com:Hasnu777/ECSE211_W26_Final_Project.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
+[branch "test/claw_mechanism"]
+	remote = origin
+	merge = refs/heads/test/claw_mechanism
+[branch "experiment/color_identification"]
+	remote = origin
+	merge = refs/heads/experiment/color_identification
+[branch "cleaning_main"]
+	remote = origin
+	merge = refs/heads/cleaning_main
+[branch "test/jingle"]
+	remote = origin
+	merge = refs/heads/test/jingle
+[branch "experiment/integrate_drive_color"]
+	remote = origin
+	merge = refs/heads/experiment/integrate_drive_color
+[branch "test/drive_system"]
+	remote = origin
+	merge = refs/heads/test/drive_system
+[branch "test/gyro_sensor"]
+	remote = origin
+	merge = refs/heads/test/gyro_sensor
+[branch "experiment/integrate_gyro"]
+	remote = origin
+	merge = refs/heads/experiment/integrate_gyro
+[branch "experiment/gyro_encoder"]
+	remote = origin
+	merge = refs/heads/experiment/gyro_encoder

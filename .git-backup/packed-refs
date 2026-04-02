@@ -1,0 +1,10 @@
+# pack-refs with: peeled fully-peeled 
+d2b7ea30d9f48be2618dbf9678080ee624291a28 refs/remotes/origin/experiment/color_identification
+9915cc88e9cfc30996872694b42ae4c3181b3d95 refs/remotes/origin/experiment/integrate_drive_color
+d464a3c36d8fdd0651dbd507f4f06fa9cec26b14 refs/remotes/origin/experiment/line_follower
+96384453be5b97b0c3e5f942a7e56675054211a7 refs/remotes/origin/main
+56ea7fe65769b7eacc9a18af90473f842b84facf refs/remotes/origin/test/claw_mechanism
+6323613560f60925d9117a5803e57f3923acd638 refs/remotes/origin/test/color_sensor_calibration
+3b18bb8de51454065451a94e97aed04ceabe2ae6 refs/remotes/origin/test/drive_system
+50097ae0eefaf4a9e5608cc01a328de87f5a53da refs/remotes/origin/test/gyro_sensor
+7079865b78f5d6f02a7e52f39875deeb9056291d refs/remotes/origin/test/line_follower

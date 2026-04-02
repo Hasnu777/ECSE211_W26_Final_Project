@@ -147,4 +147,4 @@ def check_rotation_sign():
 
 
 if __name__ == "__main__":
-    turn_90_deg(RIGHT)
+    turn_90_deg(LEFT)
