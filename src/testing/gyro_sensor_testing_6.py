@@ -19,7 +19,7 @@ from utils.brick import BP, Motor, EV3GyroSensor
 MOTOR_POLL_DELAY = 0.05
 
 SQUARE_LENGTH = 0.5   # (meters) Side length of square
-WHEEL_RADIUS = 0.02  # (meters) Radius of one wheel
+WHEEL_RADIUS = 0.0205  # (meters) Radius of one wheel
 AXLE_LENGTH = 0.075   # (meters) Distance between wheel contacts
 
 DIST_TO_DEG = 180 / (math.pi * WHEEL_RADIUS)
@@ -88,7 +88,7 @@ def rotate_bot(angle, speed):
         print(error)
 
 
-def turnLeft(angle, speed):
+def turnRight(angle, speed):
     """Rotate in place (degrees, dps)"""
     try:
         LEFT_MOTOR.set_dps(speed)
@@ -105,7 +105,7 @@ def turnLeft(angle, speed):
         print(error)
 
 
-def turnRight(angle, speed):
+def turnLeft(angle, speed):
     """Rotate in place (degrees, dps)"""
     try:
         LEFT_MOTOR.set_dps(speed)
@@ -122,23 +122,27 @@ def turnRight(angle, speed):
         print(error)
 
 
-def find_gyro_diff(old, now):
-    return abs(old - now)  # TODO: you might want to remove abs
-
+def find_gyro_diff(old, now, expected):
+    mod = (now - old) % expected
+    if (mod >= 0):
+        return mod
+    else:
+        return -mod
 
 def turn_90_deg():
-    actual_turn_angle = 180
+    actual_turn_angle = 150
     expected_turn_angle = 90
 
     GYRO.reset_measure()
     angle_before_turn = GYRO.get_abs_measure()
-    turnRight(actual_turn_angle, 200)
+    #turnRight(actual_turn_angle, 200)
+    turnLeft(actual_turn_angle, 200)
     time.sleep(1)
     angle_after_turn = GYRO.get_abs_measure()
 
     expected = expected_turn_angle
 
-    delta_turn = find_gyro_diff(angle_after_turn, angle_before_turn)
+    delta_turn = find_gyro_diff(angle_after_turn, angle_before_turn, expected)
     print("delta_turns: ", delta_turn)
 
     delta_expected_from_unexpected = (expected - delta_turn)
@@ -146,15 +150,16 @@ def turn_90_deg():
 
     if delta_expected_from_unexpected > 0:
         print("one")
-        turnRight(delta_expected_from_unexpected, 100)
+        turnLeft(delta_expected_from_unexpected, 100) # 5 is just a corrective constant
         # turnRight(delta2) # Adjustment to reach 90 deg again
         time.sleep(1)
     elif delta_expected_from_unexpected < 0:
         print("two")
-        turnRight(delta_expected_from_unexpected, 100)
+        turnRight(delta_expected_from_unexpected - 5, 100)
         # turnLeft(delta2) # Adjustment to reach 90 deg again
         time.sleep(1)
 
 
 if __name__ == "__main__":
+    #turnRight(30, 200)
     turn_90_deg()
