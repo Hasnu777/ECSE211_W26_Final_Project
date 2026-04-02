@@ -35,6 +35,9 @@ GYRO = EV3GyroSensor(4, mode="both")
 POWER_LIMIT = 80
 SPEED_LIMIT = 720
 
+RIGHT = "right"
+LEFT = "left"
+
 
 def wait_for_motor(motor: Motor):
     """Block until motor finishes motion"""
@@ -71,8 +74,8 @@ def move_dist_fwd(distance, speed):
         print(error)
 
 
-def rotate_bot(angle, speed):
-    """Rotate in place (degrees, dps)"""
+def rotate_bot(angle, speed, direction):
+    """Rotate in place (degrees, dps, "right"/"left")"""
     try:
         LEFT_MOTOR.set_dps(speed)
         RIGHT_MOTOR.set_dps(speed)
@@ -80,42 +83,12 @@ def rotate_bot(angle, speed):
         LEFT_MOTOR.set_limits(POWER_LIMIT, speed)
         RIGHT_MOTOR.set_limits(POWER_LIMIT, speed)
 
-        LEFT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
-        RIGHT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
-
-        wait_for_motor(RIGHT_MOTOR)
-    except IOError as error:
-        print(error)
-
-
-def turnLeft(angle, speed):
-    """Rotate in place (degrees, dps)"""
-    try:
-        LEFT_MOTOR.set_dps(speed)
-        RIGHT_MOTOR.set_dps(speed)
-
-        LEFT_MOTOR.set_limits(POWER_LIMIT, speed)
-        RIGHT_MOTOR.set_limits(POWER_LIMIT, speed)
-
-        LEFT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
-        RIGHT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
-
-        wait_for_motor(LEFT_MOTOR)
-    except IOError as error:
-        print(error)
-
-
-def turnRight(angle, speed):
-    """Rotate in place (degrees, dps)"""
-    try:
-        LEFT_MOTOR.set_dps(speed)
-        RIGHT_MOTOR.set_dps(speed)
-
-        LEFT_MOTOR.set_limits(POWER_LIMIT, speed)
-        RIGHT_MOTOR.set_limits(POWER_LIMIT, speed)
-
-        LEFT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
-        RIGHT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
+        if direction == RIGHT:
+            LEFT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
+            RIGHT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
+        elif direction == LEFT:
+            LEFT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
+            RIGHT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
 
         wait_for_motor(RIGHT_MOTOR)
     except IOError as error:
@@ -127,34 +100,41 @@ def find_gyro_diff(old, now):
 
 
 def turn_90_deg():
-    actual_turn_angle = 180
     expected_turn_angle = 90
-
     GYRO.reset_measure()
+
+    # Make the robot turn and
     angle_before_turn = GYRO.get_abs_measure()
-    turnRight(actual_turn_angle, 200)
+    rotate_bot(180, 200, "right")
     time.sleep(1)
     angle_after_turn = GYRO.get_abs_measure()
 
-    expected = expected_turn_angle
 
-    delta_turn = find_gyro_diff(angle_after_turn, angle_before_turn)
-    print("delta_turns: ", delta_turn)
+    actual_turn_angle = find_gyro_diff(angle_after_turn, angle_before_turn)
+    print("actual_turn_angle: ", actual_turn_angle)
 
-    delta_expected_from_unexpected = (expected - delta_turn)
+    delta_expected_from_unexpected = (expected_turn_angle - actual_turn_angle)
     print("delta_expected_from_unexpected: ", delta_expected_from_unexpected)
 
     if delta_expected_from_unexpected > 0:
-        print("one")
-        turnRight(delta_expected_from_unexpected, 100)
-        # turnRight(delta2) # Adjustment to reach 90 deg again
+        print("Case one: Right turn overshoot")
+        rotate_bot(delta_expected_from_unexpected, 100, RIGHT)
         time.sleep(1)
     elif delta_expected_from_unexpected < 0:
-        print("two")
-        turnRight(delta_expected_from_unexpected, 100)
-        # turnLeft(delta2) # Adjustment to reach 90 deg again
+        print("Case two: Left turn overshoot")
+        rotate_bot(delta_expected_from_unexpected, 100)
         time.sleep(1)
 
+    print("-------------------------------------------------")
 
 if __name__ == "__main__":
-    turn_90_deg()
+    while (True):
+        # Turn counterclockwise
+        rotate_bot(10, 100, "right")
+        print("Value:", GYRO.get_abs_measure())
+        print("-------------------------------------------")
+        # Turn counterclockwise
+        #rotate_bot(10, 100, "right")
+        #print("Value:", GYRO.get_abs_measure())
+
+        time.sleep(1)
