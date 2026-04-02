@@ -99,7 +99,7 @@ def find_gyro_diff(old, now):
     return abs(old - now)  # TODO: you might want to remove abs
 
 
-def turn_90_deg():
+def turn_90_deg(direction):
     expected_turn_angle = 90
     GYRO.reset_measure()
 
@@ -116,12 +116,17 @@ def turn_90_deg():
     print("delta_expected_from_unexpected: ", delta)
 
     if delta > 0: # if delta positive, robot overshooting right
-        print("Case one: Right turn overshoot")
-        rotate_bot(delta, 100, LEFT)
+        print("Overshoot case")
+        if (direction == LEFT):
+            rotate_bot(delta, 100, RIGHT)
+        else:
+            rotate_bot(delta, 100, LEFT)
         time.sleep(1)
     elif delta < 0: # if delta negative, robot overshooting left
-        print("Case two: Left turn overshoot")
-        rotate_bot(delta, 100, RIGHT)
+        if (direction == LEFT):
+            rotate_bot(delta, 100, LEFT)
+        else:
+            rotate_bot(delta, 100, RIGHT)
         time.sleep(1)
 
     print("-------------------------------------------------")
@@ -130,16 +135,16 @@ def turn_90_deg():
 # Purely for test
 def check_rotation_sign():
     while (True):
-    # Turn counterclockwise
-    rotate_bot(10, 100, "right")
-    print("Value:", GYRO.get_abs_measure())
-    print("-------------------------------------------")
-    # Turn counterclockwise
-    # rotate_bot(10, 100, "right")
-    # print("Value:", GYRO.get_abs_measure())
+        # Turn counterclockwise
+        rotate_bot(10, 100, "right")
+        print("Value:", GYRO.get_abs_measure())
+        print("-------------------------------------------")
+        # Turn counterclockwise
+        # rotate_bot(10, 100, "right")
+        # print("Value:", GYRO.get_abs_measure())
 
-    time.sleep(1)
+        time.sleep(1)
 
 
 if __name__ == "__main__":
-    turn_90_deg()
+    turn_90_deg(RIGHT)
