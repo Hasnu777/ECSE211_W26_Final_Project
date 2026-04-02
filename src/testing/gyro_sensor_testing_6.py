@@ -122,9 +122,10 @@ def turnLeft(angle, speed):
         print(error)
 
 
-def find_gyro_diff(old, now, expected):
-    mod = (now - old) % expected
-    if (mod >= 0):
+def find_gyro_diff(old, now):
+    diff = now - old
+    mod = diff % 360
+    if (diff >= 0):
         return mod
     else:
         return -mod
@@ -135,14 +136,14 @@ def turn_90_deg():
 
     GYRO.reset_measure()
     angle_before_turn = GYRO.get_abs_measure()
-    #turnRight(actual_turn_angle, 200)
-    turnLeft(actual_turn_angle, 200)
+    turnRight(actual_turn_angle, 200)
+    #turnLeft(actual_turn_angle, 200)
     time.sleep(1)
     angle_after_turn = GYRO.get_abs_measure()
 
     expected = expected_turn_angle
 
-    delta_turn = find_gyro_diff(angle_after_turn, angle_before_turn, expected)
+    delta_turn = find_gyro_diff(angle_after_turn, angle_before_turn)
     print("delta_turns: ", delta_turn)
 
     delta_expected_from_unexpected = (expected - delta_turn)
