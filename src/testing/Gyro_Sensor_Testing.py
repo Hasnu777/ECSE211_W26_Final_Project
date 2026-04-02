@@ -74,35 +74,58 @@ if __name__ == "__main__":
         print("while loop entered")
         current = Gyro.get_abs_measure()
         delta =  current - start
-        error = (start + 90) - delta
+        error = 90 - delta
         print("error is " + str(error))
-          
+        if (-1 < error < 1):
+            break
         correction = error * 0.5
+        if error > 1:
+            print("overshoot detected, time to correct it!")
+            motor_L.set_position_relative(-correction)
+            motor_R.set_position_relative(correction)
+            print("Corrected the overshoot, I think, let's re-loop and check again!")
+            time.sleep(0.2)
+            current = Gyro.get_abs_measure()
+            delta = current - start
+            print("New delta post-overshoot-correction calculated to be", str(delta))
+        elif error < -1:
+            print("undershoot detected, time to correct it!")
+            motor_L.set_position_relative(correction)
+            motor_R.set_position_relative(-correction)
+            print("Corrected the undershoot, I think, let's re-loop and check again!")
+            time.sleep(0.2)
+            current = Gyro.get_abs_measure()
+            delta = current - start
+            print("New delta post-undershoot-correction calculated to be", str(delta))
+
+
+          
+        
 #         motor_L.set_position_relative(correction)
 #         motor_R.set_position_relative(-correction) 
         
 
-        while abs(error) > 1:
-            if error > 1:
-                print("overshot")
-                motor_L.set_position_relative(-correction)
-                motor_R.set_position_relative(correction)
+        # while abs(error) > 1:
+        #     if error > 1:
+        #         print("overshot")
+        #         motor_L.set_position_relative(-correction)
+        #         motor_R.set_position_relative(correction)
                 
-                time.sleep(0.2)
-                error = (start + 90) - delta
-                correction = error*0.5
-                current = Gyro.get_abs_measure()
-                delta =  current - start
-            elif error < -1:
-                print("undershot")
-                motor_L.set_position_relative(correction)
-                motor_R.set_position_relative(-correction)
+        #         time.sleep(0.2)
+        #         error = 90 - delta
+        #         correction = error*0.5
+        #         current = Gyro.get_abs_measure()
+        #         delta =  current - start
+        #     elif error < -1:
+        #         print("undershot")
+        #         motor_L.set_position_relative(correction)
+        #         motor_R.set_position_relative(-correction)
               
-                time.sleep(0.2)
-                error = (start + 90) - delta
-                correction = error*0.5
-                current = Gyro.get_abs_measure()
-                delta =  current - start
+        #         time.sleep(0.2)
+        #         error = 90 - delta
+        #         correction = error*0.5
+        #         current = Gyro.get_abs_measure()
+        #         delta =  current - start
     while True:
 #         print("currentAngle is " + str(currentAngle))
         print("dps is " + str(dps))
