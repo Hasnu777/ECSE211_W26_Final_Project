@@ -102,14 +102,14 @@ def rotate_with_gyro_correction(turn_angle, direction):
 
     # Make the robot turn
     angle_before_turn = GYRO.get_abs_measure()
-    while angle_before_turn == None:
+    while angle_before_turn is None:
         angle_before_turn = GYRO.get_abs_measure()
 
     rotate_bot(turn_angle, 200, direction)
     time.sleep(1)
 
     angle_after_turn = GYRO.get_abs_measure()
-    while angle_after_turn == None:
+    while angle_after_turn is None:
         angle_before_turn = GYRO.get_abs_measure()
 
     actual_turn_angle = find_gyro_diff(angle_after_turn, angle_before_turn)
