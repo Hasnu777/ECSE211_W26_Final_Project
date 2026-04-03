@@ -60,7 +60,8 @@ def move_dist_fwd(distance, speed):
         LEFT_WHEEL.set_position_relative(int(distance * DIST_TO_DEG))
         RIGHT_WHEEL.set_position_relative(int(distance * DIST_TO_DEG))
 
-        wait_for_motor(RIGHT_WHEEL)
+        
+        #wait_for_motor(RIGHT_WHEEL)
     except IOError as error:
         print(error)
 
