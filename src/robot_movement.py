@@ -1,0 +1,145 @@
+#!/usr/bin/python3
+"""
+Code insipred by example shown in BrickPi2 Slides by F.P. Ferrie, Ryan Au
+"""
+
+from cmath import isclose
+import time
+import math
+from utils.brick import Motor, EV3GyroSensor
+
+MOTOR_POLL_DELAY = 0.05
+
+SQUARE_LENGTH = 0.5   # (meters) Side length of square
+WHEEL_RADIUS = 0.02  # (meters) Radius of one wheel
+AXLE_LENGTH = 0.075   # (meters) Distance between wheel contacts
+
+DIST_TO_DEG = 180 / (math.pi * WHEEL_RADIUS)
+ORIENT_TO_DEG = AXLE_LENGTH / WHEEL_RADIUS
+
+FWD_SPEED = 100   # (deg/sec)
+TRN_SPEED = 180   # (deg/sec)
+
+LEFT_MOTOR = Motor("D")
+RIGHT_MOTOR = Motor("A")
+GYRO = EV3GyroSensor(4, mode="both")
+
+POWER_LIMIT = 80
+SPEED_LIMIT = 720
+
+RIGHT = "right"
+LEFT = "left"
+
+
+def wait_for_motor(motor: Motor):
+    """Block until motor finishes motion"""
+    while math.isclose(motor.get_speed(), 0):
+        time.sleep(MOTOR_POLL_DELAY)
+    while not math.isclose(motor.get_speed(), 0):
+        time.sleep(MOTOR_POLL_DELAY)
+
+
+def init_motor(motor: Motor):
+    """Initialize motor"""
+    try:
+        motor.reset_encoder()
+        motor.set_limits(POWER_LIMIT, SPEED_LIMIT)
+        motor.set_power(0)
+    except IOError as error:
+        print(error)
+
+
+def move_dist_fwd(distance, speed):
+    """Move forward (meters, dps)"""
+    try:
+        LEFT_MOTOR.set_dps(speed)
+        RIGHT_MOTOR.set_dps(speed)
+
+        LEFT_MOTOR.set_limits(POWER_LIMIT, speed)
+        RIGHT_MOTOR.set_limits(POWER_LIMIT, speed)
+
+        LEFT_MOTOR.set_position_relative(int(distance * DIST_TO_DEG))
+        RIGHT_MOTOR.set_position_relative(int(distance * DIST_TO_DEG))
+
+        wait_for_motor(RIGHT_MOTOR)
+    except IOError as error:
+        print(error)
+
+
+def rotate_bot(angle, speed, direction):
+    """Rotate in place (degrees, dps, "right"/"left")"""
+    try:
+        LEFT_MOTOR.set_dps(speed)
+        RIGHT_MOTOR.set_dps(speed)
+
+        LEFT_MOTOR.set_limits(POWER_LIMIT, speed)
+        RIGHT_MOTOR.set_limits(POWER_LIMIT, speed)
+
+        if direction == RIGHT:
+            LEFT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
+            RIGHT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
+        elif direction == LEFT:
+            LEFT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
+            RIGHT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
+
+        wait_for_motor(RIGHT_MOTOR)
+    except IOError as error:
+        print(error)
+
+
+def find_gyro_diff(now, old):
+    return now - old
+
+
+def rotate_with_gyro_correction(turn_angle, direction):
+    """Rotate in place, but with gyro correction (angle (in abs value), direction)"""
+    if direction == RIGHT:
+        desired_turn_angle = turn_angle
+    elif direction == LEFT:
+        desired_turn_angle = -turn_angle
+
+    GYRO.reset_measure()
+
+    # Make the robot turn
+    angle_before_turn = GYRO.get_abs_measure()
+    rotate_bot(turn_angle, 200, direction)
+    time.sleep(1)
+    angle_after_turn = GYRO.get_abs_measure()
+
+    actual_turn_angle = find_gyro_diff(angle_after_turn, angle_before_turn)
+    print("actual_turn_angle: ", actual_turn_angle)
+
+    delta = (actual_turn_angle - desired_turn_angle)  # delta between real and expected turn angles
+    print("delta_expected_from_unexpected: ", delta)
+
+    # split problem by direction
+    if direction == RIGHT:
+        if delta > 0: # if delta positive, robot overshooting
+            print("Overshoot case")
+            rotate_bot(delta, 100, LEFT)
+            time.sleep(1)
+        elif delta < 0: # if delta negative, robot undershooting
+            print("Undershoot case")
+            rotate_bot(delta, 100, LEFT)
+            time.sleep(1)
+    if direction == LEFT:
+        if delta < 0: # if delta negative, robot overshooting
+            print("Overshoot case")
+            rotate_bot(delta, 100, LEFT)
+            time.sleep(1)
+        elif delta > 0: # if delta positive, robot undershooting
+            print("Undershoot case")
+            rotate_bot(delta, 100, LEFT)
+            time.sleep(1)
+
+    print("-------------------------------------------------")
+
+def wiggle():
+    for i in 4:
+        rotate_with_gyro_correction(80, RIGHT)
+        move_dist_fwd(0.05)
+        rotate_with_gyro_correction(80, LEFT)
+        move_dist_fwd(0.05)
+
+if __name__ == "__main__":
+    wiggle()
