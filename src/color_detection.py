@@ -5,7 +5,7 @@ import threading
 from color import *
 
 # -------- Sensor Setup --------
-color_sensor = EV3ColorSensor(4)
+color_sensor = EV3ColorSensor(3)
 touch_sensor = TouchSensor(2)
 wait_ready_sensors(True)
 
