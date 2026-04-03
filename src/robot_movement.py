@@ -3,14 +3,13 @@
 Code insipred by example shown in BrickPi2 Slides by F.P. Ferrie, Ryan Au
 """
 
-from cmath import isclose
 import time
 import math
 from utils.brick import Motor, EV3GyroSensor
 
 MOTOR_POLL_DELAY = 0.05
 
-SQUARE_LENGTH = 0.5   # (meters) Side length of square
+SQUARE_LENGTH = 0.24   # (meters) Side length of square
 WHEEL_RADIUS = 0.02  # (meters) Radius of one wheel
 AXLE_LENGTH = 0.075   # (meters) Distance between wheel contacts
 
@@ -20,8 +19,8 @@ ORIENT_TO_DEG = AXLE_LENGTH / WHEEL_RADIUS
 FWD_SPEED = 100   # (deg/sec)
 TRN_SPEED = 180   # (deg/sec)
 
-LEFT_MOTOR = Motor("D")
-RIGHT_MOTOR = Motor("A")
+LEFT_WHEEL = Motor("D")
+RIGHT_WHEEL = Motor("A")
 GYRO = EV3GyroSensor(4, mode="both")
 
 POWER_LIMIT = 80
@@ -52,16 +51,16 @@ def init_motor(motor: Motor):
 def move_dist_fwd(distance, speed):
     """Move forward (meters, dps)"""
     try:
-        LEFT_MOTOR.set_dps(speed)
-        RIGHT_MOTOR.set_dps(speed)
+        LEFT_WHEEL.set_dps(speed)
+        RIGHT_WHEEL.set_dps(speed)
 
-        LEFT_MOTOR.set_limits(POWER_LIMIT, speed)
-        RIGHT_MOTOR.set_limits(POWER_LIMIT, speed)
+        LEFT_WHEEL.set_limits(POWER_LIMIT, speed)
+        RIGHT_WHEEL.set_limits(POWER_LIMIT, speed)
 
-        LEFT_MOTOR.set_position_relative(int(distance * DIST_TO_DEG))
-        RIGHT_MOTOR.set_position_relative(int(distance * DIST_TO_DEG))
+        LEFT_WHEEL.set_position_relative(int(distance * DIST_TO_DEG))
+        RIGHT_WHEEL.set_position_relative(int(distance * DIST_TO_DEG))
 
-        wait_for_motor(RIGHT_MOTOR)
+        wait_for_motor(RIGHT_WHEEL)
     except IOError as error:
         print(error)
 
@@ -69,20 +68,20 @@ def move_dist_fwd(distance, speed):
 def rotate_bot(angle, speed, direction):
     """Rotate in place (degrees, dps, "right"/"left")"""
     try:
-        LEFT_MOTOR.set_dps(speed)
-        RIGHT_MOTOR.set_dps(speed)
+        LEFT_WHEEL.set_dps(speed)
+        RIGHT_WHEEL.set_dps(speed)
 
-        LEFT_MOTOR.set_limits(POWER_LIMIT, speed)
-        RIGHT_MOTOR.set_limits(POWER_LIMIT, speed)
+        LEFT_WHEEL.set_limits(POWER_LIMIT, speed)
+        RIGHT_WHEEL.set_limits(POWER_LIMIT, speed)
 
         if direction == RIGHT:
-            LEFT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
-            RIGHT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
+            LEFT_WHEEL.set_position_relative(int(angle * ORIENT_TO_DEG))
+            RIGHT_WHEEL.set_position_relative(-int(angle * ORIENT_TO_DEG))
         elif direction == LEFT:
-            LEFT_MOTOR.set_position_relative(-int(angle * ORIENT_TO_DEG))
-            RIGHT_MOTOR.set_position_relative(int(angle * ORIENT_TO_DEG))
+            LEFT_WHEEL.set_position_relative(-int(angle * ORIENT_TO_DEG))
+            RIGHT_WHEEL.set_position_relative(int(angle * ORIENT_TO_DEG))
 
-        wait_for_motor(RIGHT_MOTOR)
+        wait_for_motor(RIGHT_WHEEL)
     except IOError as error:
         print(error)
 

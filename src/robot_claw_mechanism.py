@@ -20,6 +20,7 @@ LOWERED_ARM = 0
 
 # FUNCTIONS
 
+
 def open_gripper():
     claw_gripper.set_position(OPEN_GRIPPER)
 
