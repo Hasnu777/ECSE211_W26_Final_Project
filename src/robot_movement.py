@@ -135,11 +135,11 @@ def rotate_with_gyro_correction(turn_angle, direction):
     print("-------------------------------------------------")
 
 def wiggle():
-    for i in 4:
-        rotate_with_gyro_correction(80, RIGHT)
-        move_dist_fwd(0.05)
-        rotate_with_gyro_correction(80, LEFT)
-        move_dist_fwd(0.05)
+    for i in range (4):
+        rotate_with_gyro_correction(50, RIGHT)
+        move_dist_fwd(0.02, 100)
+        rotate_with_gyro_correction(50, LEFT)
+        move_dist_fwd(0.02, 100)
 
 if __name__ == "__main__":
     wiggle()
