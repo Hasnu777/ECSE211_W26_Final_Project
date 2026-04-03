@@ -3,5 +3,7 @@ from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, EV3GyroSensor, 
 import time
 import threading
 from robot_movement import *
+from robot_claw_mechanism import *
+from robot_sound_system import *
 
 
