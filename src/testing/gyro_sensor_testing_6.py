@@ -109,7 +109,7 @@ def turn_90_deg(direction):
 
     # Make the robot turn and
     angle_before_turn = GYRO.get_abs_measure()
-    rotate_bot(180, 200, direction)
+    rotate_bot(100, 200, direction)
     time.sleep(1)
     angle_after_turn = GYRO.get_abs_measure()
 
@@ -158,4 +158,4 @@ def check_rotation_sign():
 
 if __name__ == "__main__":
 #     rotate_bot(180, 200, RIGHT)
-    turn_90_deg(LEFT)
+    turn_90_deg(RIGHT)
