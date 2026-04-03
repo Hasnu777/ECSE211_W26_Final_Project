@@ -91,18 +91,18 @@ def find_gyro_diff(now, old):
     return now - old  # TODO: you might want to remove abs
 
 
-def rotate_with_gyro_correction(desired_turn_angle, direction):
+def rotate_with_gyro_correction(turn_angle, direction):
     """Rotate in place, but with gyro correction (angle (in abs value), direction)"""
     if direction == RIGHT:
-        desired_turn_angle = desired_turn_angle
+        desired_turn_angle = turn_angle
     elif direction == LEFT:
-        desired_turn_angle = -desired_turn_angle
+        desired_turn_angle = -turn_angle
 
     GYRO.reset_measure()
 
-    # Make the robot turn and
+    # Make the robot turn
     angle_before_turn = GYRO.get_abs_measure()
-    rotate_bot(desired_turn_angle, 200, direction)
+    rotate_bot(turn_angle, 200, direction)
     time.sleep(1)
     angle_after_turn = GYRO.get_abs_measure()
 
@@ -135,19 +135,6 @@ def rotate_with_gyro_correction(desired_turn_angle, direction):
     print("-------------------------------------------------")
 
 
-# Purely for test
-def check_rotation_sign():
-    while (True):
-        # Turn counterclockwise
-        rotate_bot(10, 100, "right")
-        print("Value:", GYRO.get_abs_measure())
-        print("-------------------------------------------")
-        # Turn counterclockwise
-        # rotate_bot(10, 100, "right")
-        # print("Value:", GYRO.get_abs_measure())
-
-        time.sleep(1)
-
 
 if __name__ == "__main__":
-    rotate_with_gyro_correction(90, LEFT)
+    rotate_with_gyro_correction(180, RIGHT)
