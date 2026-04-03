@@ -91,8 +91,8 @@ def find_gyro_diff(now, old):
     return now - old
 
 
-def rotate_with_gyro_correction(turn_angle, direction):
-    """Rotate in place, but with gyro correction (angle (in abs value), direction)"""
+def rotate_with_gyro_correction(turn_angle, speed, direction):
+    """Rotate in place, but with gyro correction (angle (in abs value), speed direction)"""
     if direction == RIGHT:
         desired_turn_angle = turn_angle
     elif direction == LEFT:
@@ -103,15 +103,15 @@ def rotate_with_gyro_correction(turn_angle, direction):
     # Make the robot turn
     angle_before_turn = GYRO.get_abs_measure()
     while angle_before_turn is None:
+        GYRO.reset_measure()
         angle_before_turn = GYRO.get_abs_measure()
 
-    rotate_bot(turn_angle, 200, direction)
+    rotate_bot(turn_angle, speed, direction)
     time.sleep(1)
 
     angle_after_turn = GYRO.get_abs_measure()
-    while angle_after_turn is None:
-        angle_before_turn = GYRO.get_abs_measure()
 
+    
     actual_turn_angle = find_gyro_diff(angle_after_turn, angle_before_turn)
     print("actual_turn_angle: ", actual_turn_angle)
 
@@ -141,11 +141,12 @@ def rotate_with_gyro_correction(turn_angle, direction):
     print("-------------------------------------------------")
 
 def wiggle():
-    for i in range (4):
-        rotate_with_gyro_correction(50, RIGHT)
-        move_dist_fwd(0.02, 100)
-        rotate_with_gyro_correction(50, LEFT)
-        move_dist_fwd(0.02, 100)
+    for i in range (5):
+        print(i)
+        rotate_with_gyro_correction(50, 100, RIGHT)
+        rotate_with_gyro_correction(50, 300, LEFT)
+        move_dist_fwd(0.03, 100)
+        
 
 if __name__ == "__main__":
     wiggle()
