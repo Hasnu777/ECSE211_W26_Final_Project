@@ -9,45 +9,54 @@ from robot_sound_system import *
 #open_gripper()
 
 def getMeds():
+    # Prepare claw to receive blocks
     open_gripper()
-    rotate_with_gyro_correction(10, LEFT)
-    claw_arm.set_position(0)
-    claw_gripper.set_position(-100)
-    
+    time.sleep(0.5)
+    # Align claw to left block
+    rotate_with_gyro_correction(10, 300, LEFT) # in-built time.sleep()
+    # claw_arm.set_position(0)
+    # claw_gripper.set_position(-100)
+    # Move towards left block
     move_dist_fwd(SQUARE_LENGTH * 0.4, 425)
-    store_cube()
+    time.sleep(1)
+    # Left block in reach, store it
+    store_cube() # in-built time.sleep()
+    # Move back
     move_dist_fwd(-SQUARE_LENGTH * -3/8, 425)
-    rotate_with_gyro_correction(20, RIGHT)
+    time.sleep(1)
+    # Align claw to right block
+    rotate_with_gyro_correction(20, 300, RIGHT) # in-built time.sleep()
+    # Prepare for receival
     open_gripper()
+    time.sleep(0.5)
+    # Move towards right block
     move_dist_fwd(SQUARE_LENGTH * 3/8, 425)
-    grab_cube()
-    rotate_with_gyro_correction(10, LEFT)
+    time.sleep(1)
+    # Grab instead of store, storage full
+    grab_cube() # in-built time.sleep()
+    # Re-align to initial alignment
+    rotate_with_gyro_correction(10, 300, LEFT) #in-built time.sleep()
+    # NEED TO TEST - Want to get robot in alignment with right line going outside of pharmacy
     move_dist_fwd(SQUARE_LENGTH * 0.15, 425)
-    rotate_with_gyro_correction(90,LEFT)
-    move_dist_fwd(SQUARE_LENGTH * 1.5, 425)
-#     move_dist_fwd(SQUARE_LENGTH * 0.5, 425)
-#     time.sleep(1)
-#     store_cube()
-#     time.sleep(1)
-#     move_dist_fwd(-SQUARE_LENGTH * 2/11, 425)
-#     time.sleep(1)
-#     rotate_with_gyro_correction(35, RIGHT)
-#     time.sleep(1)
-#     open_gripper()
-#     move_dist_fwd(SQUARE_LENGTH * 5/22, 425)
-#     time.sleep(1)
-#     grab_cube()
-#     move_dist_fwd(SQUARE_LENGTH * 1/24, 425)
-#     rotate_with_gyro_correction(135, LEFT)
-#     move_dist_fwd(SQUARE_LENGTH * 0.5, 425)
+    time.sleep(1)
+    rotate_with_gyro_correction(90,300, LEFT) # in-built time.sleep()
 
+
+def pharmacy_to_left_single():
+    # Move out of pharmacy to intersection
+    move_dist_fwd(SQUARE_LENGTH * 1.5, 425)
+    # Turn left at intersection
+    rotate_with_gyro_correction(90, 300, LEFT)
+    # Move to next intersection
+    move_dist_fwd(SQUARE_LENGTH * 1, 425)
+    # Face single room
+    rotate_with_gyro_correction(90, 300, RIGHT)
+    # Approach single room
+    move_dist_fwd(SQUARE_LENGTH * 0.5, 425)
 
 if __name__ == "__main__":
-    
-#     init_motor(LEFT_WHEEL)
-#     init_motor(RIGHT_WHEEL)
+
     LEFT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
     RIGHT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
     # Step 1: Starting position -> collected med packages
     getMeds()
-#     move_dist_fwd(SQUARE_LENGTH,425)
