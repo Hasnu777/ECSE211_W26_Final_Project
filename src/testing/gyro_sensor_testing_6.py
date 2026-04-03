@@ -28,8 +28,8 @@ ORIENT_TO_DEG = AXLE_LENGTH / WHEEL_RADIUS
 FWD_SPEED = 100   # (deg/sec)
 TRN_SPEED = 180   # (deg/sec)
 
-LEFT_MOTOR = Motor("A")
-RIGHT_MOTOR = Motor("D")
+LEFT_MOTOR = Motor("D")
+RIGHT_MOTOR = Motor("A")
 GYRO = EV3GyroSensor(4, mode="both")
 
 POWER_LIMIT = 80
@@ -109,7 +109,7 @@ def turn_90_deg(direction):
 
     # Make the robot turn and
     angle_before_turn = GYRO.get_abs_measure()
-    rotate_bot(180, 200, RIGHT)
+    rotate_bot(180, 200, direction)
     time.sleep(1)
     angle_after_turn = GYRO.get_abs_measure()
 
@@ -127,12 +127,12 @@ def turn_90_deg(direction):
             time.sleep(1)
         elif delta < 0: # if delta negative, robot undershooting
             print("Undershoot case")
-            rotate_bot(delta, 100, RIGHT)
+            rotate_bot(delta, 100, LEFT)
             time.sleep(1)
     if direction == LEFT:
         if delta < 0: # if delta negative, robot overshooting 
             print("Overshoot case")
-            rotate_bot(delta, 100, RIGHT)
+            rotate_bot(delta, 100, LEFT)
             time.sleep(1)
         elif delta > 0: # if delta positive, robot undershooting
             print("Undershoot case")
@@ -157,4 +157,5 @@ def check_rotation_sign():
 
 
 if __name__ == "__main__":
+#     rotate_bot(180, 200, RIGHT)
     turn_90_deg(LEFT)
