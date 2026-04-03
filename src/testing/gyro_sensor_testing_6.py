@@ -95,12 +95,16 @@ def rotate_bot(angle, speed, direction):
         print(error)
 
 
-def find_gyro_diff(old, now):
-    return abs(old - now)  # TODO: you might want to remove abs
+def find_gyro_diff(now, old):
+    return now - old  # TODO: you might want to remove abs
 
 
 def turn_90_deg(direction):
-    expected_turn_angle = 90
+    if direction == RIGHT:
+        expected_turn_angle = 90
+    elif direction == LEFT:
+        expected_turn_angle = -90
+
     GYRO.reset_measure()
 
     # Make the robot turn and
@@ -112,22 +116,28 @@ def turn_90_deg(direction):
     actual_turn_angle = find_gyro_diff(angle_after_turn, angle_before_turn)
     print("actual_turn_angle: ", actual_turn_angle)
 
-    delta = (expected_turn_angle - actual_turn_angle)  # delta between real and expected turn angles
+    delta = (actual_turn_angle - expected_turn_angle)  # delta between real and expected turn angles
     print("delta_expected_from_unexpected: ", delta)
 
-    if delta > 0: # if delta positive, robot overshooting right
-        print("Overshoot case")
-        if (direction == LEFT):
-            rotate_bot(delta, 100, RIGHT)
-        else:
+    # split problem by direction
+    if direction == RIGHT:
+        if delta > 0: # if delta positive, robot overshooting 
+            print("Overshoot case")
             rotate_bot(delta, 100, LEFT)
-        time.sleep(1)
-    elif delta < 0: # if delta negative, robot overshooting left
-        if (direction == LEFT):
-            rotate_bot(delta, 100, LEFT)
-        else:
+            time.sleep(1)
+        elif delta < 0: # if delta negative, robot undershooting
+            print("Undershoot case")
             rotate_bot(delta, 100, RIGHT)
-        time.sleep(1)
+            time.sleep(1)
+    if direction == LEFT:
+        if delta < 0: # if delta negative, robot overshooting 
+            print("Overshoot case")
+            rotate_bot(delta, 100, RIGHT)
+            time.sleep(1)
+        elif delta > 0: # if delta positive, robot undershooting
+            print("Undershoot case")
+            rotate_bot(delta, 100, LEFT)
+            time.sleep(1)
 
     print("-------------------------------------------------")
 
