@@ -30,6 +30,8 @@ RIGHT = "right"
 LEFT = "left"
 
 
+
+
 def wait_for_motor(motor: Motor):
     """Block until motor finishes motion"""
     while math.isclose(motor.get_speed(), 0):
@@ -85,6 +87,25 @@ def rotate_bot(angle, speed, direction):
         wait_for_motor(RIGHT_WHEEL)
     except IOError as error:
         print(error)
+
+
+def arc_bot(angle, speed, direction):
+    try:
+        if direction == RIGHT:
+            RIGHT_WHEEL.set_dps(0)
+            LEFT_WHEEL.set_dps(speed)
+
+            LEFT_WHEEL.set_limits(POWER_LIMIT, speed)
+            LEFT_WHEEL.set_position_relative(int(angle * ORIENT_TO_DEG) * 2)
+        elif direction == LEFT:
+            LEFT_WHEEL.set_dps(0)
+            RIGHT_WHEEL.set_dps(speed)
+
+            RIGHT_WHEEL.set_limits(POWER_LIMIT, speed)
+            RIGHT_WHEEL.set_position_relative(int(angle * ORIENT_TO_DEG) * 2)
+    except IOError as error:
+        print(error)
+
 
 
 def find_gyro_diff(now, old):
