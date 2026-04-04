@@ -67,7 +67,7 @@ def pharmacy_to_left_single():
     move_dist_fwd(SQUARE_LENGTH * 0.1, 425)
     time.sleep(0.5)
     rotate_with_gyro_correction(30,300,RIGHT)
-    move_dist_fwd(SQUARE_LENGTH * 0.2, 425)
+    move_dist_fwd(SQUARE_LENGTH * -0.1, 425)
     time.sleep(1.5)
 
 
@@ -93,15 +93,16 @@ def inch_towards_door():
     print("Looking for the door...")
     while not door_detected:
         print("Beginning an inch search")
-        move_dist_fwd(0.02, 425)
+        move_dist_fwd(0.01, 425)
         print("Moved 0.02m forward")
         time.sleep(2)
         print("Slept two seconds")
-        color_detected = classify_unknown_color()
+        color_detected = classify_unknown_color(True)
         print("Looking for door")
-        total_moved += 0.02
+        total_moved += 0.01
         print(f"Updated how much I inched forward, total is now {total_moved}m")
-        if color_detected == "orange":
+        print(color_detected)
+        if "orange" in color_detected:
             print("DOOR FOUND!!!! WE OUTTA HERE")
             door_detected = True
             break
@@ -315,3 +316,4 @@ if __name__ == "__main__":
     # At this point, it's guaranteed both beds are found
     return_from_double(section_number=3)
     victory_jingle()
+

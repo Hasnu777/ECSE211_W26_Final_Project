@@ -37,7 +37,7 @@ EPSILON = 0.0000000001
 wait_ready_sensors(True)
 
 
-def classify_unknown_color():
+def classify_unknown_color(closest_three_allowed=False):
     # Collect raw rgb
     raw_rgb = COLOR_SENSOR.get_rgb()
     raw_r = raw_rgb[0]
@@ -69,4 +69,6 @@ def classify_unknown_color():
         color_to_check = ALL_COLORS[best_colors[distances[i]]]
         if color_to_check.is_match(norm_r, norm_g, norm_b) and i == 0:
             return color_to_check.get_name()
+    if closest_three_allowed:
+        return (ALL_COLORS[best_colors[distances[0]]], ALL_COLORS[best_colors[distances[1]]], ALL_COLORS[best_colors[distances[2]]])
     return "unknown"
