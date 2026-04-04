@@ -64,10 +64,10 @@ def pharmacy_to_left_single():
     move_dist_fwd(SQUARE_LENGTH * 2, 425)
     time.sleep(3)
     rotate_with_gyro_correction(30, 300, LEFT)
-    move_dist_fwd(SQUARE_LENGTH * 0.1, 425)
+    move_dist_fwd(SQUARE_LENGTH * 0.2, 425)
     time.sleep(0.5)
     rotate_with_gyro_correction(30,300,RIGHT)
-    move_dist_fwd(SQUARE_LENGTH * -0.1, 425)
+    # move_dist_fwd(SQUARE_LENGTH * -0.1, 425)
     time.sleep(1.5)
 
 
@@ -94,8 +94,8 @@ def inch_towards_door():
     while not door_detected:
         print("Beginning an inch search")
         move_dist_fwd(0.01, 425)
-        print("Moved 0.02m forward")
-        time.sleep(2)
+        print("Moved 0.01m forward")
+        time.sleep(0.5)
         print("Slept two seconds")
         color_detected = classify_unknown_color(True)
         print("Looking for door")
@@ -105,8 +105,10 @@ def inch_towards_door():
         if "orange" in color_detected:
             print("DOOR FOUND!!!! WE OUTTA HERE")
             door_detected = True
+            # Move forward after having found the door
+            move_dist_fwd(0.06, 425)
             break
-    return total_moved
+    return (total_moved+ 0.06)
 
 
 def hassan_wiggle(amount : int):
@@ -152,7 +154,6 @@ def process_room():
             room_depth = 0
             print("moved back outta the room, we OUT now")
             break
-
         # Get the total desired amount to wiggle, and amount rotated until complete/bed found
         total_desired, total_remaining = hassan_wiggle(50)
         print(f"The wiggle had a total desired amount of {total_desired}, completed {total_desired - total_remaining} and {total_remaining} remaining")
@@ -162,25 +163,37 @@ def process_room():
             # If bed found was green
             if green_detected:
                 print("OOOOHHHHH BED IS GREEN!!!! ITS HUNGRY FOR DRUGS")
+                # rotate robot to put claw over the bed
+                rotate_with_gyro_correction(36, 300, LEFT)
                 # Deliver the med package if the bed is green
                 print("RELEASE... THE *CUBE*")
                 release_cube()
                 print("cube released, notifying the blind via sound")
                 task_jingle()
+                # Put color sensor back over robot
+                rotate_with_gyro_correction(36, 300, RIGHT)
                 # Increment the number of green beds found
                 green_beds_found += 1
                 print(f"Logging the bed, now at {green_beds_found} green beds processed")
             # Revert to original alignment, from current mid-wiggle position
             print("Undoing the wiggle effects (partially applied since we got a bed woo)")
-            rotate_with_gyro_correction(total_desired - total_remaining, 300, LEFT)
+            arc_bot(total_desired - total_remaining, 300, LEFT)
+            # Back out of the room
+            move_dist_fwd(-SQUARE_LENGTH * room_depth, 425)
+            room_depth = 0
+            time.sleep(1.5 * room_depth)
+            red_detected = False
+            green_detected = False
             print("WE BE OUTTA TS HAHA")
             break
         print("Undoing the wiggle effects (fully applied because we didn't find a bed in this scan)")
-        rotate_with_gyro_correction(total_desired, 300, LEFT)
+        arc_bot(total_desired, 300, LEFT)
         print("Moving forward to scan the next bit of the room in the next run of this while loop")
         move_dist_fwd(SQUARE_LENGTH * 0.25, 425)
         time.sleep(0.5)
         room_depth += 0.25
+        red_detected = False
+        green_detected = False
 
 
 def all_beds_found():
@@ -229,28 +242,29 @@ if __name__ == "__main__":
     # Step 2: pharmacy -> left single room
     pharmacy_to_left_single()
 
-    # Find the door
+    # Step 3: Align to left single room door
     total_door_adjustment = inch_towards_door()
     door_detected = False
 
-    # Find the bed in the left single room, deposit if green, and get out of room
+    # Step 4: Find the bed in the left single room, deposit if green, and get out of room
     process_room()
 
-    # Return to position before having to find the room door
+    # Step 5: Return to position before having to find the room door
     move_dist_fwd(-total_door_adjustment, 425)
 
-    # Move from left single to right single
+    # Step 6: Move from left single to right single
     left_single_to_right_single()
 
-    # Find the door
+    # Step 7: Align to right single room door
     total_door_adjustment = inch_towards_door()
     door_detected = False
 
-    # Find the bed in the right single room, deposit if green, and get out of room
+    # Step 8: Find the bed in the right single room, deposit if green, and get out of room
     process_room()
 
     # Return to position before having to find the room door
     move_dist_fwd(-total_door_adjustment, 425)
+    time.sleep(total_door_adjustment * 2)
 
     # Check if both green beds found after checking both singles
     if green_beds_found == 2:
@@ -269,6 +283,7 @@ if __name__ == "__main__":
 
     # Return to position before having to find the room door
     move_dist_fwd(-total_door_adjustment, 425)
+    time.sleep(total_door_adjustment * 2)
 
     # Check if both green beds found after checking first double section
     if green_beds_found == 2:
@@ -279,6 +294,7 @@ if __name__ == "__main__":
     # Two beds not found, must continue checking double room. Move to section 2
     rotate_with_gyro_correction(90, 300, LEFT)
     move_dist_fwd(SQUARE_LENGTH * 0.5, 425)
+    time.sleep(1)
     rotate_with_gyro_correction(90, 300, RIGHT)
 
     # Find the door
@@ -290,6 +306,7 @@ if __name__ == "__main__":
 
     # Return to position before having to find the room door
     move_dist_fwd(-total_door_adjustment, 425)
+    time.sleep(total_door_adjustment * 2)
 
     # Check if both green beds found after checking first double section
     if green_beds_found == 2:
@@ -301,6 +318,7 @@ if __name__ == "__main__":
     # Two beds not found, must continue checking double room. Move to section 3
     rotate_with_gyro_correction(90, 300, LEFT)
     move_dist_fwd(SQUARE_LENGTH * 0.5, 425)
+    time.sleep(1)
     rotate_with_gyro_correction(90, 300, RIGHT)
 
     # Find the door
@@ -312,6 +330,7 @@ if __name__ == "__main__":
 
     # Return to position before having to find the room door
     move_dist_fwd(-total_door_adjustment, 425)
+    time.sleep(total_door_adjustment * 2)
 
     # At this point, it's guaranteed both beds are found
     return_from_double(section_number=3)
