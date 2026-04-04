@@ -67,7 +67,7 @@ def pharmacy_to_left_single():
     move_dist_fwd(SQUARE_LENGTH * 0.1, 425)
     time.sleep(0.5)
     rotate_with_gyro_correction(30,300,RIGHT)
-    move_dist_fwd(SQUARE_LENGTH * 0.1, 425)
+    move_dist_fwd(SQUARE_LENGTH * 0.2, 425)
     time.sleep(1.5)
 
 
@@ -90,13 +90,21 @@ def right_single_to_double():
 def inch_towards_door():
     global door_detected
     total_moved = 0
+    print("Looking for the door...")
     while not door_detected:
+        print("Beginning an inch search")
         move_dist_fwd(0.02, 425)
-        time.sleep(1)
+        print("Moved 0.02m forward")
+        time.sleep(2)
+        print("Slept two seconds")
         color_detected = classify_unknown_color()
-        total_moved += 0.1
+        print("Looking for door")
+        total_moved += 0.02
+        print(f"Updated how much I inched forward, total is now {total_moved}m")
         if color_detected == "orange":
+            print("DOOR FOUND!!!! WE OUTTA HERE")
             door_detected = True
+            break
     return total_moved
 
 
@@ -106,13 +114,22 @@ def hassan_wiggle(amount : int):
     global red_detected, green_detected
     while not (red_detected or green_detected):
         if remaining_to_rotate == 0:
+            print("wiggled full amount, no bed was found... ISSUE UH OH")
             break
         arc_bot(total_to_rotate/10, 300, RIGHT)
+        time.sleep(1)
+        remaining_to_rotate -= total_to_rotate/10
+        print(f"Rotated {total_to_rotate/10} degrees for a partial wiggle")
+        print(f"Updated the remaining wiggle degree value to {remaining_to_rotate}")
         color_detected = classify_unknown_color()
+        time.sleep(1)
+        print("Scanned for a bed")
         if color_detected == "red":
+            print("red bed detected, ew let's get out now")
             red_detected = True
             break
         elif color_detected == "green":
+            print("green bed detected, oh em gee I love it")
             green_detected = True
             break
     return (total_to_rotate, remaining_to_rotate)
@@ -123,31 +140,43 @@ def process_room():
 
     # Continue until a bed is found, or break conditions met
     while not (red_detected or green_detected):
+        print("Searching for a bed...")
         # If gone deep enough in the room, quit it to move on
         if room_depth == 1.5:
+            print("Whoa max depth reached, gotta back outta there before you hurt yourself buddy")
             # Robot will be straight, can just go backwards
             move_dist_fwd(-SQUARE_LENGTH * room_depth, 425)
             time.sleep(1.5*room_depth)
             # Reset room depth in preparation for next process_room() call
             room_depth = 0
+            print("moved back outta the room, we OUT now")
             break
 
         # Get the total desired amount to wiggle, and amount rotated until complete/bed found
         total_desired, total_remaining = hassan_wiggle(50)
+        print(f"The wiggle had a total desired amount of {total_desired}, completed {total_desired - total_remaining} and {total_remaining} remaining")
         # If a bed was found
         if red_detected or green_detected:
+            print("BED WAS DETECTED LETS SEE WHICH KIND")
             # If bed found was green
             if green_detected:
+                print("OOOOHHHHH BED IS GREEN!!!! ITS HUNGRY FOR DRUGS")
                 # Deliver the med package if the bed is green
+                print("RELEASE... THE *CUBE*")
                 release_cube()
+                print("cube released, notifying the blind via sound")
                 task_jingle()
                 # Increment the number of green beds found
                 green_beds_found += 1
+                print(f"Logging the bed, now at {green_beds_found} green beds processed")
             # Revert to original alignment, from current mid-wiggle position
+            print("Undoing the wiggle effects (partially applied since we got a bed woo)")
             rotate_with_gyro_correction(total_desired - total_remaining, 300, LEFT)
+            print("WE BE OUTTA TS HAHA")
             break
-
+        print("Undoing the wiggle effects (fully applied because we didn't find a bed in this scan)")
         rotate_with_gyro_correction(total_desired, 300, LEFT)
+        print("Moving forward to scan the next bit of the room in the next run of this while loop")
         move_dist_fwd(SQUARE_LENGTH * 0.25, 425)
         time.sleep(0.5)
         room_depth += 0.25
