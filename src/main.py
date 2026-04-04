@@ -1,4 +1,4 @@
-from src.robot_color_detection import classify_unknown_color
+from robot_color_detection import classify_unknown_color
 from utils import sound
 from utils import brick
 from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, EV3GyroSensor, wait_ready_sensors
@@ -56,25 +56,25 @@ def getMeds():
     time.sleep(3)
     
     rotate_with_gyro_correction(90,300, LEFT) # in-built time.sleep()
-    rotate_with_gyro_correction(4,300, RIGHT) # for use with low battery power
+    rotate_with_gyro_correction(4,300, RIGHT) # in-built time.sleep()
 
 # CONFIRMED TO WORK
 def pharmacy_to_left_single():
     # Move out of pharmacy to intersection
     move_dist_fwd(SQUARE_LENGTH * 2, 425)
-    time.sleep(2)
+    time.sleep(3)
     rotate_with_gyro_correction(30, 300, LEFT)
-    move_dist_fwd(SQUARE_LENGTH * 0.2, 425)
+    move_dist_fwd(SQUARE_LENGTH * 0.1, 425)
     time.sleep(0.5)
     rotate_with_gyro_correction(30,300,RIGHT)
-    move_dist_fwd(SQUARE_LENGTH * 1, 425)
+    move_dist_fwd(SQUARE_LENGTH * 0.1, 425)
     time.sleep(1.5)
 
 
 def left_single_to_right_single():
     rotate_with_gyro_correction(90, 300, RIGHT)
     move_dist_fwd(SQUARE_LENGTH * 2, 425)
-    time.sleep(2)
+    time.sleep(3)
     rotate_with_gyro_correction(90, 300, LEFT)
     move_dist_fwd(SQUARE_LENGTH * 0.3, 425)
     time.sleep(0.5)
@@ -83,7 +83,7 @@ def left_single_to_right_single():
 def right_single_to_double():
     rotate_with_gyro_correction(90, 300, RIGHT)
     move_dist_fwd(SQUARE_LENGTH * 1, 425)
-    time.sleep(1)
+    time.sleep(2)
     rotate_with_gyro_correction(90, 300, RIGHT)
 
 
@@ -91,7 +91,8 @@ def inch_towards_door():
     global door_detected
     total_moved = 0
     while not door_detected:
-        move_dist_fwd(0.2, 425)
+        move_dist_fwd(0.02, 425)
+        time.sleep(1)
         color_detected = classify_unknown_color()
         total_moved += 0.1
         if color_detected == "orange":
@@ -126,6 +127,7 @@ def process_room():
         if room_depth == 1.5:
             # Robot will be straight, can just go backwards
             move_dist_fwd(-SQUARE_LENGTH * room_depth, 425)
+            time.sleep(1.5*room_depth)
             # Reset room depth in preparation for next process_room() call
             room_depth = 0
             break
@@ -147,6 +149,7 @@ def process_room():
 
         rotate_with_gyro_correction(total_desired, 300, LEFT)
         move_dist_fwd(SQUARE_LENGTH * 0.25, 425)
+        time.sleep(0.5)
         room_depth += 0.25
 
 
@@ -162,13 +165,13 @@ def return_from_right_single():
     raise_arm()
     time.sleep(0.5)
     move_dist_fwd(-SQUARE_LENGTH * 0.3, 425)
-    time.sleep(0.5)
+    time.sleep(0.6)
     rotate_with_gyro_correction(90, 300, RIGHT)
     move_dist_fwd(-SQUARE_LENGTH * 1, 425)
     time.sleep(2)
     rotate_with_gyro_correction(90, 300, LEFT)
     move_dist_fwd(-SQUARE_LENGTH * 1.3, 425)
-    time.sleep(1.5)
+    time.sleep(2.5)
 
 
 def return_from_double(section_number):
@@ -187,7 +190,6 @@ def return_from_double(section_number):
 
 
 if __name__ == "__main__":
-    global door_detected
     LEFT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
     RIGHT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
 
