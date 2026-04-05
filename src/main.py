@@ -75,11 +75,12 @@ def left_single_to_right_single():
     move_dist_fwd(SQUARE_LENGTH * 2, 425)
     time.sleep(3)
     rotate_with_gyro_correction(90, 300, LEFT)
-    move_dist_fwd(SQUARE_LENGTH * 0.3, 425)
+    move_dist_fwd(SQUARE_LENGTH * 0.4, 425)
     time.sleep(0.5)
 
 
 def right_single_to_double():
+    move_dist_fwd(SQUARE_LENGTH * -0.5, 425)
     rotate_with_gyro_correction(90, 300, RIGHT)
     move_dist_fwd(SQUARE_LENGTH * 1, 425)
     time.sleep(2)
@@ -95,7 +96,7 @@ def inch_towards_door():
         move_dist_fwd(0.01, 425)
         print("Moved 0.01m forward")
         time.sleep(0.5)
-        print("Slept two seconds")
+        print("Slept 0.5 seconds")
         color_detected = classify_unknown_color(True)
         print("Looking for door")
         total_moved += 0.01
@@ -118,11 +119,11 @@ def inch_away_from_door():
         move_dist_fwd(-0.01, 425)
         print("Moved 0.01m backwards")
         time.sleep(0.5)
-        print("Slept two seconds")
+        print("Slept 0.5 seconds")
         color_detected = classify_unknown_color(True)
         print("Looking for door")
         total_moved += 0.01
-        print(f"Updated how much I inched forward, total is now {total_moved}m")
+        print(f"Updated how much I inched BACKWARD, total is now {total_moved}m")
         print(color_detected)
         if "orange" in color_detected:
             print("DOOR FOUND!!!! WE OUTTA HERE")
@@ -318,18 +319,18 @@ if __name__ == "__main__":
     LEFT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
     RIGHT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
 
-    # Step 1: Starting position -> collected med packages
+    # Step 1: Starting position -> collected med packages [CONFIRMED]
     getMeds()
 
-    # Step 2: pharmacy -> left single room
+    # Step 2: pharmacy -> left single room [CONFIRMED]
     pharmacy_to_left_single()
     
-    # Step 3: Align to left single room door
+    # Step 3: Align to left single room door [CONFIRMED]
     total_door_adjustment = inch_towards_door()
     door_detected = False
 
 
-    # Step 4: Find the bed in the left single room, deposit if green, and get out of room
+    # Step 4: Find the bed in the left single room, deposit if green, and get out of room [CONFIRMED]
     # process_room()
     move_dist_fwd(0.05, 300)
     time.sleep(1.5)
@@ -343,11 +344,11 @@ if __name__ == "__main__":
     sonia_bed_detection()
     
 
-    # Move to double room:
+    # Move to double room: [FIX RETREAT]
     move_dist_fwd(-0.10, 300)
     time.sleep(1)
     right_single_to_double()
-    """
+
     # Step 7: Align to right single room door
     total_door_adjustment = inch_towards_door()
     door_detected = False
@@ -428,5 +429,5 @@ if __name__ == "__main__":
     # At this point, it's guaranteed both beds are found
     return_from_double(section_number=3)
     victory_jingle()
-    """
+
 
