@@ -12,14 +12,13 @@ claw_gripper.set_limits(power=30)
 claw_arm.set_limits(power=30)
 
 # CONSTANTS
-OPEN_GRIPPER = -50
-CLOSED_GRIPPER = 0
+OPEN_GRIPPER = -30
+CLOSED_GRIPPER = 70
 RAISED_ARM = 180
 LOWERED_ARM = 3
 
 
 # FUNCTIONS
-
 
 def open_gripper():
     claw_gripper.set_position(OPEN_GRIPPER)
@@ -27,7 +26,6 @@ def open_gripper():
 
 def close_gripper():
     claw_gripper.set_position(CLOSED_GRIPPER)
-
 
 def raise_arm():
     claw_arm.set_position(RAISED_ARM)
@@ -41,11 +39,15 @@ def grab_cube():
     # Open gripper
     open_gripper()
 #     wait_for_motor(claw_gripper)
-    time.sleep(1)
+    time.sleep(0.5)
     # Grab cube
     close_gripper()
 #     wait_for_motor(claw_gripper)
-    time.sleep(1)
+    time.sleep(0.5)
+    
+    # lift the arm a little bit so that it doesn't catch on to anything
+    claw_arm.set_position(10)
+    time.sleep(0.3)
 
 
 def release_cube():

@@ -22,36 +22,34 @@ complete = False
 
 # CONFIRMED TO WORK
 def getMeds():
-    # Prepare claw to receive blocks
+    # 1) Prepare claw to receive blocks
+    open_gripper()
+    time.sleep(0.5)
+    # 2) Align claw to left block
+    rotate_with_gyro_correction(10, 300, LEFT) # in-built time.sleep()
+    # 3) Move towards left block
+    move_dist_fwd(SQUARE_LENGTH * 0.4, 425)
+    time.sleep(1.5)
+    # 4) Left block in reach, store it
+    store_cube() # in-built time.sleep()
+    # 5) Move back
+    move_dist_fwd(-SQUARE_LENGTH * 3/8, 425)
+    time.sleep(1.5)
+    # 6) Align claw to right block
+    rotate_with_gyro_correction(25, 300, RIGHT) # in-built time.sleep()
+    # 7) Prepare for receival
     open_gripper()
     time.sleep(1)
-    # Align claw to left block
-    rotate_with_gyro_correction(10, 300, LEFT) # in-built time.sleep()
-    # claw_arm.set_position(0)
-    # claw_gripper.set_position(-100)
-    # Move towards left block
-    move_dist_fwd(SQUARE_LENGTH * 0.4, 425)
-    time.sleep(3)
-    # Left block in reach, store it
-    store_cube() # in-built time.sleep()
-    # Move back
-    move_dist_fwd(-SQUARE_LENGTH * 3/8, 425)
-    time.sleep(3)
-    # Align claw to right block
-    rotate_with_gyro_correction(25, 300, RIGHT) # in-built time.sleep()
-    # Prepare for receival
-    claw_gripper.set_position(-100)
-    time.sleep(1)
-    # Move towards right block
+    # 8) Move towards right block
     move_dist_fwd(SQUARE_LENGTH * (3/8+0.05), 425)
-    time.sleep(3)
-    # Grab instead of store, storage full
+    time.sleep(1)
+    # 9) Grab instead of store, storage full
     grab_cube() # in-built time.sleep()
     move_dist_fwd(-SQUARE_LENGTH * 5.5/8, 425)
-    time.sleep(2)
-    # Re-align to initial alignment
+    time.sleep(1)
+    # 10) Re-align to initial alignment
     rotate_with_gyro_correction(20, 300, LEFT) #in-built time.sleep()
-    # NEED TO TEST - Want to get robot in alignment with right line going outside of pharmacy
+    # 11) Get robot in alignment with right line going outside of pharmacy
     move_dist_fwd(SQUARE_LENGTH * -2/12, 425)
     time.sleep(3)
     
@@ -235,21 +233,27 @@ def return_from_double(section_number):
 if __name__ == "__main__":
     LEFT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
     RIGHT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
-
+    
     # Step 1: Starting position -> collected med packages
     getMeds()
 
-    """
     # Step 2: pharmacy -> left single room
     pharmacy_to_left_single()
-
+    
     # Step 3: Align to left single room door
     total_door_adjustment = inch_towards_door()
     door_detected = False
 
-    # Step 4: Find the bed in the left single room, deposit if green, and get out of room
-    process_room()
 
+    # Step 4: Find the bed in the left single room, deposit if green, and get out of room
+    # process_room()
+    
+    move_dist_fwd(0.05, 250)
+    time.sleep(1.5)
+    wiggle()
+
+
+    """
     # Step 5: Return to position before having to find the room door
     move_dist_fwd(-total_door_adjustment, 425)
 

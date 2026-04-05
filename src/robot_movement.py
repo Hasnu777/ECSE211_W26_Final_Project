@@ -166,7 +166,8 @@ def wiggle():
         print(i)
         rotate_with_gyro_correction(50, 100, RIGHT)
         rotate_with_gyro_correction(50, 300, LEFT)
-        move_dist_fwd(0.03, 100)
+        move_dist_fwd(0.05, 100)
+        time.sleep(0.3)
         
 
 if __name__ == "__main__":
