@@ -254,8 +254,8 @@ def return_from_double(section_number):
 
 
 def sonia_detect_bed_color():
-    global red_detected, green_detected
-    while(1):
+    global red_detected, green_detected, bed_detection_threads_killed
+    while(not bed_detection_threads_killed):
         color_detected = classify_unknown_color()
         time.sleep(0.2)
         print("Scanned for a bed")
@@ -270,7 +270,7 @@ def sonia_detect_bed_color():
 
 def sonia_wiggle():
     global red_detected, green_detected, bed_detection_threads_killed
-    max_wiggles = 4; # To explore a room in its entire depth, wiggle 4 times max
+    max_wiggles = 7; # To explore a room in its entire depth, wiggle 7 times max (lowkey guessed this, untested still)
     wiggle_counter = 0;
 
     while ((not red_detected) and (not green_detected) and (wiggle_counter < max_wiggles)):
@@ -288,6 +288,7 @@ def sonia_wiggle():
 
     inch_away_from_door()
     bed_detection_threads_killed = True
+    print("bed detection threads have been killed")
 
 def sonia_bed_detection():
     """This function essentially wiggles AND tries to identify a bed at the same time with threading"""
@@ -316,6 +317,7 @@ def sonia_bed_detection():
 if __name__ == "__main__":
     LEFT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
     RIGHT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
+
     # Step 1: Starting position -> collected med packages
     getMeds()
 
@@ -338,7 +340,13 @@ if __name__ == "__main__":
 
     # Step 6: Move from left single to right single
     left_single_to_right_single()
+    sonia_bed_detection()
+    
 
+    # Move to double room:
+    move_dist_fwd(-0.10, 300)
+    time.sleep(1)
+    right_single_to_double()
     """
     # Step 7: Align to right single room door
     total_door_adjustment = inch_towards_door()

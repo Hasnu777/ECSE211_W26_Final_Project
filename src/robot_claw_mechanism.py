@@ -36,6 +36,7 @@ def lower_arm():
 
 
 def grab_cube():
+    time.sleep(0.5)
     # Open gripper
     open_gripper()
 #     wait_for_motor(claw_gripper)
