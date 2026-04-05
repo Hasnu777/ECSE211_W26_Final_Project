@@ -18,6 +18,7 @@ green_detected = False
 number_beds = 0
 room_depth = 0
 green_beds_found = 0
+bed_detection_threads_killed = False
 complete = False
 
 # CONFIRMED TO WORK
@@ -268,7 +269,7 @@ def sonia_detect_bed_color():
 
 
 def sonia_wiggle():
-    global red_detected, green_detected
+    global red_detected, green_detected, bed_detection_threads_killed
     max_wiggles = 4; # To explore a room in its entire depth, wiggle 4 times max
     wiggle_counter = 0;
 
@@ -286,18 +287,31 @@ def sonia_wiggle():
         print("gripper opened")
 
     inch_away_from_door()
+    bed_detection_threads_killed = True
 
 def sonia_bed_detection():
     """This function essentially wiggles AND tries to identify a bed at the same time with threading"""
     print("Bed detection commence")
+    global red_detected, green_detected, bed_detection_threads_killed
 
     t1 = threading.Thread(target=sonia_detect_bed_color, args=())
     t2 = threading.Thread(target=sonia_wiggle, args=())
 
     t1.start()
     t2.start()
-    t1.join()
-    t2.join()
+
+    while (True):
+        print("bed detection running")
+        if bed_detection_threads_killed:
+            t1.join()
+            t2.join()
+            break
+
+    # Reset your global variable to their default value for next bed search
+    bed_detection_threads_killed = False
+    red_detected = False
+    green_detected = False
+    print("We breaking outta the thread")
 
 if __name__ == "__main__":
     LEFT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
