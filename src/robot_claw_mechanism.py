@@ -12,8 +12,8 @@ claw_gripper.set_limits(power=30)
 claw_arm.set_limits(power=30)
 
 # CONSTANTS
-OPEN_GRIPPER = -30
-CLOSED_GRIPPER = 70
+OPEN_GRIPPER = -50
+CLOSED_GRIPPER = 10
 RAISED_ARM = 180
 LOWERED_ARM = 3
 
