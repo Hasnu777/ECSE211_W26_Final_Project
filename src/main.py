@@ -108,6 +108,29 @@ def inch_towards_door():
             break
     return (total_moved+ 0.06)
 
+def inch_away_from_door():
+    global door_detected
+    total_moved = 0
+    print("Looking for the door...")
+    while not door_detected:
+        print("Beginning an inch search")
+        move_dist_fwd(-0.01, 425)
+        print("Moved 0.01m backwards")
+        time.sleep(0.5)
+        print("Slept two seconds")
+        color_detected = classify_unknown_color(True)
+        print("Looking for door")
+        total_moved += 0.01
+        print(f"Updated how much I inched forward, total is now {total_moved}m")
+        print(color_detected)
+        if "orange" in color_detected:
+            print("DOOR FOUND!!!! WE OUTTA HERE")
+            door_detected = True
+            # Move forward after having found the door
+            move_dist_fwd(-0.06, 425)
+            break
+    return (total_moved + 0.06)
+
 
 def hassan_wiggle(amount : int):
     total_to_rotate = amount
@@ -229,6 +252,52 @@ def return_from_double(section_number):
     time.sleep(2)
 
 
+def sonia_detect_bed_color():
+    global red_detected, green_detected
+    color_detected = classify_unknown_color()
+    time.sleep(1)
+    print("Scanned for a bed")
+    if color_detected == "red":
+        print("red bed detected, ew let's get out now")
+        red_detected = True
+
+    elif color_detected == "green":
+        print("green bed detected, oh em gee I love it")
+        green_detected = True
+
+
+def sonia_wiggle():
+    global red_detected, green_detected
+    max_wiggles = 4; # To explore a room in its entire depth, wiggle 4 times max
+    wiggle_counter = 0;
+
+    while ((not red_detected) or (not green_detected) or (wiggle_counter < max_wiggles)):
+        rotate_with_gyro_correction(50, 100, RIGHT)  # Wiggle right
+        rotate_with_gyro_correction(50, 300, LEFT)  # Wiggle left
+
+        if (green_detected): # If green is detected, drop block and move back
+            open_gripper()
+
+
+        if (red_detected or green_detected):  # If red is detected, move back until you read the orange door
+            inch_away_from_door()
+            return
+
+        move_dist_fwd(0.7, 100)  # Move forward 7 cm before wiggling again
+        time.sleep(0.3)
+
+
+def sonia_bed_detection():
+    """This function essentially wiggles AND tries to identify a bed at the same time with threading"""
+    print("Bed detection commence")
+
+    t1 = threading.Thread(target=sonia_detect_bed_color, args=())
+    t2 = threading.Thread(target=sonia_wiggle, args=())
+
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
 
 if __name__ == "__main__":
     LEFT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
@@ -247,10 +316,11 @@ if __name__ == "__main__":
 
     # Step 4: Find the bed in the left single room, deposit if green, and get out of room
     # process_room()
-    
+
+
     move_dist_fwd(0.05, 250)
     time.sleep(1.5)
-    wiggle()
+    sonia_bed_detection()
 
 
     """
