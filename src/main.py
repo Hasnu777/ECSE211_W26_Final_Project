@@ -318,15 +318,14 @@ if __name__ == "__main__":
     move_dist_fwd(0.05, 300)
     time.sleep(1.5)
     sonia_bed_detection()
-
-
-    """
+    
     # Step 5: Return to position before having to find the room door
-    move_dist_fwd(-total_door_adjustment, 425)
+    #move_dist_fwd(-total_door_adjustment, 425)
 
     # Step 6: Move from left single to right single
     left_single_to_right_single()
 
+    """
     # Step 7: Align to right single room door
     total_door_adjustment = inch_towards_door()
     door_detected = False
