@@ -16,5 +16,5 @@ def play_jingle():
     song.wait_done()
 
 if __name__ == "__main__":
-    play_jingle
+    play_jingle()
     
