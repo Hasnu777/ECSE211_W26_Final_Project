@@ -85,6 +85,9 @@ def store_cube():
 
 
 def retrieve_cube():
+    # Open the gripper
+    open_gripper()
+    time.sleep(1)
     # Raise the arm
     raise_arm()
 #     wait_for_motor(claw_arm)

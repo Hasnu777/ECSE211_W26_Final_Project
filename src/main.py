@@ -80,7 +80,7 @@ def left_single_to_right_single():
 
 
 def right_single_to_double():
-    move_dist_fwd(SQUARE_LENGTH * -0.5, 425)
+    move_dist_fwd(SQUARE_LENGTH * -1, 425)
     rotate_with_gyro_correction(90, 300, RIGHT)
     move_dist_fwd(SQUARE_LENGTH * 1, 425)
     time.sleep(2)
@@ -270,7 +270,7 @@ def sonia_detect_bed_color():
 
 
 def sonia_wiggle():
-    global red_detected, green_detected, bed_detection_threads_killed
+    global red_detected, green_detected, bed_detection_threads_killed, green_beds_found
     max_wiggles = 7; # To explore a room in its entire depth, wiggle 7 times max (lowkey guessed this, untested still)
     wiggle_counter = 0;
 
@@ -284,7 +284,9 @@ def sonia_wiggle():
         wiggle_counter = wiggle_counter + 1;
 
     if (green_detected): # If green is detected, drop block and move back
-        open_gripper()
+        release_cube()
+        task_jingle()
+        green_beds_found += 1
         print("gripper opened")
 
     inch_away_from_door()
@@ -329,59 +331,36 @@ if __name__ == "__main__":
     total_door_adjustment = inch_towards_door()
     door_detected = False
 
-
     # Step 4: Find the bed in the left single room, deposit if green, and get out of room [CONFIRMED]
-    # process_room()
     move_dist_fwd(0.05, 300)
     time.sleep(1.5)
-    sonia_bed_detection()
+    sonia_bed_detection() # Detects bed, deposits if green, gets out of room
+    if green_beds_found == 1:
+        retrieve_cube()
     
-    # Step 5: Return to position before having to find the room door
-    #move_dist_fwd(-total_door_adjustment, 425)
-
-    # Step 6: Move from left single to right single
+    # Step 5: Move from left single to right single
     left_single_to_right_single()
+    
+    # Step 6: Find bed in right single room, deposit if green, get out of room
     sonia_bed_detection()
     
-
-    # Move to double room: [FIX RETREAT]
-    move_dist_fwd(-0.10, 300)
-    time.sleep(1)
-    right_single_to_double()
-
-    # Step 7: Align to right single room door
-    total_door_adjustment = inch_towards_door()
-    door_detected = False
-
-    # Step 8: Find the bed in the right single room, deposit if green, and get out of room
-    process_room()
-
-    # Return to position before having to find the room door
-    move_dist_fwd(-total_door_adjustment, 425)
-    time.sleep(total_door_adjustment * 2)
-
     # Check if both green beds found after checking both singles
     if green_beds_found == 2:
         return_from_right_single()
         victory_jingle()
-
-    # Must find both green beds, continue on to the double room...
+    
+    # Step 7: Move to double room [FIX RETREAT]
+    move_dist_fwd(-0.10, 300)
+    time.sleep(1)
     right_single_to_double()
-
-    # Find the door
-    total_door_adjustment = inch_towards_door()
-    door_detected = False
-
-    # Find bed in first section of the double room, deposit if green, and get out of room
-    process_room()
-
-    # Return to position before having to find the room door
-    move_dist_fwd(-total_door_adjustment, 425)
-    time.sleep(total_door_adjustment * 2)
-
-    # Check if both green beds found after checking first double section
+    
+    # Step 8: Scan double room section 1
+    move_dist_fwd(0.05, 300)
+    time.sleep(1.5)
+    sonia_bed_detection() # Detects bed, deposits if green, gets out of room
+    
+    # Check if both green beds found after checking section 1 of double room
     if green_beds_found == 2:
-        # Return to pharmacy
         return_from_double(section_number=1)
         victory_jingle()
 
@@ -396,7 +375,9 @@ if __name__ == "__main__":
     door_detected = False
 
     # Find bed in second section of the double room, deposit if green, and get out of room
-    process_room()
+    move_dist_fwd(0.05, 300)
+    time.sleep(1.5)
+    sonia_bed_detection() # Detects bed, deposits if green, gets out of room
 
     # Return to position before having to find the room door
     move_dist_fwd(-total_door_adjustment, 425)
@@ -404,7 +385,6 @@ if __name__ == "__main__":
 
     # Check if both green beds found after checking first double section
     if green_beds_found == 2:
-
         # Return to pharmacy
         return_from_double(section_number=2)
         victory_jingle()
@@ -420,7 +400,9 @@ if __name__ == "__main__":
     door_detected = False
 
     # Find bed in second section of the double room, deposit if green, and get out of room
-    process_room()
+    move_dist_fwd(0.05, 300)
+    time.sleep(1.5)
+    sonia_bed_detection() # Detects bed, deposits if green, gets out of room
 
     # Return to position before having to find the room door
     move_dist_fwd(-total_door_adjustment, 425)
@@ -429,5 +411,5 @@ if __name__ == "__main__":
     # At this point, it's guaranteed both beds are found
     return_from_double(section_number=3)
     victory_jingle()
-
+    
 
