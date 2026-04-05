@@ -238,7 +238,7 @@ if __name__ == "__main__":
 
     # Step 1: Starting position -> collected med packages
     getMeds()
-
+    
     # Step 2: pharmacy -> left single room
     pharmacy_to_left_single()
 
