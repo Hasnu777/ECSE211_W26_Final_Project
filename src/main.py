@@ -56,12 +56,12 @@ def getMeds():
     time.sleep(3)
     
     rotate_with_gyro_correction(90,300, LEFT) # in-built time.sleep()
-    rotate_with_gyro_correction(4,300, RIGHT) # in-built time.sleep()
+#     rotate_with_gyro_correction(4,300, RIGHT) # in-built time.sleep() MATT TEST THIS
 
 # CONFIRMED TO WORK
 def pharmacy_to_left_single():
     # Move out of pharmacy to intersection
-    move_dist_fwd(SQUARE_LENGTH * 2, 425)
+    move_dist_fwd(SQUARE_LENGTH * 1.5, 425)
     time.sleep(3)
     rotate_with_gyro_correction(30, 300, LEFT)
     move_dist_fwd(SQUARE_LENGTH * 0.2, 425)
