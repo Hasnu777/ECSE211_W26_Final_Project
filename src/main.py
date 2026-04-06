@@ -56,7 +56,7 @@ def getMeds():
     time.sleep(3)
     
     rotate_with_gyro_correction(90,300, LEFT) # in-built time.sleep()
-#     rotate_with_gyro_correction(4,300, RIGHT) # in-built time.sleep() MATT TEST THIS
+#     rotate_with_gyro_correction(4,300, RIGHT) # in-built time.sleep() MATT TEST THIS, DETERMINED TO BE NEEDLESS
 
 # CONFIRMED TO WORK
 def pharmacy_to_left_single():
@@ -188,8 +188,8 @@ def process_room():
             break
         print("Undoing the wiggle effects (fully applied because we didn't find a bed in this scan)")
         arc_bot(total_desired, 300, LEFT)
-        print("Moving forward to scan the next bit of the room in the next run of this while loop")
-        move_dist_fwd(SQUARE_LENGTH * 0.25, 425)
+#         print("Moving forward to scan the next bit of the room in the next run of this while loop")
+#         move_dist_fwd(SQUARE_LENGTH * 0.25, 425) - MATT THINKS THIS IS UNNECESSARY 
         time.sleep(0.5)
         room_depth += 0.25
         red_detected = False
