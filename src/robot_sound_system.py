@@ -5,6 +5,8 @@ import time
 import simpleaudio
 
 # CONSTANTS
+B5_COIN = Sound(duration=0.1, pitch="B5", volume=VOLUME, amp_f = 5, amp_ka = 0.1, amp_ac = 0.9)
+E6_COIN = Sound(duration=0.3, pitch="E6", volume=VOLUME, amp_f = 5, amp_ka = 0.1, amp_ac = 0.9)
 
 # -------------------- FUNCTIONS --------------------
 def victory_jingle():
