@@ -12,8 +12,7 @@ import simpleaudio
 song = simpleaudio.WaveObject.from_wave_file("Samsung_washing_machine.wav")
 
 def play_jingle():
-    song.PlayObject()
-    song.wait_done()
+    song.play()
 
 if __name__ == "__main__":
     play_jingle()
