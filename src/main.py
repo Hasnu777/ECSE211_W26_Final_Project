@@ -62,10 +62,10 @@ def getMeds():
 # CONFIRMED TO WORK
 def pharmacy_to_left_single():
     # Move out of pharmacy to intersection
-    move_dist_fwd(SQUARE_LENGTH * 1.75, 350)
+    move_dist_fwd(SQUARE_LENGTH * 2, 425)
     time.sleep(3)
     rotate_with_gyro_correction(30, 300, LEFT)
-    move_dist_fwd(SQUARE_LENGTH * 0.18, 350)
+    move_dist_fwd(SQUARE_LENGTH * 0.15, 425)
     time.sleep(0.5)
     rotate_with_gyro_correction(35, 300, RIGHT)
     # move_dist_fwd(SQUARE_LENGTH * -0.1, 425)
@@ -96,7 +96,7 @@ def inch_towards_door():
     print("Looking for the door...")
     while not door_detected:
         print("Beginning an inch search")
-        move_dist_fwd(0.01, 425)
+        move_dist_fwd(0.01, 350)
         print("Moved 0.01m forward")
         time.sleep(0.5)
         print("Slept 0.5 seconds")
@@ -105,12 +105,13 @@ def inch_towards_door():
         total_moved += 0.01
         print(f"Updated how much I inched forward, total is now {total_moved}m")
         print(color_detected)
-        if "orange" in color_detected[0]:
+        if "orange" in color_detected[0] or "orange" == color_detected:
             print("DOOR FOUND!!!! WE OUTTA HERE")
             door_detected = True
             time.sleep(0.5)
             # Move forward after having found the door
             move_dist_fwd(0.06, 250)
+            time.sleep(0.5)
             break
     return (total_moved + 0.06)
 
@@ -179,7 +180,7 @@ def process_room():
         if room_depth == 1.5:
             print("Whoa max depth reached, gotta back outta there before you hurt yourself buddy")
             # Robot will be straight, can just go backwards
-            move_dist_fwd(-SQUARE_LENGTH * room_depth, 425)
+            move_dist_fwd(-SQUARE_LENGTH * room_depth, 350)
             time.sleep(1.5 * room_depth)
             # Reset room depth in preparation for next process_room() call
             room_depth = 0
@@ -203,8 +204,13 @@ def process_room():
                 release_cube()
                 print("cube released, notifying the blind via sound")
                 task_jingle()
+                move_dist_fwd(-0.1, 300)
+                time.sleep(1)
                 # Raise the arm to get it out of the cube's way
                 raise_arm()
+                time.sleep(0.5)
+                move_dist_fwd(0.1, 300)
+                time.sleep(1)
                 # Put color sensor back over robot
                 rotate_with_gyro_correction(36, 300, RIGHT)
                 # Increment the number of green beds found
@@ -215,7 +221,7 @@ def process_room():
             arc_bot(-total_desired + total_remaining, 300, RIGHT)
             # Back out of the room
             print(f"Backing out of the room: depth was {room_depth}")
-            move_dist_fwd(-SQUARE_LENGTH * room_depth, 425)
+            move_dist_fwd(-SQUARE_LENGTH * room_depth, 350)
             # Lower the arm again
             lower_arm()
             room_depth = 0
@@ -226,9 +232,10 @@ def process_room():
             break
         print("Undoing the wiggle effects (fully applied because we didn't find a bed in this scan)")
         arc_bot(-total_desired+total_remaining, 300, RIGHT)
+        time.sleep(1.2)
         print("Moving forward to scan the next bit of the room in the next run of this while loop")
         print("Total:",total_desired,"\nTotal Remaining:",total_remaining)
-        move_dist_fwd(SQUARE_LENGTH * 0.25, 425)
+        move_dist_fwd(SQUARE_LENGTH * 0.25, 350)
         time.sleep(0.5)
         room_depth += 0.25
         red_detected = False
