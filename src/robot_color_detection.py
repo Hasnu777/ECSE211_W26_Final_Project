@@ -70,5 +70,5 @@ def classify_unknown_color(closest_three_allowed=False):
         if color_to_check.is_match(norm_r, norm_g, norm_b) and i == 0:
             return color_to_check.get_name()
     if closest_three_allowed:
-        return (ALL_COLORS[best_colors[distances[0]]], ALL_COLORS[best_colors[distances[1]]], ALL_COLORS[best_colors[distances[2]]])
+        return (ALL_COLORS[best_colors[distances[0]]].get_name(), ALL_COLORS[best_colors[distances[1]]].get_name(), ALL_COLORS[best_colors[distances[2]]].get_name())
     return "unknown"

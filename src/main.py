@@ -50,24 +50,24 @@ def getMeds():
     move_dist_fwd(-SQUARE_LENGTH * 5.5 / 8, 425)
     time.sleep(1)
     # 10) Re-align to initial alignment
-    rotate_with_gyro_correction(20, 300, LEFT)  #in-built time.sleep()
+    rotate_with_gyro_correction(18, 300, LEFT)  #in-built time.sleep()
     # 11) Get robot in alignment with right line going outside of pharmacy
     move_dist_fwd(SQUARE_LENGTH * -2 / 12, 425)
     time.sleep(3)
 
     rotate_with_gyro_correction(90, 300, LEFT)  # in-built time.sleep()
-    rotate_with_gyro_correction(5, 300, RIGHT)  # in-built time.sleep()
+#     rotate_with_gyro_correction(5, 300, RIGHT)  # in-built time.sleep()
 
 
 # CONFIRMED TO WORK
 def pharmacy_to_left_single():
     # Move out of pharmacy to intersection
-    move_dist_fwd(SQUARE_LENGTH * 2, 425)
+    move_dist_fwd(SQUARE_LENGTH * 1.75, 425)
     time.sleep(3)
     rotate_with_gyro_correction(30, 300, LEFT)
-    move_dist_fwd(SQUARE_LENGTH * 0.15, 425)
+    move_dist_fwd(SQUARE_LENGTH * 0.18, 425)
     time.sleep(0.5)
-    rotate_with_gyro_correction(30, 300, RIGHT)
+    rotate_with_gyro_correction(35, 300, RIGHT)
     # move_dist_fwd(SQUARE_LENGTH * -0.1, 425)
     time.sleep(1.5)
 
@@ -105,11 +105,12 @@ def inch_towards_door():
         total_moved += 0.01
         print(f"Updated how much I inched forward, total is now {total_moved}m")
         print(color_detected)
-        if "orange" in color_detected:
+        if "orange" in color_detected[0]:
             print("DOOR FOUND!!!! WE OUTTA HERE")
             door_detected = True
+            time.sleep(0.5)
             # Move forward after having found the door
-            move_dist_fwd(0.06, 425)
+            move_dist_fwd(0.06, 250)
             break
     return (total_moved + 0.06)
 
@@ -129,7 +130,7 @@ def inch_away_from_door():
         total_moved += 0.01
         print(f"Updated how much I inched BACKWARD, total is now {total_moved}m")
         print(color_detected)
-        if "orange" in color_detected:
+        if "orange" in color_detected[0] or "orange" == color_detected:
             print("DOOR FOUND!!!! WE OUTTA HERE")
             door_detected = True
             # Move forward after having found the door
@@ -148,18 +149,19 @@ def hassan_wiggle(amount: int):
             print("wiggled full amount, no bed was found... ISSUE UH OH")
             break
         arc_bot(total_to_rotate / 10, 300, RIGHT)
-        time.sleep(1)
+        time.sleep(0.5)
         remaining_to_rotate -= total_to_rotate / 10
         print(f"Rotated {total_to_rotate / 10} degrees for a partial wiggle")
         print(f"Updated the remaining wiggle degree value to {remaining_to_rotate}")
-        color_detected = classify_unknown_color()
-        time.sleep(1)
+        color_detected = classify_unknown_color(True)
+        time.sleep(0.2)
         print("Scanned for a bed")
-        if color_detected == "red":
+        print(color_detected)
+        if "red" in color_detected[0] or "red" == color_detected:
             print("red bed detected, ew let's get out now")
             red_detected = True
             break
-        elif color_detected == "green":
+        elif "green" in color_detected[0] or "green" == color_detected:
             print("green bed detected, oh em gee I love it")
             green_detected = True
             break
@@ -183,8 +185,10 @@ def process_room():
             room_depth = 0
             print("moved back outta the room, we OUT now")
             break
+        print(GYRO.get_abs_measure())
         # Get the total desired amount to wiggle, and amount rotated until complete/bed found
         total_desired, total_remaining = hassan_wiggle(50)
+        print(GYRO.get_abs_measure())
         print(
             f"The wiggle had a total desired amount of {total_desired}, completed {total_desired - total_remaining} and {total_remaining} remaining")
         # If a bed was found
@@ -207,7 +211,8 @@ def process_room():
                 print(f"Logging the bed, now at {green_beds_found} green beds processed")
             # Revert to original alignment, from current mid-wiggle position
             print("Undoing the wiggle effects (partially applied since we got a bed woo)")
-            arc_bot(total_desired - total_remaining, 300, LEFT)
+            
+            arc_bot(-total_desired + total_remaining, 300, RIGHT)
             # Back out of the room
             move_dist_fwd(-SQUARE_LENGTH * room_depth, 425)
             room_depth = 0
@@ -217,8 +222,10 @@ def process_room():
             print("WE BE OUTTA TS HAHA")
             break
         print("Undoing the wiggle effects (fully applied because we didn't find a bed in this scan)")
-        arc_bot(total_desired, 300, LEFT)
+        arc_bot(-total_desired+total_remaining, 300, RIGHT)
         print("Moving forward to scan the next bit of the room in the next run of this while loop")
+        print("Total:",total_desired,"\nTotal Remaining:",total_remaining)
+#         arc_bot(-total_desired + total_remaining, 300, RIGHT)
         move_dist_fwd(SQUARE_LENGTH * 0.25, 425)
         time.sleep(0.5)
         room_depth += 0.25
@@ -327,6 +334,7 @@ def sonia_bed_detection():
 
 
 if __name__ == "__main__":
+    GYRO.reset_measure()
     LEFT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
     RIGHT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
 
@@ -339,13 +347,18 @@ if __name__ == "__main__":
     # Step 3: Align to left single room door [CONFIRMED]
     total_door_adjustment = inch_towards_door()
     door_detected = False
+    
+    # Hassan Hijacking
+    process_room()
+    
+    move_dist_fwd(-total_door_adjustment,425)
 
-    # Step 4: Find the bed in the left single room, deposit if green, and get out of room [CONFIRMED]
-    move_dist_fwd(0.05, 300)
-    time.sleep(1.5)
-    sonia_bed_detection()  # Detects bed, deposits if green, gets out of room
-    if green_beds_found == 1:
-        retrieve_cube()
+#     # Step 4: Find the bed in the left single room, deposit if green, and get out of room [CONFIRMED]
+#     move_dist_fwd(0.05, 300)
+#     time.sleep(1.5)
+# #     sonia_bed_detection()  # Detects bed, deposits if green, gets out of room
+#     if green_beds_found == 1:
+#         retrieve_cube()
 
     # Step 5: Move from left single to right single
     left_single_to_right_single()
