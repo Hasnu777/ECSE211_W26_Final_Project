@@ -359,137 +359,114 @@ if __name__ == "__main__":
     GYRO.reset_measure()
     LEFT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
     RIGHT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
-    """
-    # Step 1: Starting position -> collected med packages [CONFIRMED]
+
+    # Step 1: Starting position -> collected med packages
     getMeds()
 
-    # Step 2: pharmacy -> left single room [CONFIRMED]
+    # Step 2: pharmacy -> left single room
     pharmacy_to_left_single()
 
-    # Step 3: Align to left single room door [CONFIRMED]
+    # Step 3: Align to left single room door
     total_door_adjustment = inch_towards_door()
     door_detected = False
     
-    # Hassan Hijacking
+    # Step 4: Find the bed in the left single room, deposit if green, and get out of room
     process_room()
-    
+
+    # Undo door alignment
     move_dist_fwd(-total_door_adjustment,425)
     time.sleep(1)
 
-#     # Step 4: Find the bed in the left single room, deposit if green, and get out of room [CONFIRMED]
-#     move_dist_fwd(0.05, 300)
-#     time.sleep(1.5)
-# #     sonia_bed_detection()  # Detects bed, deposits if green, gets out of room
+    # Step 5: Retrieve stored cube if the other one was dropped off
     if green_beds_found == 1:
-        # retrieve_cube()
         grab_cube()
         lower_arm()
         
-    # Step 5: Move from left single to right single
+    # Step 6: Move from left single to right single
     left_single_to_right_single()
 
-    # Step 6: Find bed in right single room, deposit if green, get out of room
+    # Step 7: Align to right single room door
     # HASSAN HIJACKS AGAIN MWAHAHAHA
     total_door_adjustment = inch_towards_door()
     door_detected = False
 
-    # Hassan Hijacking
+    # Step 8: Find bed in right single room, deposit if green, get out of room
     process_room()
 
+    # Step 9: Undo door alignment
     move_dist_fwd(-total_door_adjustment, 425)
-    # sonia_bed_detection()
+    time.sleep(1.5)
 
-    # Check if both green beds found after checking both singles
+    # Step 10: Check if both green beds found after checking both singles, return if true and quit
     if green_beds_found == 2:
         return_from_right_single()
         lower_arm()
         victory_jingle()
         sys.exit()
 
-    # Step 7: Move to double room [FIX RETREAT]
-    # HASSAN HIJACKS AGAIN OH MY
-    # move_dist_fwd(-0.10, 300)
-    # time.sleep(1)
-    move_dist_fwd(-total_door_adjustment, 425)
-    time.sleep(1.5)
+    # Step 11: Move from right single to double
     right_single_to_double()
-    """
     
-#     total_door_adjustment = inch_towards_door()
-#     door_detected = False
-#     
-#     move_dist_fwd(-total_door_adjustment, 425)
-#     time.sleep(1.5)
-#     
-#     right_single_to_double()
-    
-    # Step 8: Scan double room section 1
-#     move_dist_fwd(0.05, 300)
-#     time.sleep(1.5)
-#     sonia_bed_detection()  # Detects bed, deposits if green, gets out of room
-
+    # Step 12: Align to door
     total_door_adjustment = inch_towards_door()
     door_detected = False
-    
+
+    # Step 13: Scan first section of double room
+    # (theorised 3 sections, changing this will lead to changes in return_from_double() func and scanning/returning behavior below)
     process_room()
-    
+
+    # Step 14: Undo door alignment
     move_dist_fwd(-total_door_adjustment-0.03, 300)
     time.sleep(1.5)
 
-    # Check if both green beds found after checking section 1 of double room
+    # Step 15: Check if both green beds found after checking section 1 of double room, return if true and quit
     if green_beds_found == 2:
         return_from_double(section_number=1)
         victory_jingle()
         sys.exit()
 
-    # Two beds not found, must continue checking double room. Move to section 2
+    # Step 16: Two beds not found, must continue checking double room. Move to section 2
     rotate_with_gyro_correction(95, 300, LEFT)
     move_dist_fwd(SQUARE_LENGTH * 0.5, 425)
     time.sleep(1)
     rotate_with_gyro_correction(90, 300, RIGHT)
 
-    # Find the door
+    # Step 17: Find the door
     total_door_adjustment = inch_towards_door()
     door_detected = False
 
-    # Find bed in second section of the double room, deposit if green, and get out of room
-#     move_dist_fwd(0.05, 300)
-#     time.sleep(1.5)
-#     sonia_bed_detection()  # Detects bed, deposits if green, gets out of room
+    # Step 18: Find bed in second section of the double room, deposit if green, and get out of room
     process_room()
 
-    # Return to position before having to find the room door
+    # Step 19: Return to position before having to find the room door
     move_dist_fwd(-total_door_adjustment-0.03, 425)
     time.sleep(1.5)
 
-    # Check if both green beds found after checking first double section
+    # Step 20: Check if both green beds found after checking first double section, return if true and quit
     if green_beds_found == 2:
         # Return to pharmacy
         return_from_double(section_number=2)
         victory_jingle()
         sys.exit()
 
-    # Two beds not found, must continue checking double room. Move to section 3
+    # Step 21: Two beds not found, must continue checking double room. Move to section 3
     rotate_with_gyro_correction(95, 300, LEFT)
     move_dist_fwd(SQUARE_LENGTH * 0.5, 425)
     time.sleep(1)
     rotate_with_gyro_correction(90, 300, RIGHT)
 
-    # Find the door
+    # Step 24: Find the door
     total_door_adjustment = inch_towards_door()
     door_detected = False
 
-    # Find bed in second section of the double room, deposit if green, and get out of room
-#     move_dist_fwd(0.05, 300)
-#     time.sleep(1.5)
-#     sonia_bed_detection()  # Detects bed, deposits if green, gets out of room
+    # Step 25: Find bed in second section of the double room, deposit if green, and get out of room
     process_room()
 
-    # Return to position before having to find the room door
+    # Step 26: Return to position before having to find the room door
     move_dist_fwd(-total_door_adjustment, 425)
     time.sleep(total_door_adjustment * 2)
 
-    # At this point, it's guaranteed both beds are found
+    # Step 27: At this point, it's guaranteed both beds are found (assuming only 3 sections for double room)
     return_from_double(section_number=3)
     victory_jingle()
     sys.exit()
