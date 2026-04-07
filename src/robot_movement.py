@@ -187,10 +187,12 @@ def drive_straight(duration, base_speed):
         current = GYRO.get_abs_measure()
         error = (target - current + 180) % 360 - 180
 
-        correction = error * 0.5  # tune this gain
+        correction = error  # tune this gain
 
-        LEFT_WHEEL.set_speed(base_speed + correction)
-        RIGHT_WHEEL.set_speed(base_speed - correction)
+        LEFT_WHEEL.set_dps(base_speed + correction)
+        RIGHT_WHEEL.set_dps(base_speed - correction)
+    LEFT_WHEEL.set_dps(0)
+    RIGHT_WHEEL.set_dps(0)
 
 if __name__ == "__main__":
     wiggle()
