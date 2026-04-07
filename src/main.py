@@ -189,8 +189,7 @@ def process_room():
         # Get the total desired amount to wiggle, and amount rotated until complete/bed found
         total_desired, total_remaining = hassan_wiggle(50)
         print(GYRO.get_abs_measure())
-        print(
-            f"The wiggle had a total desired amount of {total_desired}, completed {total_desired - total_remaining} and {total_remaining} remaining")
+        print(f"The wiggle had a total desired amount of {total_desired}, completed {total_desired - total_remaining} and {total_remaining} remaining")
         # If a bed was found
         if red_detected or green_detected:
             print("BED WAS DETECTED LETS SEE WHICH KIND")
@@ -204,6 +203,8 @@ def process_room():
                 release_cube()
                 print("cube released, notifying the blind via sound")
                 task_jingle()
+                # Raise the arm to get it out of the cube's way
+                raise_arm()
                 # Put color sensor back over robot
                 rotate_with_gyro_correction(36, 300, RIGHT)
                 # Increment the number of green beds found
@@ -211,10 +212,12 @@ def process_room():
                 print(f"Logging the bed, now at {green_beds_found} green beds processed")
             # Revert to original alignment, from current mid-wiggle position
             print("Undoing the wiggle effects (partially applied since we got a bed woo)")
-            
             arc_bot(-total_desired + total_remaining, 300, RIGHT)
             # Back out of the room
+            print(f"Backing out of the room: depth was {room_depth}")
             move_dist_fwd(-SQUARE_LENGTH * room_depth, 425)
+            # Lower the arm again
+            lower_arm()
             room_depth = 0
             time.sleep(1.5 * room_depth)
             red_detected = False
@@ -225,7 +228,6 @@ def process_room():
         arc_bot(-total_desired+total_remaining, 300, RIGHT)
         print("Moving forward to scan the next bit of the room in the next run of this while loop")
         print("Total:",total_desired,"\nTotal Remaining:",total_remaining)
-#         arc_bot(-total_desired + total_remaining, 300, RIGHT)
         move_dist_fwd(SQUARE_LENGTH * 0.25, 425)
         time.sleep(0.5)
         room_depth += 0.25
@@ -357,14 +359,22 @@ if __name__ == "__main__":
 #     move_dist_fwd(0.05, 300)
 #     time.sleep(1.5)
 # #     sonia_bed_detection()  # Detects bed, deposits if green, gets out of room
-#     if green_beds_found == 1:
-#         retrieve_cube()
+    if green_beds_found == 1:
+        retrieve_cube()
 
     # Step 5: Move from left single to right single
     left_single_to_right_single()
 
     # Step 6: Find bed in right single room, deposit if green, get out of room
-    sonia_bed_detection()
+    # HASSAN HIJACKS AGAIN MWAHAHAHA
+    total_door_adjustment = inch_towards_door()
+    door_detected = False
+
+    # Hassan Hijacking
+    process_room()
+
+    move_dist_fwd(-total_door_adjustment, 425)
+    # sonia_bed_detection()
 
     # Check if both green beds found after checking both singles
     if green_beds_found == 2:
@@ -372,8 +382,11 @@ if __name__ == "__main__":
         victory_jingle()
 
     # Step 7: Move to double room [FIX RETREAT]
-    move_dist_fwd(-0.10, 300)
-    time.sleep(1)
+    # HASSAN HIJACKS AGAIN OH MY
+    # move_dist_fwd(-0.10, 300)
+    # time.sleep(1)
+    move_dist_fwd(-total_door_adjustment, 425)
+    time.sleep(1.5)
     right_single_to_double()
 
     # Step 8: Scan double room section 1
