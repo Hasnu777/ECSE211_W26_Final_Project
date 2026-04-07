@@ -168,7 +168,29 @@ def wiggle():
         rotate_with_gyro_correction(50, 300, LEFT)
         move_dist_fwd(0.05, 100)
         time.sleep(0.3)
-        
+
+def maintain_angle(targetAngle):
+    current = GYRO.get_abs_measure()
+    while current != targetAngle:
+        current = GYRO.get_abs_measure()
+        if current != None:
+            error = targetAngle - current
+            correction = error * 0.5
+            RIGHT_WHEEL.set_position_relative(-correction)
+            LEFT_WHEEL.set_position_relative(correction)
+
+def drive_straight(duration, base_speed):
+    target = GYRO.get_abs_measure()
+    start = time.time()
+
+    while time.time() - start < duration:
+        current = GYRO.get_abs_measure()
+        error = (target - current + 180) % 360 - 180
+
+        correction = error * 0.5  # tune this gain
+
+        LEFT_WHEEL.set_speed(base_speed + correction)
+        RIGHT_WHEEL.set_speed(base_speed - correction)
 
 if __name__ == "__main__":
     wiggle()
