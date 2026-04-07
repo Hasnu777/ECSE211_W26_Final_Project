@@ -50,9 +50,9 @@ def getMeds():
     move_dist_fwd(-SQUARE_LENGTH * 5.5 / 8, 425)
     time.sleep(1)
     # 10) Re-align to initial alignment
-    rotate_with_gyro_correction(18, 300, LEFT)  #in-built time.sleep()
+    rotate_with_gyro_correction(15, 300, LEFT)  #in-built time.sleep()
     # 11) Get robot in alignment with right line going outside of pharmacy
-    move_dist_fwd(SQUARE_LENGTH * -2 / 12, 425)
+    move_dist_fwd(SQUARE_LENGTH * -2 / 12, 300)
     time.sleep(3)
 
     rotate_with_gyro_correction(90, 300, LEFT)  # in-built time.sleep()
@@ -62,10 +62,10 @@ def getMeds():
 # CONFIRMED TO WORK
 def pharmacy_to_left_single():
     # Move out of pharmacy to intersection
-    move_dist_fwd(SQUARE_LENGTH * 1.75, 425)
+    move_dist_fwd(SQUARE_LENGTH * 1.75, 350)
     time.sleep(3)
     rotate_with_gyro_correction(30, 300, LEFT)
-    move_dist_fwd(SQUARE_LENGTH * 0.18, 425)
+    move_dist_fwd(SQUARE_LENGTH * 0.18, 350)
     time.sleep(0.5)
     rotate_with_gyro_correction(35, 300, RIGHT)
     # move_dist_fwd(SQUARE_LENGTH * -0.1, 425)
