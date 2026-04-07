@@ -338,7 +338,6 @@ if __name__ == "__main__":
     GYRO.reset_measure()
     LEFT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
     RIGHT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
-    drive_straight(10,200)
     
     # Step 1: Starting position -> collected med packages [CONFIRMED]
     getMeds()
