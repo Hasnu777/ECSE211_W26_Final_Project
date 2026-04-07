@@ -187,7 +187,7 @@ def drive_straight(duration, base_speed):
         current = GYRO.get_abs_measure()
         error = (target - current + 180) % 360 - 180
 
-        correction = error  # tune this gain
+        correction = error *ORIENT_TO_DEG # tune this gain
 
         LEFT_WHEEL.set_dps(base_speed + correction)
         RIGHT_WHEEL.set_dps(base_speed - correction)
