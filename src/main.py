@@ -69,16 +69,21 @@ def pharmacy_to_left_single():
     time.sleep(0.5)
     rotate_with_gyro_correction(35, 300, RIGHT)
     # move_dist_fwd(SQUARE_LENGTH * -0.1, 425)
-    time.sleep(1.5)
+    # time.sleep(1.5)
 
 
 def left_single_to_right_single():
-    rotate_with_gyro_correction(90, 300, RIGHT)
+    rotate_with_gyro_correction(35, 300, LEFT)
+    # time.sleep(1.5)
+    move_dist_fwd(-SQUARE_LENGTH * 0.15, 425)
+    time.sleep(0.5)
+    rotate_with_gyro_correction(120, 300, RIGHT)
+    # rotate_with_gyro_correction(90, 300, RIGHT)
     move_dist_fwd(SQUARE_LENGTH * 2, 425)
     time.sleep(3)
     rotate_with_gyro_correction(90, 300, LEFT)
-    move_dist_fwd(SQUARE_LENGTH * 0.4, 425)
-    time.sleep(0.5)
+    # move_dist_fwd(SQUARE_LENGTH * 0.15, 425)
+    # time.sleep(0.5)
 
 
 def right_single_to_double():
@@ -110,10 +115,10 @@ def inch_towards_door():
             door_detected = True
             time.sleep(0.5)
             # Move forward after having found the door
-            move_dist_fwd(0.06, 250)
+            move_dist_fwd(0.1, 250)
             time.sleep(0.5)
             break
-    return (total_moved + 0.06)
+    return (total_moved + 0.1)
 
 
 def inch_away_from_door():
@@ -208,22 +213,23 @@ def process_room():
                 time.sleep(1)
                 # Raise the arm to get it out of the cube's way
                 raise_arm()
-                time.sleep(0.5)
+                time.sleep(1)
                 move_dist_fwd(0.1, 300)
                 time.sleep(1)
                 # Put color sensor back over robot
-                rotate_with_gyro_correction(36, 300, RIGHT)
+                # rotate_with_gyro_correction(36, 300, RIGHT)
                 # Increment the number of green beds found
                 green_beds_found += 1
                 print(f"Logging the bed, now at {green_beds_found} green beds processed")
             # Revert to original alignment, from current mid-wiggle position
             print("Undoing the wiggle effects (partially applied since we got a bed woo)")
-            arc_bot(-total_desired + total_remaining, 300, RIGHT)
+            arc_bot(-total_desired + total_remaining + 36, 300, RIGHT)
+            time.sleep(1.5)
             # Back out of the room
             print(f"Backing out of the room: depth was {room_depth}")
             move_dist_fwd(-SQUARE_LENGTH * room_depth, 350)
-            # Lower the arm again
-            lower_arm()
+            # # Lower the arm again
+            # lower_arm()
             room_depth = 0
             time.sleep(1.5 * room_depth)
             red_detected = False
@@ -232,7 +238,7 @@ def process_room():
             break
         print("Undoing the wiggle effects (fully applied because we didn't find a bed in this scan)")
         arc_bot(-total_desired+total_remaining, 300, RIGHT)
-        time.sleep(1.2)
+        time.sleep(1.5)
         print("Moving forward to scan the next bit of the room in the next run of this while loop")
         print("Total:",total_desired,"\nTotal Remaining:",total_remaining)
         move_dist_fwd(SQUARE_LENGTH * 0.25, 350)
@@ -259,7 +265,7 @@ def return_from_right_single():
     move_dist_fwd(-SQUARE_LENGTH * 1, 425)
     time.sleep(2)
     rotate_with_gyro_correction(90, 300, LEFT)
-    move_dist_fwd(-SQUARE_LENGTH * 1.3, 425)
+    move_dist_fwd(-SQUARE_LENGTH * 1.8, 425)
     time.sleep(2.5)
 
 
@@ -367,8 +373,9 @@ if __name__ == "__main__":
 #     time.sleep(1.5)
 # #     sonia_bed_detection()  # Detects bed, deposits if green, gets out of room
     if green_beds_found == 1:
-        retrieve_cube()
-
+        # retrieve_cube()
+        grab_cube()
+        lower_arm()
     # Step 5: Move from left single to right single
     left_single_to_right_single()
 
