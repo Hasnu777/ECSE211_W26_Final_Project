@@ -90,7 +90,7 @@ def left_single_to_right_single():
 def right_single_to_double():
 #     move_dist_fwd(SQUARE_LENGTH * -1, 425)
     rotate_with_gyro_correction(90, 300, RIGHT)
-    move_dist_fwd(SQUARE_LENGTH * 1.2, 425)
+    move_dist_fwd(SQUARE_LENGTH * 1, 425)
     time.sleep(2)
     rotate_with_gyro_correction(93, 300, RIGHT)
 
@@ -174,27 +174,9 @@ def hassan_wiggle(amount: int):
             break
     return (total_to_rotate, remaining_to_rotate)
 
-def matt_arc(amount):
-    total_to_rotate = amount
-    global red_detected, green_detected
-    while not (red_detected or green_detected):
-        # if remaining_to_rotate == 0:
-        #     print("wiggled full amount, no bed was found... ISSUE UH OH")
-        #     break
-        arc_bot(total_to_rotate, 300, LEFT)
-        time.sleep(0.5)
-        color_detected = classify_unknown_color(True)
-        time.sleep(0.2)
-        print("Scanned for a bed")
-        print(color_detected)
-        if "green" in color_detected[0] or "green" == color_detected:
-            print("green bed detected, oh em gee I love it")
-            green_detected = True
-            break
-
 
 # DEPRECATED
-def process_room(double = False):
+def process_room():
     global room_depth, green_beds_found, red_detected, green_detected
 
     # Continue until a bed is found, or break conditions met
@@ -212,13 +194,17 @@ def process_room(double = False):
             break
         print(GYRO.get_abs_measure())
         # Get the total desired amount to wiggle, and amount rotated until complete/bed found
-        if green_detected:
+        total_desired, total_remaining = hassan_wiggle(50)
+        print(GYRO.get_abs_measure())
+        print(f"The wiggle had a total desired amount of {total_desired}, completed {total_desired - total_remaining} and {total_remaining} remaining")
+        # If a bed was found
+        if red_detected or green_detected:
+            print("BED WAS DETECTED LETS SEE WHICH KIND")
+            # If bed found was green
+            if green_detected:
                 print("OOOOHHHHH BED IS GREEN!!!! ITS HUNGRY FOR DRUGS")
                 # rotate robot to put claw over the bed
-                if double:
-                    rotate_with_gyro_correction(72, 300, RIGHT)
-                else:
-                    rotate_with_gyro_correction(36, 300, LEFT)
+                rotate_with_gyro_correction(36, 300, LEFT)
                 # Deliver the med package if the bed is green
                 print("RELEASE... THE *CUBE*")
                 release_cube()
@@ -236,45 +222,11 @@ def process_room(double = False):
                 # Increment the number of green beds found
                 green_beds_found += 1
                 print(f"Logging the bed, now at {green_beds_found} green beds processed")
-        else:
-            total_desired, total_remaining = hassan_wiggle(50)
-            print(GYRO.get_abs_measure())
-            print(f"The wiggle had a total desired amount of {total_desired}, completed {total_desired - total_remaining} and {total_remaining} remaining")
-            # If a bed was found
-            if red_detected or green_detected:
-                print("BED WAS DETECTED LETS SEE WHICH KIND")
-                # If bed found was green
-                if green_detected:
-                    print("OOOOHHHHH BED IS GREEN!!!! ITS HUNGRY FOR DRUGS")
-                    # rotate robot to put claw over the bed
-                    if double:
-                        rotate_with_gyro_correction(36, 300, RIGHT)
-                    else:
-                        rotate_with_gyro_correction(36, 300, LEFT)
-                    # Deliver the med package if the bed is green
-                    print("RELEASE... THE *CUBE*")
-                    release_cube()
-                    print("cube released, notifying the blind via sound")
-                    task_jingle()
-                    move_dist_fwd(-0.05, 300)
-                    time.sleep(1)
-                    # Raise the arm to get it out of the cube's way
-                    raise_arm()
-                    time.sleep(1)
-                    move_dist_fwd(0.05, 300)
-                    time.sleep(1)
-                    # Put color sensor back over robot
-                    # rotate_with_gyro_correction(36, 300, RIGHT)
-                    # Increment the number of green beds found
-                    green_beds_found += 1
-                    print(f"Logging the bed, now at {green_beds_found} green beds processed")
-                # Revert to original alignment, from current mid-wiggle position
+            # Revert to original alignment, from current mid-wiggle position
             print("Undoing the wiggle effects (partially applied since we got a bed woo)")
             print(f"Total Desired: {total_desired}\nTotal Remaining: {total_remaining}\nSum: {-total_desired + total_remaining+36}")
             arc_bot(-total_desired + total_remaining + 36 + 5, 300, RIGHT)
             time.sleep(1.5)
-            matt_arc(20)
-            arc_bot(-20, 300, LEFT)
             # Back out of the room
             print(f"Backing out of the room: depth was {room_depth}")
             move_dist_fwd(-SQUARE_LENGTH * room_depth, 350)
@@ -462,7 +414,7 @@ if __name__ == "__main__":
     # Step 13: Scan first section of double room
     # SECTION 1
     # (theorised 3 sections, changing this will lead to changes in return_from_double() func and scanning/returning behavior below)
-    process_room(True)
+    process_room()
 
     # Step 14: Undo door alignment
     move_dist_fwd(-total_door_adjustment-0.03, 300)
@@ -486,7 +438,7 @@ if __name__ == "__main__":
     door_detected = False
 
     # Step 18: Find bed in second section of the double room, deposit if green, and get out of room
-    process_room(True)
+    process_room()
 
     # Step 19: Return to position before having to find the room door
     move_dist_fwd(-total_door_adjustment-0.03, 425)
@@ -511,7 +463,7 @@ if __name__ == "__main__":
     door_detected = False
 
     # Step 25: Find bed in second section of the double room, deposit if green, and get out of room
-    process_room(True)
+    process_room()
 
     # Step 26: Return to position before having to find the room door
     move_dist_fwd(-total_door_adjustment, 425)
