@@ -103,8 +103,8 @@ def left_single_to_right_single():
 def right_single_to_double():
     move_dist_fwd(-(SQUARE_LENGTH *0.6), 425)
     rotate_with_gyro_correction(90, 300, RIGHT)
-    maintain_angle(start_angle)
-    move_dist_fwd(SQUARE_LENGTH * 1, 425)
+#     maintain_angle(start_angle)
+    move_dist_fwd(SQUARE_LENGTH * 0.85, 425)
     time.sleep(2)
     rotate_with_gyro_correction(90, 300, RIGHT)
 
@@ -300,7 +300,7 @@ def return_from_double(section_number):
         move_dist_fwd(-SQUARE_LENGTH * 0.5, 425)
 
     move_dist_fwd(-SQUARE_LENGTH * 2.5, 425)
-    time.sleep(2)
+    time.sleep(4)
     rotate_with_gyro_correction(90, 300, LEFT)
     move_dist_fwd(-SQUARE_LENGTH * 1.75, 425)
     time.sleep(2)
@@ -372,8 +372,8 @@ def sonia_bed_detection():
 
 
 if __name__ == "__main__":
-    claw_arm.set_position(-10)
-    claw_arm.reset_encoder()
+#     claw_arm.set_position(-10)
+#     claw_arm.reset_encoder()
     es = threading.Thread(target=emergencyStop, daemon=True)
     es.start()
     GYRO.reset_measure()
@@ -462,7 +462,7 @@ if __name__ == "__main__":
     process_room()
 
     # Step 19: Return to position before having to find the room door
-    move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0.3), 425)
+    move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0.8), 425)
     time.sleep(1.5)
 
     # Step 20: Check if both green beds found after checking first double section, return if true and quit
