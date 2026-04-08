@@ -40,17 +40,17 @@ def emergencyStop():
 def getMeds():
     # 1) Prepare claw to receive blocks
     open_gripper()
-    time.sleep(0.5)
+    # time.sleep(0.5)
     # 2) Align claw to left block
     rotate_with_gyro_correction(10, 300, LEFT)  # in-built time.sleep()
     # 3) Move towards left block
     move_dist_fwd(SQUARE_LENGTH * 0.4, 425)
-    time.sleep(1.5)
+    time.sleep(0.5)
     # 4) Left block in reach, store it
     store_cube()  # in-built time.sleep()
     # 5) Move back
     move_dist_fwd(-SQUARE_LENGTH * 3 / 8, 425)
-    time.sleep(1.5)
+    time.sleep(0.5)
     # 6) Align claw to right block
     rotate_with_gyro_correction(25, 300, RIGHT)  # in-built time.sleep()
     # 7) Prepare for receival
@@ -67,7 +67,7 @@ def getMeds():
     rotate_with_gyro_correction(15, 300, LEFT)  #in-built time.sleep()
     # 11) Get robot in alignment with right line going outside of pharmacy
     move_dist_fwd(SQUARE_LENGTH * -2 / 12, 300)
-    time.sleep(3)
+    time.sleep(1)
 
     rotate_with_gyro_correction(90, 300, LEFT)  # in-built time.sleep()
 #     rotate_with_gyro_correction(5, 300, RIGHT)  # in-built time.sleep()
@@ -196,11 +196,11 @@ def process_room():
     while not (red_detected or green_detected):
         print("Searching for a bed...")
         # If gone deep enough in the room, quit it to move on
-        if room_depth == 1.5:
+        if room_depth == 1.3:
             print("Whoa max depth reached, gotta back outta there before you hurt yourself buddy")
             # Robot will be straight, can just go backwards
             move_dist_fwd(-SQUARE_LENGTH * room_depth, 350)
-            time.sleep(1.5 * room_depth)
+            time.sleep(1)
             # Reset room depth in preparation for next process_room() call
             room_depth = 0
             print("moved back outta the room, we OUT now")
