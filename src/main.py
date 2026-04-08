@@ -372,8 +372,8 @@ def sonia_bed_detection():
 
 
 if __name__ == "__main__":
-#     claw_arm.set_position(10)
-#     claw_arm.reset_encoder()
+    claw_arm.set_position(-10)
+    claw_arm.reset_encoder()
     es = threading.Thread(target=emergencyStop, daemon=True)
     es.start()
     GYRO.reset_measure()

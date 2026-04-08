@@ -174,7 +174,7 @@ def wiggle():
         
 def maintain_angle(targetAngle):
     current = GYRO.get_abs_measure()
-    while current != targetAngle:
+    while current not in range(targetAngle-1 , targetAngle +1):
         current = GYRO.get_abs_measure()
         if current != None:
             error = targetAngle - current

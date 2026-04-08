@@ -15,7 +15,7 @@ claw_arm.set_limits(power=30)
 OPEN_GRIPPER = -50
 CLOSED_GRIPPER = 10
 RAISED_ARM = 180
-LOWERED_ARM = 3
+LOWERED_ARM = 7
 
 
 # FUNCTIONS
@@ -55,7 +55,7 @@ def release_cube():
     # Release cube
     open_gripper()
 #     wait_for_motor(claw_gripper)
-    time.sleep(0.5)
+    time.sleep(0.3)
     # Close gripper
 #     close_gripper()
 #     wait_for_motor(claw_gripper)
