@@ -77,10 +77,10 @@ def getMeds():
 def pharmacy_to_left_single():
     # Move out of pharmacy to intersection
     move_dist_fwd(SQUARE_LENGTH * 2, 425)
-    time.sleep(3)
+    time.sleep(0.5) #CHANGED FROM 3
     rotate_with_gyro_correction(30, 300, LEFT)
     move_dist_fwd(SQUARE_LENGTH * 0.15, 425)
-    time.sleep(0.5)
+    time.sleep(0.2)
     rotate_with_gyro_correction(33, 300, RIGHT)
     # move_dist_fwd(SQUARE_LENGTH * -0.1, 425)
     # time.sleep(1.5)
@@ -169,7 +169,7 @@ def hassan_wiggle(amount: int):
             print("wiggled full amount, no bed was found... ISSUE UH OH")
             break
         arc_bot(total_to_rotate / 10, 300, RIGHT)
-        time.sleep(0.5)
+        time.sleep(0.2) #CHANGED FROM 0.5
         remaining_to_rotate -= total_to_rotate / 10
         print(f"Rotated {total_to_rotate / 10} degrees for a partial wiggle")
         print(f"Updated the remaining wiggle degree value to {remaining_to_rotate}")
@@ -241,7 +241,7 @@ def process_room():
             print("Undoing the wiggle effects (partially applied since we got a bed woo)")
             print(f"Total Desired: {total_desired}\nTotal Remaining: {total_remaining}\nSum: {-total_desired + total_remaining+36}")
             arc_bot(-total_desired + total_remaining + 36 + 5, 300, RIGHT)
-            time.sleep(1.5)
+            time.sleep(1)
             # Back out of the room
             print(f"Backing out of the room: depth was {room_depth}")
             move_dist_fwd(-(SQUARE_LENGTH * room_depth), 350)
@@ -258,7 +258,7 @@ def process_room():
         # arc_bot(-total_desired+total_remaining + 5, 300, RIGHT)  # FOR SINGLE ROOMS, MOSTLY WORKED
         arc_bot(-total_desired+total_remaining + 5, 300, RIGHT) # FOR DOUBLE ROOM, TEST
         
-        time.sleep(1.5)
+        time.sleep(0.8)
         print("Moving forward to scan the next bit of the room in the next run of this while loop")
         print("Total:",total_desired,"\nTotal Remaining:",total_remaining)
         move_dist_fwd(SQUARE_LENGTH * 0.25, 350)
