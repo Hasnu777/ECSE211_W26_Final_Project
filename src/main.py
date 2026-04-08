@@ -103,6 +103,7 @@ def left_single_to_right_single():
 def right_single_to_double():
     move_dist_fwd(-(SQUARE_LENGTH *0.6), 425)
     rotate_with_gyro_correction(90, 300, RIGHT)
+    maintain_angle(start_angle)
     move_dist_fwd(SQUARE_LENGTH * 1, 425)
     time.sleep(2)
     rotate_with_gyro_correction(90, 300, RIGHT)
@@ -378,6 +379,7 @@ if __name__ == "__main__":
     GYRO.reset_measure()
     LEFT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
     RIGHT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
+    start_angle = GYRO.get_abs_measure()
 
     # Step 1: Starting position -> collected med packages
     getMeds()
