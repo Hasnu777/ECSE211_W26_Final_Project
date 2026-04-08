@@ -66,19 +66,19 @@ def store_cube():
     # Lower the arm
     lower_arm()
 #     wait_for_motor(claw_arm)
-    time.sleep(1)
+    time.sleep(0.1)
     # Grab cube
     grab_cube()
     # Raise the arm
     raise_arm()
 #     wait_for_motor(claw_arm)
-    time.sleep(1)
+    time.sleep(0.8)
     # Release cube
     release_cube()
     # Lower the arm
     lower_arm()
 #     wait_for_motor(claw_arm)
-    time.sleep(1)
+    time.sleep(0.1)
     # Close the gripper
     close_gripper()
     time.sleep(1)

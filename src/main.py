@@ -45,7 +45,7 @@ def getMeds():
     rotate_with_gyro_correction(10, 300, LEFT)  # in-built time.sleep()
     # 3) Move towards left block
     move_dist_fwd(SQUARE_LENGTH * 0.4, 425)
-    time.sleep(0.5)
+    time.sleep(0.2)
     # 4) Left block in reach, store it
     store_cube()  # in-built time.sleep()
     # 5) Move back
@@ -89,10 +89,10 @@ def pharmacy_to_left_single():
 def left_single_to_right_single():
     rotate_with_gyro_correction(35, 300, LEFT)
     # time.sleep(1.5)
-    move_dist_fwd(-SQUARE_LENGTH * 0.2, 425)
+    move_dist_fwd(-SQUARE_LENGTH * 0.5, 425)
     time.sleep(0.5)
     rotate_with_gyro_correction(33, 300, RIGHT)
-    rotate_with_gyro_correction(90, 300, RIGHT)
+    rotate_with_gyro_correction(95, 300, RIGHT)
     move_dist_fwd(SQUARE_LENGTH * 2, 425)
     time.sleep(3)
     rotate_with_gyro_correction(90, 300, LEFT)
@@ -101,11 +101,11 @@ def left_single_to_right_single():
 
 
 def right_single_to_double():
-#     move_dist_fwd(SQUARE_LENGTH * -1, 425)
-    rotate_with_gyro_correction(90, 300, RIGHT)
-    move_dist_fwd(SQUARE_LENGTH * 1.2, 425)
+    move_dist_fwd(-(SQUARE_LENGTH *0.6), 425)
+    rotate_with_gyro_correction(92, 300, RIGHT)
+    move_dist_fwd(SQUARE_LENGTH * 1, 425)
     time.sleep(2)
-    rotate_with_gyro_correction(90, 300, RIGHT)
+    rotate_with_gyro_correction(94, 300, RIGHT)
 
 
 # CONFIRMED TO WORK
@@ -244,7 +244,7 @@ def process_room():
             time.sleep(1.5)
             # Back out of the room
             print(f"Backing out of the room: depth was {room_depth}")
-            move_dist_fwd(-SQUARE_LENGTH * room_depth, 350)
+            move_dist_fwd(-(SQUARE_LENGTH * room_depth), 350)
             # # Lower the arm again
             # lower_arm()
             time.sleep(1) # MATT CHANGED FROM 3
@@ -290,7 +290,7 @@ def return_from_right_single():
 
 
 def return_from_double(section_number):
-    move_dist_fwd(-SQUARE_LENGTH * 0.5, 425)
+#     move_dist_fwd(-SQUARE_LENGTH * 0.5, 425)
     time.sleep(1)
     rotate_with_gyro_correction(90, 300, LEFT)
     if section_number == 3:
@@ -371,7 +371,8 @@ def sonia_bed_detection():
 
 
 if __name__ == "__main__":
-#     process_room()
+#     claw_arm.set_position(5)
+#     claw_arm.reset_encoder()
     es = threading.Thread(target=emergencyStop, daemon=True)
     es.start()
     GYRO.reset_measure()
@@ -435,7 +436,7 @@ if __name__ == "__main__":
     process_room()
 
     # Step 14: Undo door alignment
-    move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0.3), 300)
+    move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0), 300)
     time.sleep(1.5)
 
     # Step 15: Check if both green beds found after checking section 1 of double room, return if true and quit
@@ -446,7 +447,7 @@ if __name__ == "__main__":
 
     # Step 16: Two beds not found, must continue checking double room. Move to section 2
     #SECTION 2
-    rotate_with_gyro_correction(95, 300, LEFT)
+    rotate_with_gyro_correction(91, 300, LEFT)
     move_dist_fwd(SQUARE_LENGTH * 0.5, 425)
     time.sleep(1)
     rotate_with_gyro_correction(90, 300, RIGHT)
@@ -459,7 +460,7 @@ if __name__ == "__main__":
     process_room()
 
     # Step 19: Return to position before having to find the room door
-    move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0.3), 425)
+    move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0), 425)
     time.sleep(1.5)
 
     # Step 20: Check if both green beds found after checking first double section, return if true and quit
@@ -471,7 +472,7 @@ if __name__ == "__main__":
 
     # Step 21: Two beds not found, must continue checking double room. Move to section 3
     # SECTION 3
-    rotate_with_gyro_correction(95, 300, LEFT)
+    rotate_with_gyro_correction(91, 300, LEFT)
     move_dist_fwd(SQUARE_LENGTH * 0.5, 425)
     time.sleep(1)
     rotate_with_gyro_correction(90, 300, RIGHT)
