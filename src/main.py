@@ -81,7 +81,7 @@ def pharmacy_to_left_single():
     rotate_with_gyro_correction(30, 300, LEFT)
     move_dist_fwd(SQUARE_LENGTH * 0.15, 425)
     time.sleep(0.5)
-    rotate_with_gyro_correction(35, 300, RIGHT)
+    rotate_with_gyro_correction(33, 300, RIGHT)
     # move_dist_fwd(SQUARE_LENGTH * -0.1, 425)
     # time.sleep(1.5)
 
@@ -371,6 +371,7 @@ def sonia_bed_detection():
 
 
 if __name__ == "__main__":
+#     process_room()
     es = threading.Thread(target=emergencyStop, daemon=True)
     es.start()
     GYRO.reset_measure()
@@ -434,7 +435,7 @@ if __name__ == "__main__":
     process_room()
 
     # Step 14: Undo door alignment
-    move_dist_fwd(-total_door_adjustment-0.03, 300)
+    move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0.3), 300)
     time.sleep(1.5)
 
     # Step 15: Check if both green beds found after checking section 1 of double room, return if true and quit
@@ -458,7 +459,7 @@ if __name__ == "__main__":
     process_room()
 
     # Step 19: Return to position before having to find the room door
-    move_dist_fwd(-total_door_adjustment-0.03, 425)
+    move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0.3), 425)
     time.sleep(1.5)
 
     # Step 20: Check if both green beds found after checking first double section, return if true and quit
