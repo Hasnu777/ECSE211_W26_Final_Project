@@ -104,7 +104,7 @@ def right_single_to_double():
     move_dist_fwd(-(SQUARE_LENGTH *0.6), 425)
     rotate_with_gyro_correction(90, 300, RIGHT)
 #     maintain_angle(start_angle)
-    move_dist_fwd(SQUARE_LENGTH * 0.85, 425)
+    move_dist_fwd(SQUARE_LENGTH * 0.95, 425)
     time.sleep(2)
     rotate_with_gyro_correction(90, 300, RIGHT)
 
@@ -381,6 +381,7 @@ if __name__ == "__main__":
     RIGHT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
     start_angle = GYRO.get_abs_measure()
 
+
     # Step 1: Starting position -> collected med packages
     getMeds()
 
@@ -462,7 +463,7 @@ if __name__ == "__main__":
     process_room()
 
     # Step 19: Return to position before having to find the room door
-    move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0.8), 425)
+    move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0.3), 425)
     time.sleep(1.5)
 
     # Step 20: Check if both green beds found after checking first double section, return if true and quit
