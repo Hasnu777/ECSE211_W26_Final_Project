@@ -235,6 +235,8 @@ def process_room():
                 # Increment the number of green beds found
                 green_beds_found += 1
                 print(f"Logging the bed, now at {green_beds_found} green beds processed")
+            else:
+                rotate_with_gyro_correction(36, 300, LEFT)
             # Revert to original alignment, from current mid-wiggle position
             print("Undoing the wiggle effects (partially applied since we got a bed woo)")
             print(f"Total Desired: {total_desired}\nTotal Remaining: {total_remaining}\nSum: {-total_desired + total_remaining+36}")
@@ -245,7 +247,7 @@ def process_room():
             move_dist_fwd(-SQUARE_LENGTH * room_depth, 350)
             # # Lower the arm again
             # lower_arm()
-            time.sleep(3)
+            time.sleep(1) # MATT CHANGED FROM 3
             room_depth = 0
             red_detected = False
             green_detected = False
