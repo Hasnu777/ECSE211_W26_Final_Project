@@ -95,17 +95,17 @@ def left_single_to_right_single():
     rotate_with_gyro_correction(95, 300, RIGHT)
     move_dist_fwd(SQUARE_LENGTH * 2, 425)
     time.sleep(3)
-    rotate_with_gyro_correction(90, 300, LEFT)
+    rotate_with_gyro_correction(94, 300, LEFT)
     # move_dist_fwd(SQUARE_LENGTH * 0.15, 425)
     # time.sleep(0.5)
 
 
 def right_single_to_double():
     move_dist_fwd(-(SQUARE_LENGTH *0.6), 425)
-    rotate_with_gyro_correction(92, 300, RIGHT)
+    rotate_with_gyro_correction(90, 300, RIGHT)
     move_dist_fwd(SQUARE_LENGTH * 1, 425)
     time.sleep(2)
-    rotate_with_gyro_correction(94, 300, RIGHT)
+    rotate_with_gyro_correction(90, 300, RIGHT)
 
 
 # CONFIRMED TO WORK
@@ -117,7 +117,7 @@ def inch_towards_door():
         print("Beginning an inch search")
         move_dist_fwd(0.01, 350)
         print("Moved 0.01m forward")
-        time.sleep(0.5)
+        time.sleep(0.2)
         print("Slept 0.5 seconds")
         color_detected = classify_unknown_color(True)
         print("Looking for door")
@@ -196,7 +196,7 @@ def process_room():
     while not (red_detected or green_detected):
         print("Searching for a bed...")
         # If gone deep enough in the room, quit it to move on
-        if room_depth == 1.3:
+        if room_depth >= 1.2:
             print("Whoa max depth reached, gotta back outta there before you hurt yourself buddy")
             # Robot will be straight, can just go backwards
             move_dist_fwd(-SQUARE_LENGTH * room_depth, 350)
@@ -371,7 +371,7 @@ def sonia_bed_detection():
 
 
 if __name__ == "__main__":
-#     claw_arm.set_position(5)
+#     claw_arm.set_position(10)
 #     claw_arm.reset_encoder()
     es = threading.Thread(target=emergencyStop, daemon=True)
     es.start()
@@ -436,7 +436,7 @@ if __name__ == "__main__":
     process_room()
 
     # Step 14: Undo door alignment
-    move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0), 300)
+    move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0.3), 300)
     time.sleep(1.5)
 
     # Step 15: Check if both green beds found after checking section 1 of double room, return if true and quit
@@ -460,7 +460,7 @@ if __name__ == "__main__":
     process_room()
 
     # Step 19: Return to position before having to find the room door
-    move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0), 425)
+    move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0.3), 425)
     time.sleep(1.5)
 
     # Step 20: Check if both green beds found after checking first double section, return if true and quit

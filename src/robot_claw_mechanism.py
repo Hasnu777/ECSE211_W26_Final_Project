@@ -55,7 +55,7 @@ def release_cube():
     # Release cube
     open_gripper()
 #     wait_for_motor(claw_gripper)
-    time.sleep(1)
+    time.sleep(0.5)
     # Close gripper
 #     close_gripper()
 #     wait_for_motor(claw_gripper)
