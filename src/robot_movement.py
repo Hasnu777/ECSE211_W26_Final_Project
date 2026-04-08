@@ -131,7 +131,7 @@ def rotate_with_gyro_correction(turn_angle, speed, direction):
         angle_invalid = (angle_before_turn is None )#or not ((angle_before_turn < 180) and (angle_before_turn > -180)))
 
     rotate_bot(turn_angle, speed, direction)
-    time.sleep(1)
+    time.sleep(0.1)
 
     angle_after_turn = GYRO.get_abs_measure()
 

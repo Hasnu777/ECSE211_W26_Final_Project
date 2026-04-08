@@ -103,9 +103,9 @@ def left_single_to_right_single():
 def right_single_to_double():
 #     move_dist_fwd(SQUARE_LENGTH * -1, 425)
     rotate_with_gyro_correction(90, 300, RIGHT)
-    move_dist_fwd(SQUARE_LENGTH * 1, 425)
+    move_dist_fwd(SQUARE_LENGTH * 1.2, 425)
     time.sleep(2)
-    rotate_with_gyro_correction(93, 300, RIGHT)
+    rotate_with_gyro_correction(90, 300, RIGHT)
 
 
 # CONFIRMED TO WORK
