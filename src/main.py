@@ -356,8 +356,11 @@ def sonia_bed_detection():
     green_detected = False
     print("We breaking outta the thread")
 
+# claw_arm.reset_encoder()
 
 if __name__ == "__main__":
+#     claw_arm.set_position(-175)
+#     claw_arm.reset_encoder()
     GYRO.reset_measure()
     LEFT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
     RIGHT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
@@ -418,7 +421,7 @@ if __name__ == "__main__":
     process_room()
 
     # Step 14: Undo door alignment
-    move_dist_fwd(-total_door_adjustment-0.03, 300)
+    move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH * 0.3), 300)
     time.sleep(1.5)
 
     # Step 15: Check if both green beds found after checking section 1 of double room, return if true and quit
@@ -454,7 +457,7 @@ if __name__ == "__main__":
 
     # Step 21: Two beds not found, must continue checking double room. Move to section 3
     rotate_with_gyro_correction(95, 300, LEFT)
-    move_dist_fwd(SQUARE_LENGTH * 0.5, 425)
+    move_dist_fwd(SQUARE_LENGTH * 0.15, 425)
     time.sleep(1)
     rotate_with_gyro_correction(90, 300, RIGHT)
 
@@ -467,7 +470,7 @@ if __name__ == "__main__":
 
     # Step 26: Return to position before having to find the room door
     print("backing out extra, 2nd time")
-    move_dist_fwd(-total_door_adjustment - (SQUARE_LENGTH * 0.3), 425)
+    move_dist_fwd(-total_door_adjustment, 425)
     time.sleep(total_door_adjustment * 2)
 
     # Step 27: At this point, it's guaranteed both beds are found (assuming only 3 sections for double room)
