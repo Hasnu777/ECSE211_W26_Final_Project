@@ -441,7 +441,8 @@ if __name__ == "__main__":
     process_room()
 
     # Step 19: Return to position before having to find the room door
-    move_dist_fwd(-total_door_adjustment-0.03, 425)
+    print("backing out extra")
+    move_dist_fwd(-total_door_adjustment - (SQUARE_LENGTH * 0.3), 425)
     time.sleep(1.5)
 
     # Step 20: Check if both green beds found after checking first double section, return if true and quit
@@ -465,7 +466,8 @@ if __name__ == "__main__":
     process_room()
 
     # Step 26: Return to position before having to find the room door
-    move_dist_fwd(-total_door_adjustment, 425)
+    print("backing out extra, 2nd time")
+    move_dist_fwd(-total_door_adjustment - (SQUARE_LENGTH * 0.3), 425)
     time.sleep(total_door_adjustment * 2)
 
     # Step 27: At this point, it's guaranteed both beds are found (assuming only 3 sections for double room)

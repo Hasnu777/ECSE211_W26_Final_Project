@@ -123,10 +123,12 @@ def rotate_with_gyro_correction(turn_angle, speed, direction):
 
     # Make the robot turn
     angle_before_turn = GYRO.get_abs_measure()
-    angle_invalid = (angle_before_turn is None or not ((angle_before_turn < 180) and (angle_before_turn > -180)))
-    while angle_before_turn is None:
+    angle_invalid = (angle_before_turn is None) #or not ((angle_before_turn < 180) and (angle_before_turn > -180)))
+    while angle_invalid:
+        print("reset gyro")
         GYRO.reset_measure()
         angle_before_turn = GYRO.get_abs_measure()
+        angle_invalid = (angle_before_turn is None )#or not ((angle_before_turn < 180) and (angle_before_turn > -180)))
 
     rotate_bot(turn_angle, speed, direction)
     time.sleep(1)
