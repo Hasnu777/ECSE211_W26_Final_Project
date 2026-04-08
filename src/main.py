@@ -8,9 +8,10 @@ from robot_movement import *
 from robot_claw_mechanism import *
 from robot_sound_system import *
 import sys
+import os
 
 # CONSTANTS
-
+TS = TouchSensor(2)
 # IMPORTANT VARIABLES
 
 door_detected = False
@@ -22,6 +23,18 @@ green_beds_found = 0
 bed_detection_threads_killed = False
 complete = False
 
+def emergencyStop():
+    """Monitors the touch sensor and immediately kills all threads on press."""
+    while True:
+        if TS.is_pressed():
+            print("EMERGENCY STOP TRIGGERED — halting all motors and exiting.")
+            # Stop motors before killing the process
+            LEFT_WHEEL.set_dps(0)
+            RIGHT_WHEEL.set_dps(0)
+            claw_arm.set_dps(0)
+            claw_gripper.set_dps(0)
+            os._exit(1)
+        time.sleep(0.05)
 
 # CONFIRMED TO WORK
 def getMeds():
@@ -356,6 +369,8 @@ def sonia_bed_detection():
 
 
 if __name__ == "__main__":
+    es = threading.Thread(target=emergencyStop, daemon=True)
+    es.start()
     GYRO.reset_measure()
     LEFT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
     RIGHT_WHEEL.set_limits(power=POWER_LIMIT, dps=425)
