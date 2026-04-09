@@ -92,7 +92,7 @@ def left_single_to_right_single():
     move_dist_fwd(-SQUARE_LENGTH * 0.5, 425)
     time.sleep(0.5)
     rotate_with_gyro_correction(33, 300, RIGHT)
-    rotate_with_gyro_correction(95, 300, RIGHT)
+    rotate_with_gyro_correction(93, 300, RIGHT)
     move_dist_fwd(SQUARE_LENGTH * 2, 425)
     time.sleep(3)
     rotate_with_gyro_correction(94, 300, LEFT)
@@ -201,7 +201,7 @@ def process_room():
             print("Whoa max depth reached, gotta back outta there before you hurt yourself buddy")
             # Robot will be straight, can just go backwards
             move_dist_fwd(-SQUARE_LENGTH * room_depth, 350)
-            time.sleep(1)
+            time.sleep(2)
             # Reset room depth in preparation for next process_room() call
             room_depth = 0
             print("moved back outta the room, we OUT now")
@@ -247,8 +247,8 @@ def process_room():
             print(f"Backing out of the room: depth was {room_depth}")
             move_dist_fwd(-(SQUARE_LENGTH * room_depth), 350)
             # # Lower the arm again
-            # lower_arm()
-            time.sleep(1) # MATT CHANGED FROM 3
+#             lower_arm()
+            time.sleep(2) # MATT CHANGED FROM 3
             room_depth = 0
             red_detected = False
             green_detected = False
@@ -372,7 +372,9 @@ def sonia_bed_detection():
 
 
 if __name__ == "__main__":
-#     claw_arm.set_position(-10)
+    flag = False
+#     claw_arm.reset_encoder()
+#     claw_arm.set_position(-5)
 #     claw_arm.reset_encoder()
     es = threading.Thread(target=emergencyStop, daemon=True)
     es.start()
@@ -420,6 +422,10 @@ if __name__ == "__main__":
     time.sleep(1.5)
 
     # Step 10: Check if both green beds found after checking both singles, return if true and quit
+    if green_beds_found == 1:
+        grab_cube()
+        lower_arm()
+        
     if green_beds_found == 2:
         return_from_right_single()
         lower_arm()
@@ -436,13 +442,19 @@ if __name__ == "__main__":
     # Step 13: Scan first section of double room
     # SECTION 1
     # (theorised 3 sections, changing this will lead to changes in return_from_double() func and scanning/returning behavior below)
+    if green_beds_found == 0:
+        flag = True
     process_room()
 
     # Step 14: Undo door alignment
     move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0.3), 300)
-    time.sleep(1.5)
+    time.sleep(2)
 
     # Step 15: Check if both green beds found after checking section 1 of double room, return if true and quit
+    if green_beds_found == 1 and Flag:
+        grab_cube()
+        lower_arm()
+        
     if green_beds_found == 2:
         return_from_double(section_number=1)
         victory_jingle()
@@ -460,13 +472,18 @@ if __name__ == "__main__":
     door_detected = False
 
     # Step 18: Find bed in second section of the double room, deposit if green, and get out of room
+    if green_beds_found == 0:
+        flag = True
     process_room()
 
     # Step 19: Return to position before having to find the room door
     move_dist_fwd(-total_door_adjustment-(SQUARE_LENGTH*0.3), 425)
-    time.sleep(1.5)
+    time.sleep(2)
 
     # Step 20: Check if both green beds found after checking first double section, return if true and quit
+    if green_beds_found == 1 and flag:
+        grab_cube()
+        lower_arm()
     if green_beds_found == 2:
         # Return to pharmacy
         return_from_double(section_number=2)
