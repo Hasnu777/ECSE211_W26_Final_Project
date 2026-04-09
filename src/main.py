@@ -1,7 +1,7 @@
 from robot_color_detection import classify_unknown_color
 from utils import sound
 from utils import brick
-from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, EV3GyroSensor, wait_ready_sensors
+from utils.brick import TouchSensor, Motor, EV3UltrasonicSensor, EV3GyroSensor, wait_ready_sensors, reset_brick
 import time
 import threading
 from robot_movement import *
@@ -33,6 +33,7 @@ def emergencyStop():
             RIGHT_WHEEL.set_dps(0)
             claw_arm.set_dps(0)
             claw_gripper.set_dps(0)
+            reset_brick()
             os._exit(1)
         time.sleep(0.05)
 
@@ -370,11 +371,12 @@ def sonia_bed_detection():
     green_detected = False
     print("We breaking outta the thread")
 
-
+# claw_gripper.reset_encoder()
+# claw_gripper.set_position(10)
+# claw_gripper.reset_encoder()
 if __name__ == "__main__":
     flag = False
 #     claw_arm.reset_encoder()
-#     claw_arm.set_position(-5)
 #     claw_arm.reset_encoder()
     es = threading.Thread(target=emergencyStop, daemon=True)
     es.start()
@@ -395,6 +397,7 @@ if __name__ == "__main__":
     door_detected = False
     
     # Step 4: Find the bed in the left single room, deposit if green, and get out of room
+    prev_green = green_beds_found
     process_room()
 
     # Undo door alignment
@@ -402,7 +405,7 @@ if __name__ == "__main__":
     time.sleep(1)
 
     # Step 5: Retrieve stored cube if the other one was dropped off
-    if green_beds_found == 1:
+    if green_beds_found != prev_green:
         grab_cube()
         lower_arm()
         
@@ -415,6 +418,7 @@ if __name__ == "__main__":
     door_detected = False
 
     # Step 8: Find bed in right single room, deposit if green, get out of room
+    prev_green = green_beds_found
     process_room()
 
     # Step 9: Undo door alignment
@@ -422,16 +426,18 @@ if __name__ == "__main__":
     time.sleep(1.5)
 
     # Step 10: Check if both green beds found after checking both singles, return if true and quit
-    if green_beds_found == 1:
-        grab_cube()
-        lower_arm()
+
         
     if green_beds_found == 2:
         return_from_right_single()
         lower_arm()
         victory_jingle()
         sys.exit()
-
+        
+    if green_beds_found != prev_green:
+        grab_cube()
+        lower_arm()
+        
     # Step 11: Move from right single to double
     right_single_to_double()
     
@@ -442,8 +448,7 @@ if __name__ == "__main__":
     # Step 13: Scan first section of double room
     # SECTION 1
     # (theorised 3 sections, changing this will lead to changes in return_from_double() func and scanning/returning behavior below)
-    if green_beds_found == 0:
-        flag = True
+    prev_gren = green_beds_found
     process_room()
 
     # Step 14: Undo door alignment
@@ -451,14 +456,16 @@ if __name__ == "__main__":
     time.sleep(2)
 
     # Step 15: Check if both green beds found after checking section 1 of double room, return if true and quit
-    if green_beds_found == 1 and Flag:
-        grab_cube()
-        lower_arm()
+
         
     if green_beds_found == 2:
         return_from_double(section_number=1)
         victory_jingle()
         sys.exit()
+        
+    if green_beds_found != prev_green:
+        grab_cube()
+        lower_arm()
 
     # Step 16: Two beds not found, must continue checking double room. Move to section 2
     #SECTION 2
@@ -472,8 +479,7 @@ if __name__ == "__main__":
     door_detected = False
 
     # Step 18: Find bed in second section of the double room, deposit if green, and get out of room
-    if green_beds_found == 0:
-        flag = True
+    prev_green = green_beds_found
     process_room()
 
     # Step 19: Return to position before having to find the room door
@@ -481,15 +487,16 @@ if __name__ == "__main__":
     time.sleep(2)
 
     # Step 20: Check if both green beds found after checking first double section, return if true and quit
-    if green_beds_found == 1 and flag:
-        grab_cube()
-        lower_arm()
+
     if green_beds_found == 2:
         # Return to pharmacy
         return_from_double(section_number=2)
         victory_jingle()
         sys.exit()
 
+    if green_beds_found != prev_green:
+        grab_cube()
+        lower_arm()
     # Step 21: Two beds not found, must continue checking double room. Move to section 3
     # SECTION 3
     rotate_with_gyro_correction(91, 300, LEFT)
