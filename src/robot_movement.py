@@ -123,12 +123,15 @@ def rotate_with_gyro_correction(turn_angle, speed, direction):
 
     # Make the robot turn
     angle_before_turn = GYRO.get_abs_measure()
-    while angle_before_turn is None:
+    angle_invalid = (angle_before_turn is None) #or not ((angle_before_turn < 180) and (angle_before_turn > -180)))
+    while angle_invalid:
+        print("reset gyro")
         GYRO.reset_measure()
         angle_before_turn = GYRO.get_abs_measure()
+        angle_invalid = (angle_before_turn is None )#or not ((angle_before_turn < 180) and (angle_before_turn > -180)))
 
     rotate_bot(turn_angle, speed, direction)
-    time.sleep(1)
+    time.sleep(0.1)
 
     angle_after_turn = GYRO.get_abs_measure()
 
@@ -169,6 +172,16 @@ def wiggle():
         move_dist_fwd(0.05, 100)
         time.sleep(0.3)
         
+def maintain_angle(targetAngle):
+    current = GYRO.get_abs_measure()
+    while abs(current - targetAngle) > 2:
+        current = GYRO.get_abs_measure()
+        if current != None:
+            error = targetAngle - current
+            correction = (error * 0.5)*3
+            RIGHT_WHEEL.set_position_relative(-correction)
+            LEFT_WHEEL.set_position_relative(correction)
+            time.sleep(0.1)
 
 if __name__ == "__main__":
     wiggle()
