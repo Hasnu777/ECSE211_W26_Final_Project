@@ -324,7 +324,7 @@ def sonia_detect_bed_color():
 
 def sonia_wiggle():
     global red_detected, green_detected, bed_detection_threads_killed, green_beds_found
-    max_wiggles = 7  # To explore a room in its entire depth, wiggle 7 times max (lowkey guessed this, untested still)
+    max_wiggles = 7  # To explore a room in its entire depth, wiggle 7 times max (until it reached the end of a room)
     wiggle_counter = 0
 
     while ((not red_detected) and (not green_detected) and (wiggle_counter < max_wiggles)):
@@ -340,11 +340,9 @@ def sonia_wiggle():
         release_cube()
         task_jingle()
         green_beds_found += 1
-        print("gripper opened")
 
     inch_away_from_door()
     bed_detection_threads_killed = True
-    print("bed detection threads have been killed")
 
 
 def sonia_bed_detection():
@@ -369,7 +367,6 @@ def sonia_bed_detection():
     bed_detection_threads_killed = False
     red_detected = False
     green_detected = False
-    print("We breaking outta the thread")
 
 # claw_gripper.reset_encoder()
 # claw_gripper.set_position(10)

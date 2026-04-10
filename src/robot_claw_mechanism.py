@@ -19,10 +19,8 @@ LOWERED_ARM = 0
 
 
 # FUNCTIONS
-
 def open_gripper():
     claw_gripper.set_position(OPEN_GRIPPER)
-
 
 def close_gripper():
     claw_gripper.set_position(CLOSED_GRIPPER)
@@ -37,13 +35,9 @@ def lower_arm():
 
 def grab_cube():
     time.sleep(0.5)
-    # Open gripper
     open_gripper()
-#     wait_for_motor(claw_gripper)
     time.sleep(0.5)
-    # Grab cube
     close_gripper()
-#     wait_for_motor(claw_gripper)
     time.sleep(0.5)
     
     # lift the arm a little bit so that it doesn't catch on to anything
@@ -52,51 +46,35 @@ def grab_cube():
 
 
 def release_cube():
-    # Release cube
     open_gripper()
-#     wait_for_motor(claw_gripper)
     time.sleep(0.3)
-    # Close gripper
-#     close_gripper()
-#     wait_for_motor(claw_gripper)
-#     time.sleep(1)
 
 
 def store_cube():
-    # Lower the arm
     lower_arm()
-#     wait_for_motor(claw_arm)
     time.sleep(0.1)
-    # Grab cube
+
     grab_cube()
-    # Raise the arm
+
     raise_arm()
-#     wait_for_motor(claw_arm)
     time.sleep(0.8)
-    # Release cube
+
     release_cube()
-    # Lower the arm
+
     lower_arm()
-#     wait_for_motor(claw_arm)
     time.sleep(0.1)
-    # Close the gripper
+
     close_gripper()
     time.sleep(1)
 
 
 def retrieve_cube():
-    # Open the gripper
     open_gripper()
     time.sleep(1)
-    # Raise the arm
     raise_arm()
-#     wait_for_motor(claw_arm)
     time.sleep(1)
-    # Grab cube
     grab_cube()
-    # Lower the arm
     lower_arm()
-#     wait_for_motor(claw_arm)
     time.sleep(1)
 
 
