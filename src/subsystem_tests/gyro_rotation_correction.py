@@ -88,7 +88,7 @@ def rotate_bot(angle, speed, direction):
 
 
 def find_gyro_diff(now, old):
-    return now - old  # TODO: you might want to remove abs
+    return now - old
 
 
 def rotate_with_gyro_correction(turn_angle, direction):
