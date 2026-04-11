@@ -71,7 +71,6 @@ def getMeds():
     time.sleep(1)
 
     rotate_with_gyro_correction(90, 300, LEFT)  # in-built time.sleep()
-#     rotate_with_gyro_correction(5, 300, RIGHT)  # in-built time.sleep()
 
 
 # CONFIRMED TO WORK
@@ -83,13 +82,10 @@ def pharmacy_to_left_single():
     move_dist_fwd(SQUARE_LENGTH * 0.15, 425)
     time.sleep(0.5)
     rotate_with_gyro_correction(33, 300, RIGHT)
-    # move_dist_fwd(SQUARE_LENGTH * -0.1, 425)
-    # time.sleep(1.5)
 
 
 def left_single_to_right_single():
     rotate_with_gyro_correction(35, 300, LEFT)
-    # time.sleep(1.5)
     move_dist_fwd(-SQUARE_LENGTH * 0.5, 425)
     time.sleep(0.5)
     rotate_with_gyro_correction(33, 300, RIGHT)
@@ -97,8 +93,6 @@ def left_single_to_right_single():
     move_dist_fwd(SQUARE_LENGTH * 2, 425)
     time.sleep(3)
     rotate_with_gyro_correction(94, 300, LEFT)
-    # move_dist_fwd(SQUARE_LENGTH * 0.15, 425)
-    # time.sleep(0.5)
 
 
 def right_single_to_double():
@@ -247,9 +241,7 @@ def process_room():
             # Back out of the room
             print(f"Backing out of the room: depth was {room_depth}")
             move_dist_fwd(-(SQUARE_LENGTH * room_depth), 350)
-            # # Lower the arm again
-#             lower_arm()
-            time.sleep(2) # MATT CHANGED FROM 3
+            time.sleep(2) 
             room_depth = 0
             red_detected = False
             green_detected = False
@@ -368,13 +360,8 @@ def sonia_bed_detection():
     red_detected = False
     green_detected = False
 
-# claw_gripper.reset_encoder()
-# claw_gripper.set_position(10)
-# claw_gripper.reset_encoder()
 if __name__ == "__main__":
     flag = False
-#     claw_arm.reset_encoder()
-#     claw_arm.reset_encoder()
     es = threading.Thread(target=emergencyStop, daemon=True)
     es.start()
     GYRO.reset_measure()
@@ -410,7 +397,6 @@ if __name__ == "__main__":
     left_single_to_right_single()
 
     # Step 7: Align to right single room door
-    # HASSAN HIJACKS AGAIN MWAHAHAHA
     total_door_adjustment = inch_towards_door()
     door_detected = False
 
