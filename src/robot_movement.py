@@ -1,12 +1,10 @@
-#!/usr/bin/python3
-"""
-Code insipred by example shown in BrickPi2 Slides by F.P. Ferrie, Ryan Au
-"""
+""" Code insipred by example shown in BrickPi2 Slides by F.P. Ferrie, Ryan Au """
 
 import time
 import math
 from utils.brick import Motor, EV3GyroSensor
 
+# CONSTANTS
 MOTOR_POLL_DELAY = 0.05
 
 SQUARE_LENGTH = 0.24   # (meters) Side length of square
@@ -29,8 +27,7 @@ SPEED_LIMIT = 720
 RIGHT = "right"
 LEFT = "left"
 
-
-
+# FUNCTIONS
 
 def wait_for_motor(motor: Motor):
     """Block until motor finishes motion"""
@@ -90,26 +87,26 @@ def rotate_bot(angle, speed, direction):
 
 
 def arc_bot(angle, speed, direction):
+    """Rotate bot about one wheel, dependent on direction of arc (degrees, dps, "right"/"left")"""
     try:
         if direction == RIGHT:
+            # Rotating right, point of origin being the right wheel
             RIGHT_WHEEL.set_dps(0)
             LEFT_WHEEL.set_dps(speed)
 
             LEFT_WHEEL.set_limits(POWER_LIMIT, speed)
             LEFT_WHEEL.set_position_relative(int(angle * ORIENT_TO_DEG) * 2)
+
         elif direction == LEFT:
+            # Rotating left, point of origin being the left wheel
             LEFT_WHEEL.set_dps(0)
             RIGHT_WHEEL.set_dps(speed)
 
             RIGHT_WHEEL.set_limits(POWER_LIMIT, speed)
             RIGHT_WHEEL.set_position_relative(int(angle * ORIENT_TO_DEG) * 2)
+
     except IOError as error:
         print(error)
-
-
-
-def find_gyro_diff(now, old):
-    return now - old
 
 
 def rotate_with_gyro_correction(turn_angle, speed, direction):
@@ -123,65 +120,34 @@ def rotate_with_gyro_correction(turn_angle, speed, direction):
 
     # Make the robot turn
     angle_before_turn = GYRO.get_abs_measure()
-    angle_invalid = (angle_before_turn is None) #or not ((angle_before_turn < 180) and (angle_before_turn > -180)))
+    angle_invalid = (angle_before_turn is None)  # or not ((angle_before_turn < 180) and (angle_before_turn > -180))
     while angle_invalid:
-        print("reset gyro")
+        # Initial reading gave a bad value, must try again
         GYRO.reset_measure()
         angle_before_turn = GYRO.get_abs_measure()
-        angle_invalid = (angle_before_turn is None )#or not ((angle_before_turn < 180) and (angle_before_turn > -180)))
+        angle_invalid = (angle_before_turn is None )  # or not ((angle_before_turn < 180) and (angle_before_turn > -180))
 
     rotate_bot(turn_angle, speed, direction)
     time.sleep(0.1)
 
     angle_after_turn = GYRO.get_abs_measure()
 
-    
-    actual_turn_angle = find_gyro_diff(angle_after_turn, angle_before_turn)
-    print("actual_turn_angle: ", actual_turn_angle)
+    actual_turn_angle = angle_after_turn - angle_before_turn
 
     delta = (actual_turn_angle - desired_turn_angle)  # delta between real and expected turn angles
-    print("delta_expected_from_unexpected: ", delta)
 
     # split problem by direction
     if direction == RIGHT:
         if delta > 0: # if delta positive, robot overshooting
-            print("Overshoot case")
             rotate_bot(delta, 100, LEFT)
             time.sleep(1)
         elif delta < 0: # if delta negative, robot undershooting
-            print("Undershoot case")
             rotate_bot(delta, 100, LEFT)
             time.sleep(1)
     if direction == LEFT:
         if delta < 0: # if delta negative, robot overshooting
-            print("Overshoot case")
             rotate_bot(delta, 100, LEFT)
             time.sleep(1)
         elif delta > 0: # if delta positive, robot undershooting
-            print("Undershoot case")
             rotate_bot(delta, 100, LEFT)
             time.sleep(1)
-
-    print("-------------------------------------------------")
-
-def wiggle():
-    for i in range (5):
-        print(i)
-        rotate_with_gyro_correction(50, 100, RIGHT)
-        rotate_with_gyro_correction(50, 300, LEFT)
-        move_dist_fwd(0.05, 100)
-        time.sleep(0.3)
-        
-def maintain_angle(targetAngle):
-    current = GYRO.get_abs_measure()
-    while abs(current - targetAngle) > 2:
-        current = GYRO.get_abs_measure()
-        if current != None:
-            error = targetAngle - current
-            correction = (error * 0.5)*3
-            RIGHT_WHEEL.set_position_relative(-correction)
-            LEFT_WHEEL.set_position_relative(correction)
-            time.sleep(0.1)
-
-if __name__ == "__main__":
-    wiggle()
