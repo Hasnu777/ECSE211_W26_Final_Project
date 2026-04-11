@@ -121,7 +121,6 @@ def inch_towards_door():
         print(f"Updated how much I inched forward, total is now {total_moved}m")
         print(color_detected)
         if "orange" in color_detected[0] or "orange" == color_detected:
-            print("DOOR FOUND!!!! WE OUTTA HERE")
             door_detected = True
             time.sleep(0.5)
             # Move forward after having found the door
@@ -147,7 +146,6 @@ def inch_away_from_door():
         print(f"Updated how much I inched BACKWARD, total is now {total_moved}m")
         print(color_detected)
         if "orange" in color_detected[0] or "orange" == color_detected:
-            print("DOOR FOUND!!!! WE OUTTA HERE")
             door_detected = True
             # Move forward after having found the door
             move_dist_fwd(-0.06, 425)
@@ -162,7 +160,6 @@ def hassan_wiggle(amount: int):
     global red_detected, green_detected
     while not (red_detected or green_detected):
         if remaining_to_rotate == 0:
-            print("wiggled full amount, no bed was found... ISSUE UH OH")
             break
         arc_bot(total_to_rotate / 10, 300, RIGHT)
         time.sleep(0.2)
@@ -174,11 +171,9 @@ def hassan_wiggle(amount: int):
         print("Scanned for a bed")
         print(color_detected)
         if "red" in color_detected[0] or "red" == color_detected:
-            print("red bed detected, ew let's get out now")
             red_detected = True
             break
         elif "green" in color_detected[0] or "green" == color_detected:
-            print("green bed detected, oh em gee I love it")
             green_detected = True
             break
     return (total_to_rotate, remaining_to_rotate)
@@ -193,13 +188,11 @@ def process_room():
         print("Searching for a bed...")
         # If gone deep enough in the room, quit it to move on
         if room_depth >= 1.2:
-            print("Whoa max depth reached, gotta back outta there before you hurt yourself buddy")
             # Robot will be straight, can just go backwards
             move_dist_fwd(-SQUARE_LENGTH * room_depth, 350)
             time.sleep(2)
             # Reset room depth in preparation for next process_room() call
             room_depth = 0
-            print("moved back outta the room, we OUT now")
             break
         print(GYRO.get_abs_measure())
         # Get the total desired amount to wiggle, and amount rotated until complete/bed found
@@ -208,16 +201,12 @@ def process_room():
         print(f"The wiggle had a total desired amount of {total_desired}, completed {total_desired - total_remaining} and {total_remaining} remaining")
         # If a bed was found
         if red_detected or green_detected:
-            print("BED WAS DETECTED LETS SEE WHICH KIND")
             # If bed found was green
             if green_detected:
-                print("OOOOHHHHH BED IS GREEN!!!! ITS HUNGRY FOR DRUGS")
                 # rotate robot to put claw over the bed
                 rotate_with_gyro_correction(36, 300, LEFT)
                 # Deliver the med package if the bed is green
-                print("RELEASE... THE *CUBE*")
                 release_cube()
-                print("cube released, notifying the blind via sound")
                 task_jingle()
                 move_dist_fwd(-0.05, 300)
                 time.sleep(1)
@@ -226,9 +215,6 @@ def process_room():
                 time.sleep(1)
                 move_dist_fwd(0.05, 300)
                 time.sleep(1)
-                # Put color sensor back over robot
-                # rotate_with_gyro_correction(36, 300, RIGHT)
-                # Increment the number of green beds found
                 green_beds_found += 1
                 print(f"Logging the bed, now at {green_beds_found} green beds processed")
             else:
@@ -245,12 +231,10 @@ def process_room():
             room_depth = 0
             red_detected = False
             green_detected = False
-            print("WE BE OUTTA TS HAHA")
             break
         print("Undoing the wiggle effects (fully applied because we didn't find a bed in this scan)")
         
-        # arc_bot(-total_desired+total_remaining + 5, 300, RIGHT)  # FOR SINGLE ROOMS, MOSTLY WORKED
-        arc_bot(-total_desired+total_remaining + 5, 300, RIGHT) # FOR DOUBLE ROOM, TEST
+        arc_bot(-total_desired+total_remaining + 5, 300, RIGHT) # FOR DOUBLE ROOM
         
         time.sleep(1.5)
         print("Moving forward to scan the next bit of the room in the next run of this while loop")
@@ -284,7 +268,6 @@ def return_from_right_single():
 
 
 def return_from_double(section_number):
-#     move_dist_fwd(-SQUARE_LENGTH * 0.5, 425)
     time.sleep(1)
     rotate_with_gyro_correction(90, 300, LEFT)
     if section_number == 3:
@@ -306,11 +289,9 @@ def sonia_detect_bed_color():
         time.sleep(0.2)
         print("Scanned for a bed")
         if color_detected == "red":
-            print("red bed detected, ew let's get out now")
             red_detected = True
 
         elif color_detected == "green":
-            print("green bed detected, oh em gee I love it")
             green_detected = True
 
 
@@ -339,7 +320,6 @@ def sonia_wiggle():
 
 def sonia_bed_detection():
     """This function essentially wiggles AND tries to identify a bed at the same time with threading"""
-    print("Bed detection commence")
     global red_detected, green_detected, bed_detection_threads_killed
 
     t1 = threading.Thread(target=sonia_detect_bed_color, args=())
