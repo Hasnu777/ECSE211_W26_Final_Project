@@ -1,0 +1,5 @@
+96384453be5b97b0c3e5f942a7e56675054211a7 c1415fe3b5f1689a86902c1c106fa3a5009169bf DPM group 24 <dpm-24@example.com> 1774626002 +0000	update by push
+c1415fe3b5f1689a86902c1c106fa3a5009169bf 84a1b0ee66a0243c4aa395ead329a0c88ca130f9 DPM group 24 <dpm-24@example.com> 1774627536 +0000	pull: fast-forward
+84a1b0ee66a0243c4aa395ead329a0c88ca130f9 c208b43fbe8334d4c0a7212a8fc4de2fb338b0a5 DPM group 24 <dpm-24@example.com> 1774629695 +0000	fetch: fast-forward
+c208b43fbe8334d4c0a7212a8fc4de2fb338b0a5 43776aab5786c39905ce0d6752b5cf6b73b8fa47 DPM group 24 <dpm-24@example.com> 1774655052 +0000	pull: fast-forward
+43776aab5786c39905ce0d6752b5cf6b73b8fa47 72ced147af67fd8eb26fc3606007455610f149de DPM group 24 <dpm-24@example.com> 1774655950 +0000	pull: fast-forward

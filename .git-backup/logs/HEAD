@@ -1,0 +1,69 @@
+0000000000000000000000000000000000000000 96384453be5b97b0c3e5f942a7e56675054211a7 DPM group 24 <dpm-24@example.com> 1774625265 +0000	clone: from git@github.com:Hasnu777/ECSE211_W26_Final_Project.git
+96384453be5b97b0c3e5f942a7e56675054211a7 c1415fe3b5f1689a86902c1c106fa3a5009169bf DPM group 24 <dpm-24@example.com> 1774625999 +0000	commit: added port testing file
+c1415fe3b5f1689a86902c1c106fa3a5009169bf c1415fe3b5f1689a86902c1c106fa3a5009169bf DPM group 24 <dpm-24@example.com> 1774627542 +0000	reset: moving to HEAD
+c1415fe3b5f1689a86902c1c106fa3a5009169bf 84a1b0ee66a0243c4aa395ead329a0c88ca130f9 DPM group 24 <dpm-24@example.com> 1774627547 +0000	pull: Fast-forward
+84a1b0ee66a0243c4aa395ead329a0c88ca130f9 84a1b0ee66a0243c4aa395ead329a0c88ca130f9 DPM group 24 <dpm-24@example.com> 1774629712 +0000	reset: moving to HEAD
+84a1b0ee66a0243c4aa395ead329a0c88ca130f9 56ea7fe65769b7eacc9a18af90473f842b84facf DPM group 24 <dpm-24@example.com> 1774629713 +0000	checkout: moving from main to test/claw_mechanism
+56ea7fe65769b7eacc9a18af90473f842b84facf 56ea7fe65769b7eacc9a18af90473f842b84facf DPM group 24 <dpm-24@example.com> 1774654547 +0000	reset: moving to HEAD
+56ea7fe65769b7eacc9a18af90473f842b84facf 84a1b0ee66a0243c4aa395ead329a0c88ca130f9 DPM group 24 <dpm-24@example.com> 1774654549 +0000	checkout: moving from test/claw_mechanism to main
+84a1b0ee66a0243c4aa395ead329a0c88ca130f9 c208b43fbe8334d4c0a7212a8fc4de2fb338b0a5 DPM group 24 <dpm-24@example.com> 1774654557 +0000	pull: Fast-forward
+c208b43fbe8334d4c0a7212a8fc4de2fb338b0a5 43776aab5786c39905ce0d6752b5cf6b73b8fa47 DPM group 24 <dpm-24@example.com> 1774655052 +0000	pull: Fast-forward
+43776aab5786c39905ce0d6752b5cf6b73b8fa47 72ced147af67fd8eb26fc3606007455610f149de DPM group 24 <dpm-24@example.com> 1774655950 +0000	pull: Fast-forward
+72ced147af67fd8eb26fc3606007455610f149de d2b7ea30d9f48be2618dbf9678080ee624291a28 DPM group 24 <dpm-24@example.com> 1774656468 +0000	checkout: moving from main to experiment/color_identification
+d2b7ea30d9f48be2618dbf9678080ee624291a28 d2b7ea30d9f48be2618dbf9678080ee624291a28 DPM group 24 <dpm-24@example.com> 1774656711 +0000	reset: moving to HEAD
+d2b7ea30d9f48be2618dbf9678080ee624291a28 7b19f373e076b6af7e266c567c4e797d7d8c068a DPM group 24 <dpm-24@example.com> 1774656716 +0000	checkout: moving from experiment/color_identification to cleaning_main
+7b19f373e076b6af7e266c567c4e797d7d8c068a d8923edd989e143c3bb8d696df2ed1a54c9c5a06 DPM group 24 <dpm-24@example.com> 1774657162 +0000	commit: .
+d8923edd989e143c3bb8d696df2ed1a54c9c5a06 c17d878cd30ae357b9bd5842c2522872ad817460 DPM group 24 <dpm-24@example.com> 1774657546 +0000	pull: Fast-forward
+c17d878cd30ae357b9bd5842c2522872ad817460 7489cdec1fbbccbba156ba395f0dfed1b8596ee2 DPM group 24 <dpm-24@example.com> 1774658277 +0000	commit: .
+7489cdec1fbbccbba156ba395f0dfed1b8596ee2 50be9a7b26a8437738b1f54f6d7ec0cd1f6a9f85 DPM group 24 <dpm-24@example.com> 1774659597 +0000	pull: Fast-forward
+50be9a7b26a8437738b1f54f6d7ec0cd1f6a9f85 50be9a7b26a8437738b1f54f6d7ec0cd1f6a9f85 DPM group 24 <dpm-24@example.com> 1774661259 +0000	reset: moving to HEAD
+50be9a7b26a8437738b1f54f6d7ec0cd1f6a9f85 e9f9182fba71d2025e9656ccf407b851eacce808 DPM group 24 <dpm-24@example.com> 1774661262 +0000	pull: Fast-forward
+e9f9182fba71d2025e9656ccf407b851eacce808 71ec8cfcfe7e2e9d54b4446c3fcf9053c9a256f8 DPM group 24 <dpm-24@example.com> 1774661426 +0000	commit: .
+71ec8cfcfe7e2e9d54b4446c3fcf9053c9a256f8 8144c0c8628a39f3b5d1c7337dd185b0885091c9 DPM group 24 <dpm-24@example.com> 1774661724 +0000	pull: Fast-forward
+8144c0c8628a39f3b5d1c7337dd185b0885091c9 fa31a3f6b7e6117e95adb48f7acf3a6743a02cc1 DPM group 24 <dpm-24@example.com> 1774663055 +0000	commit: wiggle implemened
+fa31a3f6b7e6117e95adb48f7acf3a6743a02cc1 18ad9e38d59bd5e6c8f287b22cd72865691bca62 DPM group 24 <dpm-24@example.com> 1774734334 +0000	checkout: moving from cleaning_main to test/jingle
+18ad9e38d59bd5e6c8f287b22cd72865691bca62 ff115ec02216a571f055d10205a69a9794d30f6a DPM group 24 <dpm-24@example.com> 1774735013 +0000	commit: jingle syntax fix -Matt
+ff115ec02216a571f055d10205a69a9794d30f6a 9915cc88e9cfc30996872694b42ae4c3181b3d95 DPM group 24 <dpm-24@example.com> 1774735669 +0000	checkout: moving from test/jingle to experiment/integrate_drive_color
+9915cc88e9cfc30996872694b42ae4c3181b3d95 fa31a3f6b7e6117e95adb48f7acf3a6743a02cc1 DPM group 24 <dpm-24@example.com> 1774735786 +0000	checkout: moving from experiment/integrate_drive_color to cleaning_main
+fa31a3f6b7e6117e95adb48f7acf3a6743a02cc1 8171b596f6ed2a14438caef164e8031bf4e1acd7 DPM group 24 <dpm-24@example.com> 1774748637 +0000	commit: Sonia left her laptop behind & forgot to commit this, so threads are integrated here -Matt
+8171b596f6ed2a14438caef164e8031bf4e1acd7 ff115ec02216a571f055d10205a69a9794d30f6a DPM group 24 <dpm-24@example.com> 1774748690 +0000	checkout: moving from cleaning_main to test/jingle
+ff115ec02216a571f055d10205a69a9794d30f6a 9a3b5e91cfdb6ae1b3027b2c6cabc93c425a1b3b DPM group 24 <dpm-24@example.com> 1774751780 +0000	commit: washing machine jingle works -Matt
+9a3b5e91cfdb6ae1b3027b2c6cabc93c425a1b3b 2ea9cbeeb73c1da387ca0ebba267a68f399798b7 DPM group 24 <dpm-24@example.com> 1774753742 +0000	commit: cleanup washing machine jingle -Matt
+2ea9cbeeb73c1da387ca0ebba267a68f399798b7 294bab2ddfa6781a7dda31f90023ce1015a966ef DPM group 24 <dpm-24@example.com> 1774753965 +0000	pull: Fast-forward
+294bab2ddfa6781a7dda31f90023ce1015a966ef ff7f5670ec9cd00b3670a79344f6996a9ca24c96 DPM group 24 <dpm-24@example.com> 1774754390 +0000	commit: task jingle complete
+ff7f5670ec9cd00b3670a79344f6996a9ca24c96 f4cba31b8a5cd29d94884db88d2db02866bb2f3c DPM group 24 <dpm-24@example.com> 1774754525 +0000	pull: Fast-forward
+f4cba31b8a5cd29d94884db88d2db02866bb2f3c 0bebccad7ffd36f88bb5cbe3e0329f8a74eb82f8 DPM group 24 <dpm-24@example.com> 1774755564 +0000	commit: everything settled
+0bebccad7ffd36f88bb5cbe3e0329f8a74eb82f8 0f39b3ae8b7314a151ca3462d2aac74dcdc2a815 DPM group 24 <dpm-24@example.com> 1774755568 +0000	pull: Merge made by the 'recursive' strategy.
+0f39b3ae8b7314a151ca3462d2aac74dcdc2a815 8171b596f6ed2a14438caef164e8031bf4e1acd7 DPM group 24 <dpm-24@example.com> 1774755976 +0000	checkout: moving from test/jingle to cleaning_main
+8171b596f6ed2a14438caef164e8031bf4e1acd7 3b18bb8de51454065451a94e97aed04ceabe2ae6 DPM group 24 <dpm-24@example.com> 1774756601 +0000	checkout: moving from cleaning_main to test/drive_system
+3b18bb8de51454065451a94e97aed04ceabe2ae6 3b18bb8de51454065451a94e97aed04ceabe2ae6 DPM group 24 <dpm-24@example.com> 1774757060 +0000	reset: moving to HEAD
+3b18bb8de51454065451a94e97aed04ceabe2ae6 3b18bb8de51454065451a94e97aed04ceabe2ae6 DPM group 24 <dpm-24@example.com> 1774757184 +0000	reset: moving to HEAD
+3b18bb8de51454065451a94e97aed04ceabe2ae6 3b18bb8de51454065451a94e97aed04ceabe2ae6 DPM group 24 <dpm-24@example.com> 1774757468 +0000	reset: moving to HEAD
+3b18bb8de51454065451a94e97aed04ceabe2ae6 8171b596f6ed2a14438caef164e8031bf4e1acd7 DPM group 24 <dpm-24@example.com> 1774757475 +0000	checkout: moving from test/drive_system to cleaning_main
+8171b596f6ed2a14438caef164e8031bf4e1acd7 3b18bb8de51454065451a94e97aed04ceabe2ae6 DPM group 24 <dpm-24@example.com> 1774758129 +0000	checkout: moving from cleaning_main to test/drive_system
+3b18bb8de51454065451a94e97aed04ceabe2ae6 9915cc88e9cfc30996872694b42ae4c3181b3d95 DPM group 24 <dpm-24@example.com> 1774758198 +0000	checkout: moving from test/drive_system to experiment/integrate_drive_color
+9915cc88e9cfc30996872694b42ae4c3181b3d95 9915cc88e9cfc30996872694b42ae4c3181b3d95 DPM group 24 <dpm-24@example.com> 1774758921 +0000	reset: moving to HEAD
+9915cc88e9cfc30996872694b42ae4c3181b3d95 8171b596f6ed2a14438caef164e8031bf4e1acd7 DPM group 24 <dpm-24@example.com> 1774758924 +0000	checkout: moving from experiment/integrate_drive_color to cleaning_main
+8171b596f6ed2a14438caef164e8031bf4e1acd7 beb120727717a2ec9232d5ce8262a5cc7ac0a01f DPM group 24 <dpm-24@example.com> 1774767448 +0000	commit: Cleanup v1
+beb120727717a2ec9232d5ce8262a5cc7ac0a01f 685f2f4de659add0921a69bb51cae2bdc2903df9 DPM group 24 <dpm-24@example.com> 1774810067 +0000	pull: Fast-forward
+685f2f4de659add0921a69bb51cae2bdc2903df9 bd7105da87fc7a367121f70a07f39bc511c8af03 DPM group 24 <dpm-24@example.com> 1774812120 +0000	commit: Unknown status of this commit, was left uncommitted by prev workers - Hassan
+bd7105da87fc7a367121f70a07f39bc511c8af03 50097ae0eefaf4a9e5608cc01a328de87f5a53da DPM group 24 <dpm-24@example.com> 1774992931 +0000	checkout: moving from cleaning_main to test/gyro_sensor
+50097ae0eefaf4a9e5608cc01a328de87f5a53da 50097ae0eefaf4a9e5608cc01a328de87f5a53da DPM group 24 <dpm-24@example.com> 1774993248 +0000	checkout: moving from test/gyro_sensor to experiment/integrate_gyro
+50097ae0eefaf4a9e5608cc01a328de87f5a53da daca72471bf50c8de7f9dc276832923174b2637c DPM group 24 <dpm-24@example.com> 1774994468 +0000	pull: Fast-forward
+daca72471bf50c8de7f9dc276832923174b2637c 04ef70aba92ed3f020b5df5c922f1542e91fb3b5 DPM group 24 <dpm-24@example.com> 1774996056 +0000	commit: current code for testing
+04ef70aba92ed3f020b5df5c922f1542e91fb3b5 67061bbdf80e6a7acf02550601fadea9e30cf7fd DPM group 24 <dpm-24@example.com> 1775066957 +0000	pull: Fast-forward
+67061bbdf80e6a7acf02550601fadea9e30cf7fd ce5b7fc49c668ddae4daf734a6f475f27afc4cb6 DPM group 24 <dpm-24@example.com> 1775067855 +0000	commit: threading debug
+ce5b7fc49c668ddae4daf734a6f475f27afc4cb6 ce5b7fc49c668ddae4daf734a6f475f27afc4cb6 DPM group 24 <dpm-24@example.com> 1775068029 +0000	reset: moving to HEAD
+ce5b7fc49c668ddae4daf734a6f475f27afc4cb6 2832abb0d1ea1376ee20d22a1fa2751481e032d7 DPM group 24 <dpm-24@example.com> 1775068032 +0000	pull: Fast-forward
+2832abb0d1ea1376ee20d22a1fa2751481e032d7 d974c7fe7ad227ab147a36bdba1248d6868e97a2 DPM group 24 <dpm-24@example.com> 1775070582 +0000	commit: Gyro correction alg doesn't work yet - Matt
+d974c7fe7ad227ab147a36bdba1248d6868e97a2 c77bac66e37563dd540648e71f19eb39e7e2ed8f DPM group 24 <dpm-24@example.com> 1775070706 +0000	commit: update commit - Matt
+c77bac66e37563dd540648e71f19eb39e7e2ed8f 1d402bea24b6950e595cefefbfaed64c059bdf51 DPM group 24 <dpm-24@example.com> 1775136782 +0000	commit: experimenting with dps measurement
+1d402bea24b6950e595cefefbfaed64c059bdf51 0f39b3ae8b7314a151ca3462d2aac74dcdc2a815 DPM group 24 <dpm-24@example.com> 1775136795 +0000	checkout: moving from experiment/integrate_gyro to test/jingle
+0f39b3ae8b7314a151ca3462d2aac74dcdc2a815 0f39b3ae8b7314a151ca3462d2aac74dcdc2a815 DPM group 24 <dpm-24@example.com> 1775137043 +0000	reset: moving to HEAD
+0f39b3ae8b7314a151ca3462d2aac74dcdc2a815 1d402bea24b6950e595cefefbfaed64c059bdf51 DPM group 24 <dpm-24@example.com> 1775137066 +0000	checkout: moving from test/jingle to experiment/integrate_gyro
+1d402bea24b6950e595cefefbfaed64c059bdf51 1d30ac8730a4aa0c055181007a8776df29e2aba0 DPM group 24 <dpm-24@example.com> 1775138025 +0000	commit: updated code - Matt
+1d30ac8730a4aa0c055181007a8776df29e2aba0 49f119d5690f9ddf9cabb67690404e32bf999197 DPM group 24 <dpm-24@example.com> 1775141281 +0000	checkout: moving from experiment/integrate_gyro to experiment/gyro_encoder
+49f119d5690f9ddf9cabb67690404e32bf999197 49f119d5690f9ddf9cabb67690404e32bf999197 DPM group 24 <dpm-24@example.com> 1775142050 +0000	reset: moving to HEAD
+49f119d5690f9ddf9cabb67690404e32bf999197 1d30ac8730a4aa0c055181007a8776df29e2aba0 DPM group 24 <dpm-24@example.com> 1775142064 +0000	checkout: moving from experiment/gyro_encoder to experiment/integrate_gyro
+1d30ac8730a4aa0c055181007a8776df29e2aba0 49f119d5690f9ddf9cabb67690404e32bf999197 DPM group 24 <dpm-24@example.com> 1775142094 +0000	checkout: moving from experiment/integrate_gyro to experiment/gyro_encoder
+49f119d5690f9ddf9cabb67690404e32bf999197 095d18d12ca355b274a601d79b45e7e90de6d21c DPM group 24 <dpm-24@example.com> 1775144366 +0000	commit: added test code for gyro

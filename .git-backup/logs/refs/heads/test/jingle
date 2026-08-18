@@ -1,0 +1,9 @@
+0000000000000000000000000000000000000000 18ad9e38d59bd5e6c8f287b22cd72865691bca62 DPM group 24 <dpm-24@example.com> 1774734334 +0000	branch: Created from refs/remotes/origin/test/jingle
+18ad9e38d59bd5e6c8f287b22cd72865691bca62 ff115ec02216a571f055d10205a69a9794d30f6a DPM group 24 <dpm-24@example.com> 1774735013 +0000	commit: jingle syntax fix -Matt
+ff115ec02216a571f055d10205a69a9794d30f6a 9a3b5e91cfdb6ae1b3027b2c6cabc93c425a1b3b DPM group 24 <dpm-24@example.com> 1774751780 +0000	commit: washing machine jingle works -Matt
+9a3b5e91cfdb6ae1b3027b2c6cabc93c425a1b3b 2ea9cbeeb73c1da387ca0ebba267a68f399798b7 DPM group 24 <dpm-24@example.com> 1774753742 +0000	commit: cleanup washing machine jingle -Matt
+2ea9cbeeb73c1da387ca0ebba267a68f399798b7 294bab2ddfa6781a7dda31f90023ce1015a966ef DPM group 24 <dpm-24@example.com> 1774753965 +0000	pull: Fast-forward
+294bab2ddfa6781a7dda31f90023ce1015a966ef ff7f5670ec9cd00b3670a79344f6996a9ca24c96 DPM group 24 <dpm-24@example.com> 1774754390 +0000	commit: task jingle complete
+ff7f5670ec9cd00b3670a79344f6996a9ca24c96 f4cba31b8a5cd29d94884db88d2db02866bb2f3c DPM group 24 <dpm-24@example.com> 1774754525 +0000	pull: Fast-forward
+f4cba31b8a5cd29d94884db88d2db02866bb2f3c 0bebccad7ffd36f88bb5cbe3e0329f8a74eb82f8 DPM group 24 <dpm-24@example.com> 1774755564 +0000	commit: everything settled
+0bebccad7ffd36f88bb5cbe3e0329f8a74eb82f8 0f39b3ae8b7314a151ca3462d2aac74dcdc2a815 DPM group 24 <dpm-24@example.com> 1774755568 +0000	pull: Merge made by the 'recursive' strategy.
