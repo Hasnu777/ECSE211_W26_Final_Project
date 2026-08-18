@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2026-03-31" view-index="0" gantt-divider-location="366" resource-divider-location="300" version="3.3.3322" locale="en_AE">
+    <description/>
+    <view zooming-state="default:0" id="gantt-chart">
+        <field id="tpd3" name="Name" width="200" order="0"/>
+        <field id="tpd4" name="Begin date" width="75" order="1"/>
+        <field id="tpd5" name="End date" width="75" order="2"/>
+        <field id="tpd15" name="Notes" width="20" order="3"/>
+        <option id="taskLabelUp" value="coordinator"/>
+        <option id="taskLabelDown" value="taskDates"/>
+        <option id="taskLabelLeft" value="name"/>
+        <option id="taskLabelRight" value="resources"/>
+        <option id="filter.completedTasks" value="false"/>
+        <option id="filter.dueTodayTasks" value="false"/>
+        <option id="filter.overdueTasks" value="false"/>
+        <option id="filter.inProgressTodayTasks" value="false"/>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="true"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="63" uid="ffb0c0e0dc0243a2bbb7b08995f25035" name="Begin Project" meeting="true" start="2026-02-24" duration="0" complete="0" expand="true">
+            <depend id="1" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="1" uid="d9793e792f9748469f1f1033c40bc579" name="Drafting &amp; Signing Team Contract" meeting="false" start="2026-02-24" duration="2" complete="100" expand="true">
+            <depend id="2" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="2" uid="68a78a270ab9424790f0036c8574c16f" name="Inidividual Reading &amp; Understanding of Project Requirements, Constraints, Specifications" meeting="false" start="2026-02-26" duration="2" complete="100" expand="true">
+            <depend id="5" type="2" difference="0" hardness="Strong"/>
+            <depend id="6" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="4" uid="2a2053efed11463f96880a21b46a8a3d" name="Internal Meeting #1" meeting="false" start="2026-02-28" duration="2" complete="100" expand="true">
+            <task id="5" uid="04f3819a4fc945328a0e245f055166ca" name="Defining Project Requirements, Constraints, Specifications" meeting="false" start="2026-02-28" duration="1" complete="100" expand="true">
+                <depend id="7" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="6" uid="48f00541695042d8aecd67f840e2b391" name="Brainstorming Mechanical Design for Project" meeting="false" start="2026-02-28" duration="2" complete="100" expand="true">
+                <depend id="7" type="2" difference="0" hardness="Strong"/>
+            </task>
+        </task>
+        <task id="7" uid="89b6955a27d2499daf3056dd00ab1a40" name="Documenting System Design Options" meeting="false" start="2026-03-02" duration="2" complete="100" expand="true">
+            <depend id="8" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="8" uid="435da196b6e24acdb3bdbc7e0d98e46e" name="Brainstorming Project Software Design" meeting="false" start="2026-03-04" duration="2" complete="100" expand="true">
+            <depend id="9" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="9" uid="e0a21654815744f18134b28c56c1fa23" name="Creating Gantt Chart V1" meeting="false" start="2026-03-06" duration="3" complete="100" expand="true">
+            <depend id="11" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="10" uid="bbbf6277a2624deda2af455fa4e03c97" name="Meeting #2 - Internal Updates" meeting="false" start="2026-03-09" duration="1" complete="100" expand="true">
+            <task id="11" uid="92ebf3500a3f4735ba8f6e347b7b5ca5" name="Completing System Design Documentation" meeting="false" start="2026-03-09" duration="1" complete="100" expand="true">
+                <depend id="12" type="2" difference="0" hardness="Strong"/>
+            </task>
+        </task>
+        <task id="12" uid="927da5a67f784802b2275ea8295a8053" name="Prepare &amp; Finish Timeline Budget" meeting="false" start="2026-03-10" duration="2" complete="100" expand="true">
+            <depend id="13" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="13" uid="5fe8fffbc1984d1588867bcd7bb54072" name="Prepare &amp; Finish Role and Responsibility Distribution" meeting="false" start="2026-03-12" duration="1" complete="100" expand="true">
+            <depend id="14" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="14" uid="f0821e2df3e8420cb71e425bdf0f6df5" name="Modelling Subsystems &amp; Components" meeting="false" start="2026-03-13" duration="2" complete="100" expand="true">
+            <depend id="15" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="15" uid="05746cf36e82407fa241dc4ac7ca4270" name="Digital Twin Complete" meeting="true" start="2026-03-15" duration="0" complete="0" expand="true">
+            <depend id="16" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="16" uid="d0f6041e59eb4d8e833f1c9d21e2f769" name="Updating Timesheet" meeting="false" start="2026-03-15" duration="1" complete="100" expand="true">
+            <depend id="17" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="17" uid="7158cd91b66c44de8fa6afea885cf484" name="Week 1 Deliverables Complete" meeting="true" start="2026-03-16" duration="0" complete="0" expand="true">
+            <depend id="18" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="18" uid="b8be7313c4e94c9288d4d7e56624e8ff" name="TA-Team Meeting #1" meeting="true" start="2026-03-16" duration="0" complete="100" expand="true">
+            <depend id="64" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="64" uid="9f65c8f1f1b34642a1e317c3d04c270d" name="Build Drive System" meeting="false" start="2026-03-16" duration="1" complete="100" expand="true">
+            <depend id="20" type="2" difference="0" hardness="Strong"/>
+            <depend id="21" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="19" uid="a3a384379fc64ae3a42e911554fac3be" name="Meeting #3" meeting="false" start="2026-03-17" duration="1" complete="100" expand="true">
+            <task id="20" uid="a559a11e95be4b2eb37f00d661451453" name="Completing Software Design" meeting="false" start="2026-03-17" duration="1" complete="100" expand="true">
+                <depend id="22" type="2" difference="0" hardness="Strong"/>
+                <depend id="23" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="21" uid="9e2d048249da4956b6703b1532556d25" name="Plan Tests &amp; Methodologies" meeting="false" start="2026-03-17" duration="1" complete="100" expand="true">
+                <depend id="22" type="2" difference="0" hardness="Strong"/>
+                <depend id="23" type="2" difference="0" hardness="Strong"/>
+                <depend id="24" type="2" difference="0" hardness="Strong"/>
+            </task>
+        </task>
+        <task id="22" uid="f4bcb174555046aba7cfb618af3fb7b8" name="Program Drive System" meeting="false" start="2026-03-18" duration="1" complete="100" expand="true">
+            <depend id="26" type="2" difference="0" hardness="Strong"/>
+            <depend id="27" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="23" uid="4f4968a5abee45d2ae43a905c749b28f" name="Write Code for Gyro Sensor Testing" meeting="false" start="2026-03-18" duration="1" complete="100" expand="true">
+            <depend id="26" type="2" difference="0" hardness="Strong"/>
+            <depend id="27" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="24" uid="b4091a9afc7e4840b21ea5a165c8ff3e" name="Build Color Detection System" meeting="false" start="2026-03-18" duration="1" complete="100" expand="true">
+            <depend id="26" type="2" difference="0" hardness="Strong"/>
+            <depend id="27" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="26" uid="61bbd32f6d464e869315a73f97877580" name="Test Gyro Sensor" meeting="false" start="2026-03-19" duration="1" complete="100" expand="true">
+            <depend id="33" type="2" difference="0" hardness="Strong"/>
+            <depend id="65" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="27" uid="4132c60d4d2348589b267abebd93263d" name="Test Drive System" meeting="false" start="2026-03-19" duration="1" complete="100" expand="true">
+            <depend id="33" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="65" uid="f3c24b8041554b5798bb21d6e7a6829c" name="Refine Color Detection System" meeting="false" start="2026-03-20" duration="2" complete="100" expand="true">
+            <depend id="35" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="33" uid="29539e56dd0241b5b4be462307be94d7" name="Implement &amp; Test Claw Mechanism" meeting="false" start="2026-03-20" duration="2" complete="100" expand="true">
+            <depend id="35" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="35" uid="9d72f783bb1041038cfea1eee5070d1e" name="Finalise Week 2 Deliverables" meeting="false" start="2026-03-22" duration="1" complete="100" expand="true">
+            <depend id="36" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="36" uid="cf0c558e1d9245c691bc8a2dbbed228b" name="Week 2 Deliverables Complete" meeting="true" start="2026-03-23" duration="0" complete="0" expand="true">
+            <depend id="37" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="37" uid="a5566b15317748a1a56e41b7d87c6b5e" name="TA-Team Meeting #2" meeting="true" start="2026-03-23" duration="0" complete="0" expand="true">
+            <depend id="68" type="2" difference="0" hardness="Strong"/>
+            <depend id="69" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="68" uid="ad53f6ceeba942e799f8edc61d5e7f68" name="Stabilize Gyro Sensor and Claw" meeting="false" start="2026-03-23" duration="1" complete="100" expand="true">
+            <depend id="70" type="2" difference="0" hardness="Strong"/>
+            <depend id="71" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="70" uid="b8bf6c1b05714bc3b2257603e38383b8" name="Program Hardcoded Pathing System" meeting="false" start="2026-03-24" duration="1" complete="100" expand="true">
+            <depend id="72" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="71" uid="ae6f6c63e07b4cb8a0897d857ebbd999" name="Program Room Scanning Algorithm" meeting="false" start="2026-03-24" duration="1" complete="100" expand="true">
+            <depend id="72" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="69" uid="0cff8548a51648b684c012083a96cd6d" name="Test &amp; Refine Color Detection System" meeting="false" start="2026-03-23" duration="2" complete="100" expand="true">
+            <depend id="72" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="72" uid="8ab9fb1bf182490db7fc6d7e77e9b109" name="Stabilise Drive System" meeting="false" start="2026-03-25" duration="1" complete="100" expand="true">
+            <depend id="73" type="2" difference="0" hardness="Strong"/>
+            <depend id="76" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="73" uid="9113d9be603a44db83c032b723003558" name="Building Sound System Structure" meeting="false" start="2026-03-26" duration="1" complete="100" expand="true">
+            <depend id="74" type="2" difference="0" hardness="Strong"/>
+            <depend id="77" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="76" uid="53f0cbcc70c34f71ab5ce69ca86bddac" name="Error Diagnosing - Port Issues" meeting="false" start="2026-03-26" duration="1" complete="100" expand="true">
+            <depend id="74" type="2" difference="0" hardness="Strong"/>
+            <depend id="77" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="74" uid="4d60f224bd6f453c9abd621e23d56510" name="Programming Sound System Structure" meeting="false" start="2026-03-27" duration="1" complete="100" expand="true">
+            <depend id="78" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="77" uid="989b82cff863470899bc5eef3dcadffc" name="Test &amp; Refine Room Scanning Algorithm" meeting="false" start="2026-03-27" duration="1" complete="100" expand="true">
+            <depend id="78" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="78" uid="19ea867b4346488a9b18d82ccea3b7bc" name="Integration Test: Drive System &amp; Color Detection" meeting="false" start="2026-03-28" duration="1" complete="100" expand="true">
+            <depend id="47" type="2" difference="0" hardness="Strong"/>
+            <depend id="79" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="79" uid="b93de4afc5e14beb8560a43435f46641" name="Integration Test: Drive System &amp; Color Detection System &amp; Claw" meeting="false" start="2026-03-29" duration="1" complete="100" expand="true">
+            <depend id="48" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="47" uid="f82283ccde754795b7205eec7d793056" name="Finalise Week 3 Deliverables" meeting="false" start="2026-03-29" duration="1" complete="100" expand="true">
+            <depend id="48" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="48" uid="70eb1be70edb448882ea9c62acbef715" name="Week 3 Deliverables Complete" meeting="true" start="2026-03-30" duration="0" complete="0" expand="true">
+            <depend id="49" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="49" uid="05c1c266e87d4a2eb4daafe04fc9ed40" name="TA-Team Meeting #3" meeting="true" start="2026-03-30" duration="0" complete="0" expand="true">
+            <depend id="80" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="80" uid="5ea2e26f641143a4acfd2f23d23b29f9" name="Finalise Design Review Presentation" meeting="false" start="2026-03-30" duration="1" complete="100" expand="true">
+            <depend id="51" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="51" uid="4dc28fdb9e0f4282bd3d2f2f1d0b7625" name="Present Project Design Review" meeting="true" start="2026-03-31" duration="0" complete="0" expand="true">
+            <depend id="50" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="50" uid="8e6e9a2caea946978c2e4ab55f15c734" name="Internal Team Meeting" meeting="false" start="2026-03-31" duration="1" complete="100" expand="true">
+            <depend id="81" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="81" uid="ca0371d45099415a847e96b0547aea33" name="Integration of Drive System With Gyro Corrections + Color Detection + Sound System" meeting="false" start="2026-04-01" duration="1" complete="100" expand="true">
+            <depend id="82" type="2" difference="0" hardness="Strong"/>
+            <depend id="83" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="82" uid="e5a1cc2aee4e403f89253dde96ea2461" name="Integration Test: Drive &amp; Gyro + Color Detection + Sound" meeting="false" start="2026-04-02" duration="1" complete="100" expand="true">
+            <depend id="84" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="83" uid="6091fb8f201d47ce86a72b099a0e93fb" name="Color Sensor Repositioning &amp; Cable Management" meeting="false" start="2026-04-02" duration="1" complete="100" expand="true">
+            <depend id="84" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="84" uid="8abee07898ac467cb2ee692d877ef3c0" name="Integration of Above + Claw" meeting="false" start="2026-04-03" duration="1" complete="100" expand="true">
+            <depend id="56" type="2" difference="0" hardness="Strong"/>
+            <depend id="85" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="85" uid="bdd36e9b409b4cc69a2624472e1aae92" name="Integration Testing + Refinement" meeting="false" start="2026-04-04" duration="2" complete="100" expand="true">
+            <depend id="58" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="56" uid="5cd942b8f2e44aa89ad590bc92957379" name="Final Project Report First Draft" meeting="false" start="2026-04-04" duration="2" complete="100" expand="true">
+            <depend id="58" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="58" uid="06d2db7e8e8c4bfda88a4178ac5a6c34" name="Week 4 Deliverables Complete" meeting="true" start="2026-04-06" duration="0" complete="0" expand="true">
+            <depend id="59" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="59" uid="5392b84ba27c4b3fafa543747ce4aec2" name="TA-Team Meeting #4" meeting="true" start="2026-04-06" duration="0" complete="0" expand="true">
+            <depend id="86" type="2" difference="0" hardness="Strong"/>
+            <depend id="87" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="86" uid="64b2168e11274bd3ae5eb2f79dc466ea" name="Adjust, Test, and Refine Robot Navigation Behavior" meeting="false" start="2026-04-06" duration="1" complete="100" expand="true">
+            <depend id="90" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="87" uid="3dfbbcc1a0d4407788a54706df09a991" name="Adjust, Test, and Refine Robot Bed Detection Behavior" meeting="false" start="2026-04-06" duration="1" complete="100" expand="true">
+            <depend id="90" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="90" uid="8663d2a6cff24fe891d9326510685f1f" name="Implement, Integrate &amp; Test Emergency Stop System" meeting="false" start="2026-04-07" duration="1" complete="100" expand="true">
+            <depend id="88" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="88" uid="767aff2ff6a74f8d83442c2c12eedeb6" name="Stress Test Robot via Different Scenarios &amp; Refine/Fix Issues" meeting="false" start="2026-04-08" duration="1" complete="100" expand="true">
+            <depend id="89" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="89" uid="d7d8631c531a40f399e0f0ceb1e2714e" name="Final Demonstration" meeting="true" start="2026-04-09" duration="0" complete="0" expand="true">
+            <depend id="60" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="60" uid="134bbfd9c7654ea59d34ff72ea7085b3" name="Finalise Project Design Report &amp; Project Debrief Report" meeting="false" start="2026-04-09" duration="2" complete="100" expand="true">
+            <depend id="62" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="62" uid="4e56b1a560ae48038f267043bd6e114c" name="Final Project Complete" meeting="true" start="2026-04-11" duration="0" complete="0" expand="true"/>
+    </tasks>
+    <resources/>
+    <allocations/>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles>
+        <role id="1" name="Project Manager"/>
+        <role id="2" name="Design Documentation Manager"/>
+        <role id="3" name="Software Lead"/>
+        <role id="4" name="Hardware Lead"/>
+        <role id="5" name="Testing Lead"/>
+        <role id="6" name="Software Member"/>
+        <role id="7" name="Hardware Member"/>
+        <role id="8" name="Testing Member"/>
+    </roles>
+</project>
